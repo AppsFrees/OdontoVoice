@@ -10,17 +10,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @media print {
+            html, body, main {
+                height: auto !important;
+                min-height: 0 !important;
+                max-height: none !important;
+                overflow: visible !important;
+                display: block !important;
+                position: static !important;
+                background: white !important;
+                font-size: 10pt;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
             .no-print { display: none !important; }
             .print-only { display: block !important; }
-            body { background: white !important; font-size: 11pt; }
-            .printable-card { border: none !important; shadow: none !important; padding: 0 !important; }
-            @page { margin: 12mm; size: A4 portrait; }
+            .lg\:col-span-8 { width: 100% !important; max-width: 100% !important; }
+            .bg-white { 
+                border: 1px solid #e2e8f0 !important; 
+                box-shadow: none !important; 
+                page-break-inside: avoid; 
+                break-inside: avoid; 
+                margin-bottom: 12px !important; 
+            }
+            @page { margin: 10mm; size: A4 portrait; }
         }
         .tooth-box {
             user-select: none;
             touch-action: manipulation;
         }
-        /* Themes de color para las insignias */
+        /* Paleta de colores para estados de piezas */
         .color-rojo { background-color: #fef2f2; border-color: #ef4444; color: #b91c1c; }
         .color-azul { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
         .color-negro { background-color: #f1f5f9; border-color: #334155; color: #0f172a; }
@@ -38,7 +56,7 @@
 </head>
 <body class="h-full flex flex-col font-sans text-slate-800 antialiased">
 
-    <!-- Header Principal (Oculto en Impresión) -->
+    <!-- Header Principal -->
     <header class="no-print bg-indigo-700 text-white shadow-lg p-4 flex flex-wrap justify-between items-center gap-4">
         <div class="flex items-center space-x-3">
             <div id="headerLogoContainer" class="bg-white/10 p-2 rounded-xl flex items-center justify-center min-w-10 min-h-10 max-w-12 max-h-12 overflow-hidden">
@@ -79,7 +97,7 @@
     <!-- Main Content Area -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-3 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-y-auto">
         
-        <!-- PANEL IZQUIERDO: Datos del Paciente & Selector de Estado (4 Cols en Desktop) -->
+        <!-- PANEL IZQUIERDO: Datos del Paciente & Asistente de Voz -->
         <div class="lg:col-span-4 flex flex-col gap-5 no-print">
             
             <!-- DATOS DEL PACIENTE -->
@@ -129,7 +147,7 @@
                     </button>
                 </div>
 
-                <!-- Caja de Transcripción de Voz en Tiempo Real -->
+                <!-- Caja de Transcripción de Voz -->
                 <div id="voiceTranscriptBox" class="bg-indigo-50/60 border border-indigo-200 rounded-xl p-3 text-xs flex flex-col gap-1">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1">
                         <i class="fa-solid fa-comment-dots"></i> Último dictado capturado:
@@ -137,7 +155,7 @@
                     <p id="voiceTranscriptText" class="text-slate-700 font-medium italic">Presione 'Iniciar Dictado' y hable a su micrófono...</p>
                 </div>
 
-                <!-- DESPLEGABLE SELECCIÓN MANUAL DE ESTADO CLINICO -->
+                <!-- SELECCIÓN MANUAL DE ESTADO CLÍNICO -->
                 <div class="pt-2 border-t border-slate-100">
                     <label class="block text-xs font-bold text-slate-700 mb-2 flex items-center justify-between">
                         <span><i class="fa-solid fa-palette text-indigo-600 mr-1"></i> Estado Clínico Manual Activo</span>
@@ -159,7 +177,7 @@
                 </div>
             </div>
 
-            <!-- LEYENDA Y BUSCADOR RÁPIDO DE ESTADOS -->
+            <!-- LEYENDA DE ESTADOS -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                 <button onclick="toggleLegend()" class="w-full text-xs font-bold text-slate-700 flex justify-between items-center cursor-pointer">
                     <span><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Leyenda de Estados Configurados</span>
@@ -173,7 +191,7 @@
 
         </div>
 
-        <!-- PANEL DERECHO: ODONTOGRAMA VISUAL, HALLAZGOS Y PRESUPUESTO (8 Cols) -->
+        <!-- PANEL DERECHO: ODONTOGRAMA, HALLAZGOS Y PRESUPUESTO -->
         <div class="lg:col-span-8 flex flex-col gap-6">
 
             <!-- ENCABEZADO FICHA DE IMPRESIÓN (Solo visible en Guardar/Imprimir PDF) -->
@@ -203,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN ODONTOGRAMA GRÁFICO -->
+            <!-- ODONTOGRAMA GRÁFICO -->
             <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center">
                 
                 <!-- Selector Dentición Permanente / Infantil -->
@@ -351,7 +369,7 @@
 
     </main>
 
-    <!-- MODAL DE AJUSTES & TARIFAS (Persistente) -->
+    <!-- MODAL DE AJUSTES & TARIFAS -->
     <div id="settingsModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
             
@@ -468,16 +486,16 @@
             logoBase64: '',
             clinicalStates: [
                 { id: 'endo_good', name: 'Endodoncia en buen estado', color: 'azul', keywords: ['endodoncia en buen estado', 'conducto en buen estado'] },
-                { id: 'endo_bad', name: 'Endodoncia en mal estado', color: 'rojo', keywords: ['endodoncia en mal estado', 'conducto en mal estado', 'endodoncia mal'] },
+                { id: 'endo_bad', name: 'Endodoncia en mal estado', color: 'rojo', keywords: ['endodoncia en mal estado', 'conducto en mal estado', 'endodoncia mal', 'endodoncia en mal'] },
                 { id: 'caries_oclusal', name: 'Caries oclusal', color: 'rojo', keywords: ['caries oclusal', 'caries arriba'] },
                 { id: 'caries_vestibular', name: 'Caries vestibular', color: 'rojo', keywords: ['caries vestibular', 'caries afuera'] },
                 { id: 'caries_distal', name: 'Caries distal', color: 'rojo', keywords: ['caries distal', 'caries atras'] },
                 { id: 'caries_mesial', name: 'Caries mesial', color: 'rojo', keywords: ['caries mesial', 'caries adelante'] },
                 { id: 'caries_gen', name: 'Caries', color: 'rojo', keywords: ['caries'] },
-                { id: 'resina_good', name: 'Obturación con resina en buen estado', color: 'azul', keywords: ['obturacion con resina en buen estado', 'resina en buen estado', 'calza en buen estado', 'obturado'] },
-                { id: 'resina_bad', name: 'Obturación con resina en mal estado', color: 'rojo', keywords: ['obturacion con resina en mal estado', 'resina en mal estado', 'calza en mal estado', 'resina filtrada'] },
+                { id: 'resina_good', name: 'Obturación con resina en buen estado', color: 'azul', keywords: ['obturacion con resina en buen estado', 'resina en buen estado', 'calza en buen estado', 'obturado en buen estado'] },
+                { id: 'resina_bad', name: 'Obturación con resina en mal estado', color: 'rojo', keywords: ['obturacion con resina en mal estado', 'resina en mal estado', 'calza en mal estado', 'resina filtrada', 'obturacion en mal estado'] },
                 { id: 'corona_good', name: 'Corona en buen estado', color: 'azul', keywords: ['corona en buen estado'] },
-                { id: 'corona_bad', name: 'Corona en mal estado', color: 'rojo', keywords: ['corona en mal estado', 'corona mal'] },
+                { id: 'corona_bad', name: 'Corona en mal estado', color: 'rojo', keywords: ['corona en mal estado', 'corona mal', 'corona en mal'] },
                 { id: 'extracted', name: 'Diente extraído', color: 'negro', keywords: ['diente extraido', 'extraido', 'pieza extraida', 'ausente'] },
                 { id: 'agenesia', name: 'Agenesia', color: 'negro', keywords: ['agenesia'] },
                 { id: 'radicular', name: 'Remanente radicular', color: 'rojo', keywords: ['remanente radicular', 'raiz', 'restos radiculares'] },
@@ -505,9 +523,9 @@
             name: '',
             age: '',
             phone: '',
-            toothStates: {}, // { 18: { stateId: 'caries_gen', note: '' } }
-            findings: [],    // [ { id, tooth, stateName, color, note } ]
-            budgetItems: [], // [ { id, description, qty, price } ]
+            toothStates: {},
+            findings: [],
+            budgetItems: [],
             discountVal: 0,
             discountType: 'fixed'
         };
@@ -559,7 +577,6 @@
             } else {
                 initEmptyPatient();
             }
-            // Sincronizar inputs
             document.getElementById('inputPatientName').value = patientData.name || '';
             document.getElementById('inputPatientAge').value = patientData.age || '';
             document.getElementById('inputPatientPhone').value = patientData.phone || '';
@@ -599,11 +616,9 @@
             document.getElementById('appTitleDisplay').innerText = appSettings.clinicName || 'OdontoFlow Studio';
             document.getElementById('printClinicName').innerText = appSettings.clinicName || 'OdontoFlow Studio';
             
-            // Símbolos de Moneda
             const currDisplays = document.querySelectorAll('.currencySymbolDisplay');
             currDisplays.forEach(el => el.innerText = appSettings.currencySymbol || '$');
 
-            // Logo Header y Logo Impresión
             const headerLogoImg = document.getElementById('customHeaderLogo');
             const headerDefaultIcon = document.getElementById('defaultHeaderIcon');
             const printLogoImg = document.getElementById('printCustomLogo');
@@ -768,14 +783,12 @@
             selectedToothNum = num;
             const stateObj = appSettings.clinicalStates.find(s => s.id === stateId) || appSettings.clinicalStates[0];
 
-            // Guardar estado en diente
             const prevNote = (patientData.toothStates[num] && patientData.toothStates[num].note) || '';
             patientData.toothStates[num] = {
                 stateId: stateObj.id,
                 note: noteOverride !== null ? noteOverride : prevNote
             };
 
-            // Registrar Hallazgo
             addFindingRecord(num, stateObj.name, stateObj.color, patientData.toothStates[num].note);
 
             savePatientDataToStorage();
@@ -804,7 +817,6 @@
                 patientData.toothStates[selectedToothNum].note = noteText;
             }
 
-            // Actualizar nota en hallazgos
             const finding = patientData.findings.find(f => f.tooth === selectedToothNum);
             if (finding) finding.note = noteText;
 
@@ -1013,7 +1025,7 @@
             document.getElementById('grandTotalDisplay').innerText = grandTotal.toFixed(2);
         }
 
-        // --- RECONOCIMIENTO DE VOZ AVANZADO & NORMALIZACIÓN ---
+        // --- RECONOCIMIENTO DE VOZ AVANZADO & NORMALIZACIÓN ROBUSTA ---
         let recognition = null;
         let isListening = false;
 
@@ -1082,15 +1094,18 @@
             return s;
         }
 
-        // MOTOR PARSER DE VOZ MULTINIVEL
+        // MOTOR PARSER DE VOZ CORREGIDO
         function processVoiceCommand(rawText) {
             console.log("Comando recibido por voz:", rawText);
             let norm = normalizeText(rawText);
 
-            // 0. Reemplazar 'punto', 'coma' cuando están entre palabras o números
+            // Reemplazar palabras de relleno
+            norm = norm.replace(/\b(el|la|los|las|un|una|del|de|en|con|por|favor|marcar|poner|agregar)\b/g, ' ');
+
+            // Reemplazar 'punto', 'coma' entre palabras/números
             norm = norm.replace(/([a-z0-9]+)\s+(?:punto|coma)\s+([a-z0-9]+)/g, '$1 $2');
 
-            // 1. Reemplazar decenas compuestas pronunciadas ("cuarenta y ocho" -> "48", "treinta y cuatro" -> "34")
+            // Decenas compuestas pronunciadas ("cuarenta y ocho" -> "48", "treinta y cuatro" -> "34")
             const compoundTens = [
                 ['treinta y uno', '31'], ['treinta y dos', '32'], ['treinta y tres', '33'], ['treinta y cuatro', '34'],
                 ['treinta y cinco', '35'], ['treinta y seis', '36'], ['treinta y siete', '37'], ['treinta y ocho', '38'],
@@ -1102,10 +1117,10 @@
                 ['ochenta y uno', '81'], ['ochenta y dos', '82'], ['ochenta y tres', '83'], ['ochenta y cuatro', '84'], ['ochenta y cinco', '85']
             ];
             compoundTens.forEach(([phrase, numStr]) => {
-                norm = norm.replace(new RegExp('\b' + phrase + '\b', 'g'), numStr);
+                norm = norm.replace(new RegExp('\\b' + phrase + '\\b', 'g'), numStr);
             });
 
-            // 2. Reemplazar palabras de decenas simples ("once", "doce", "veinticuatro", etc.)
+            // Palabras de decenas simples ("once", "doce", "veinticuatro", etc.)
             const tensWords = {
                 'diez': '10', 'once': '11', 'doce': '12', 'trece': '13', 'catorce': '14', 'quince': '15',
                 'dieciseis': '16', 'diecisiete': '17', 'dieciocho': '18',
@@ -1113,29 +1128,29 @@
                 'veinticinco': '25', 'veintiseis': '26', 'veintisiete': '27', 'veintiocho': '28'
             };
             for (let w in tensWords) {
-                norm = norm.replace(new RegExp('\b' + w + '\b', 'g'), tensWords[w]);
+                norm = norm.replace(new RegExp('\\b' + w + '\\b', 'g'), tensWords[w]);
             }
 
-            // 3. Reemplazar pares de palabras de dígitos ("cuatro ocho" -> "48", "tres cuatro" -> "34", "uno uno" -> "11")
+            // Pares de dígitos ("cuatro ocho" -> "48", "tres cuatro" -> "34", "uno uno" -> "11")
             const wordToDigit = {
                 'uno': '1', 'dos': '2', 'tres': '3', 'cuatro': '4',
                 'cinco': '5', 'seis': '6', 'siete': '7', 'ocho': '8'
             };
             for (let w1 in wordToDigit) {
                 for (let w2 in wordToDigit) {
-                    let pat = new RegExp('\b' + w1 + '\s+' + w2 + '\b', 'g');
+                    let pat = new RegExp('\\b' + w1 + '\\s+' + w2 + '\\b', 'g');
                     norm = norm.replace(pat, wordToDigit[w1] + wordToDigit[w2]);
                 }
             }
 
-            // 4. Unir dígitos separados por punto, coma o espacios ("4.8", "4,8", "4 8" -> "48")
-            norm = norm.replace(/ ([1-8])[\.,\s]+([1-8]) /g, '$1$2');
+            // Unir dígitos separados por punto, coma o espacios ("4.8", "4,8", "4 8" -> "48")
+            norm = norm.replace(/\b([1-8])[\.,\s]+([1-8])\b/g, '$1$2');
 
-            // Buscar números de 2 dígitos
+            // Buscar números de 2 dígitos válidos
             const allTeeth = [...adultUpper, ...adultLower, ...childUpper, ...childLower];
             let foundTooth = null;
 
-            const matches = norm.match(/ (\d{2}) /g);
+            const matches = norm.match(/\b(\d{2})\b/g);
             if (matches) {
                 for (let m of matches) {
                     let n = parseInt(m);
@@ -1159,14 +1174,14 @@
                 return;
             }
 
-            // Cambiar dentición automáticamente si es infantil o adulto
+            // Cambiar dentición automáticamente
             if (childUpper.includes(foundTooth) || childLower.includes(foundTooth)) {
                 setDentitionType('child');
             } else {
                 setDentitionType('adult');
             }
 
-            // Buscar coincidencia de Estado Clínico por orden de palabras clave más largas primero
+            // Coincidencia de Estado Clínico por orden de palabras clave más largas primero
             let matchedState = null;
             let allKws = [];
 
@@ -1200,36 +1215,25 @@
                 return;
             }
 
-            let msg = `🏥 *${appSettings.clinicName || 'OdontoFlow Studio'}*
-`;
-            msg += `📋 *INFORME DE CONSULTA Y PRESUPUESTO*
-`;
-            msg += `-----------------------------------
-`;
-            msg += `👤 *Paciente:* ${patientData.name || 'Cliente'}
-`;
-            msg += `🆔 *HC:* ${patientData.id}
-
-`;
+            let msg = `🏥 *${appSettings.clinicName || 'OdontoFlow Studio'}*\n`;
+            msg += `📋 *INFORME DE CONSULTA Y PRESUPUESTO*\n`;
+            msg += `-----------------------------------\n`;
+            msg += `👤 *Paciente:* ${patientData.name || 'Cliente'}\n`;
+            msg += `🆔 *HC:* ${patientData.id}\n\n`;
 
             if (patientData.findings.length > 0) {
-                msg += `🦷 *HALLAZGOS DEL ODONTOGRAMA:*
-`;
+                msg += `🦷 *HALLAZGOS DEL ODONTOGRAMA:*\n`;
                 patientData.findings.forEach(f => {
-                    msg += `• Pieza #${f.tooth}: ${f.stateName} ${f.note ? '(' + f.note + ')' : ''}
-`;
+                    msg += `• Pieza #${f.tooth}: ${f.stateName} ${f.note ? '(' + f.note + ')' : ''}\n`;
                 });
-                msg += `
-`;
+                msg += `\n`;
             }
 
             if (patientData.budgetItems.length > 0) {
-                msg += `💰 *PRESUPUESTO DE TRATAMIENTOS:*
-`;
+                msg += `💰 *PRESUPUESTO DE TRATAMIENTOS:*\n`;
                 patientData.budgetItems.forEach(i => {
                     const total = (i.qty || 0) * (i.price || 0);
-                    msg += `• ${i.description} (x${i.qty}): ${appSettings.currencySymbol}${total.toFixed(2)}
-`;
+                    msg += `• ${i.description} (x${i.qty}): ${appSettings.currencySymbol}${total.toFixed(2)}\n`;
                 });
 
                 let subtotal = 0;
@@ -1238,20 +1242,15 @@
                 if (discount > subtotal) discount = subtotal;
                 const grandTotal = subtotal - discount;
 
-                msg += `-----------------------------------
-`;
+                msg += `-----------------------------------\n`;
                 if (discount > 0) {
-                    msg += `Subtotal: ${appSettings.currencySymbol}${subtotal.toFixed(2)}
-`;
-                    msg += `Descuento: -${appSettings.currencySymbol}${discount.toFixed(2)}
-`;
+                    msg += `Subtotal: ${appSettings.currencySymbol}${subtotal.toFixed(2)}\n`;
+                    msg += `Descuento: -${appSettings.currencySymbol}${discount.toFixed(2)}\n`;
                 }
-                msg += `*TOTAL ESTIMADO:* ${appSettings.currencySymbol}${grandTotal.toFixed(2)}
-`;
+                msg += `*TOTAL ESTIMADO:* ${appSettings.currencySymbol}${grandTotal.toFixed(2)}\n`;
             }
 
-            msg += `
-Quedamos a su disposición para agendar su cita. ¡Muchas gracias!`;
+            msg += `\nQuedamos a su disposición para agendar su cita. ¡Muchas gracias!`;
 
             const cleanPhone = patientData.phone.replace(/[^0-9+]/g, '');
             const encoded = encodeURIComponent(msg);
