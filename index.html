@@ -466,8 +466,8 @@
     <!-- SCRIPT PRINCIPAL LÓGICA & PERSISTENCIA -->
     <script>
         // --- CONSTANTES Y KEYS DE LOCALSTORAGE ---
-        const SETTINGS_KEY = 'odontoflow_settings_v4';
-        const DATA_KEY = 'odontoflow_patient_data_v4';
+        const SETTINGS_KEY = 'odontoflow_settings_v5';
+        const DATA_KEY = 'odontoflow_patient_data_v5';
 
         // --- PALETA DE COLORES SOPORTADOS ---
         const COLOR_OPTIONS = [
@@ -479,27 +479,27 @@
             { id: 'amarillo', label: 'Amarillo (Observación)', bgClass: 'color-amarillo', dotClass: 'dot-amarillo', hex: '#f59e0b' }
         ];
 
-        // --- CONFIGURACIÓN POR DEFECTO ---
+        // --- CONFIGURACIÓN POR DEFECTO Y PALABRAS CLAVE AMPLIADAS ---
         const DEFAULT_SETTINGS = {
             clinicName: 'OdontoFlow Studio',
             currencySymbol: '$',
             logoBase64: '',
             clinicalStates: [
-                { id: 'endo_good', name: 'Endodoncia en buen estado', color: 'azul', keywords: ['endodoncia en buen estado', 'conducto en buen estado'] },
-                { id: 'endo_bad', name: 'Endodoncia en mal estado', color: 'rojo', keywords: ['endodoncia en mal estado', 'conducto en mal estado', 'endodoncia mal', 'endodoncia en mal'] },
+                { id: 'endo_good', name: 'Endodoncia en buen estado', color: 'azul', keywords: ['endodoncia en buen estado', 'conducto en buen estado', 'endodoncia', 'conducto', 'tratamiento de conducto'] },
+                { id: 'endo_bad', name: 'Endodoncia en mal estado', color: 'rojo', keywords: ['endodoncia en mal estado', 'conducto en mal estado', 'endodoncia mal', 'conducto mal'] },
                 { id: 'caries_oclusal', name: 'Caries oclusal', color: 'rojo', keywords: ['caries oclusal', 'caries arriba'] },
                 { id: 'caries_vestibular', name: 'Caries vestibular', color: 'rojo', keywords: ['caries vestibular', 'caries afuera'] },
                 { id: 'caries_distal', name: 'Caries distal', color: 'rojo', keywords: ['caries distal', 'caries atras'] },
                 { id: 'caries_mesial', name: 'Caries mesial', color: 'rojo', keywords: ['caries mesial', 'caries adelante'] },
-                { id: 'caries_gen', name: 'Caries', color: 'rojo', keywords: ['caries'] },
-                { id: 'resina_good', name: 'Obturación con resina en buen estado', color: 'azul', keywords: ['obturacion con resina en buen estado', 'resina en buen estado', 'calza en buen estado', 'obturado en buen estado'] },
-                { id: 'resina_bad', name: 'Obturación con resina en mal estado', color: 'rojo', keywords: ['obturacion con resina en mal estado', 'resina en mal estado', 'calza en mal estado', 'resina filtrada', 'obturacion en mal estado'] },
-                { id: 'corona_good', name: 'Corona en buen estado', color: 'azul', keywords: ['corona en buen estado'] },
-                { id: 'corona_bad', name: 'Corona en mal estado', color: 'rojo', keywords: ['corona en mal estado', 'corona mal', 'corona en mal'] },
-                { id: 'extracted', name: 'Diente extraído', color: 'negro', keywords: ['diente extraido', 'extraido', 'pieza extraida', 'ausente'] },
+                { id: 'caries_gen', name: 'Caries', color: 'rojo', keywords: ['caries', 'picadura', 'cavidad'] },
+                { id: 'resina_good', name: 'Obturación con resina en buen estado', color: 'azul', keywords: ['obturacion con resina en buen estado', 'resina en buen estado', 'calza en buen estado', 'obturado en buen estado', 'resina', 'calza', 'obturacion', 'curacion', 'curado'] },
+                { id: 'resina_bad', name: 'Obturación con resina en mal estado', color: 'rojo', keywords: ['obturacion con resina en mal estado', 'resina en mal estado', 'calza en mal estado', 'resina filtrada', 'obturacion en mal estado', 'resina mal', 'calza mal'] },
+                { id: 'corona_good', name: 'Corona en buen estado', color: 'azul', keywords: ['corona en buen estado', 'corona', 'funda', 'prótesis fija'] },
+                { id: 'corona_bad', name: 'Corona en mal estado', color: 'rojo', keywords: ['corona en mal estado', 'corona mal', 'funda mal'] },
+                { id: 'extracted', name: 'Diente extraído', color: 'negro', keywords: ['diente extraido', 'extraido', 'pieza extraida', 'ausente', 'extraccion', 'falta'] },
                 { id: 'agenesia', name: 'Agenesia', color: 'negro', keywords: ['agenesia'] },
-                { id: 'radicular', name: 'Remanente radicular', color: 'rojo', keywords: ['remanente radicular', 'raiz', 'restos radiculares'] },
-                { id: 'sano', name: 'Sano / Normal', color: 'verde', keywords: ['sano', 'normal', 'limpio'] }
+                { id: 'radicular', name: 'Remanente radicular', color: 'rojo', keywords: ['remanente radicular', 'raiz', 'restos radiculares', 'remanente'] },
+                { id: 'sano', name: 'Sano / Normal', color: 'verde', keywords: ['sano', 'normal', 'limpio', 'intacto'] }
             ],
             tariffs: [
                 { id: 't1', name: 'Curación con Resina Fotocurable', price: 40.00 },
@@ -1094,15 +1094,20 @@
             return s;
         }
 
-        // MOTOR PARSER DE VOZ CORREGIDO
+        // LIMS Y LIMPIEZA DE PALABRAS
+        function cleanSpeechString(str) {
+            let s = normalizeText(str);
+            s = s.replace(/\b(el|la|los|las|un|una|del|de|en|con|por|favor|marcar|poner|agregar)\b/g, ' ');
+            s = s.replace(/\s+/g, ' ').trim();
+            return s;
+        }
+
+        // MOTOR PARSER DE VOZ CORREGIDO SINCRO
         function processVoiceCommand(rawText) {
             console.log("Comando recibido por voz:", rawText);
             let norm = normalizeText(rawText);
 
-            // Reemplazar palabras de relleno
-            norm = norm.replace(/\b(el|la|los|las|un|una|del|de|en|con|por|favor|marcar|poner|agregar)\b/g, ' ');
-
-            // Reemplazar 'punto', 'coma' entre palabras/números
+            // Transmutar "cuatro punto cuatro" -> "cuatro cuatro"
             norm = norm.replace(/([a-z0-9]+)\s+(?:punto|coma)\s+([a-z0-9]+)/g, '$1 $2');
 
             // Decenas compuestas pronunciadas ("cuarenta y ocho" -> "48", "treinta y cuatro" -> "34")
@@ -1146,7 +1151,7 @@
             // Unir dígitos separados por punto, coma o espacios ("4.8", "4,8", "4 8" -> "48")
             norm = norm.replace(/\b([1-8])[\.,\s]+([1-8])\b/g, '$1$2');
 
-            // Buscar números de 2 dígitos válidos
+            // Buscar números de 2 dígitos válidos en FDI
             const allTeeth = [...adultUpper, ...adultLower, ...childUpper, ...childLower];
             let foundTooth = null;
 
@@ -1181,27 +1186,33 @@
                 setDentitionType('adult');
             }
 
-            // Coincidencia de Estado Clínico por orden de palabras clave más largas primero
+            // COINCIDENCIA DE ESTADO CLÍNICO CON HIGIENE DE FRASES (AMBAS NORMALIZADAS CON LA MISMA REGLA)
+            let cleanedSpeech = cleanSpeechString(norm);
             let matchedState = null;
             let allKws = [];
 
             appSettings.clinicalStates.forEach(st => {
                 st.keywords.forEach(kw => {
-                    allKws.push({ kwNorm: normalizeText(kw), stateObj: st });
+                    let cleanKw = cleanSpeechString(kw);
+                    if (cleanKw) {
+                        allKws.push({ kwClean: cleanKw, stateObj: st });
+                    }
                 });
             });
 
-            allKws.sort((a, b) => b.kwNorm.length - a.kwNorm.length);
+            // Ordenar por longitud descendente de la palabra clave limpia
+            allKws.sort((a, b) => b.kwClean.length - a.kwClean.length);
 
             for (let item of allKws) {
-                if (norm.includes(item.kwNorm)) {
+                if (cleanedSpeech.includes(item.kwClean)) {
                     matchedState = item.stateObj;
                     break;
                 }
             }
 
             if (!matchedState) {
-                matchedState = appSettings.clinicalStates.find(s => s.id === activeStateId) || appSettings.clinicalStates[0];
+                showAlert("Estado no Reconocido", `Pieza #${foundTooth} detectada, pero no se reconoció el estado en "${rawText}". Por favor especifique el hallazgo (ej: caries, resina, corona, endodoncia).`);
+                return;
             }
 
             applyToothState(foundTooth, matchedState.id);
