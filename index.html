@@ -1,261 +1,304 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full">
+<html lang="es" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OdontoFlow Studio - Odontograma & Presupuesto</title>
+    <title>OdontoFlow Studio - Odontograma & Presupuesto Interactivo</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printableArea, #printableArea * {
-                visibility: visible;
-            }
-            #printableArea {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 10px;
-                border: none !important;
-                box-shadow: none !important;
-            }
-            .no-print {
-                display: none !important;
-            }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; font-size: 11pt; }
+            .printable-card { border: none !important; shadow: none !important; padding: 0 !important; }
+            @page { margin: 12mm; size: A4 portrait; }
         }
+        .tooth-box {
+            user-select: none;
+            touch-action: manipulation;
+        }
+        /* Color themes for teeth badges */
+        .color-rojo { background-color: #fef2f2; border-color: #ef4444; color: #b91c1c; }
+        .color-azul { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
+        .color-negro { background-color: #f1f5f9; border-color: #334155; color: #0f172a; }
+        .color-verde { background-color: #f0fdf4; border-color: #10b981; color: #047857; }
+        .color-morado { background-color: #faf5ff; border-color: #a855f7; color: #6b21a8; }
+        .color-amarillo { background-color: #fffbeb; border-color: #f59e0b; color: #b45309; }
+        
+        .dot-rojo { background-color: #ef4444; }
+        .dot-azul { background-color: #3b82f6; }
+        .dot-negro { background-color: #1e293b; }
+        .dot-verde { background-color: #10b981; }
+        .dot-morado { background-color: #a855f7; }
+        .dot-amarillo { background-color: #f59e0b; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 h-full flex flex-col font-sans">
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased">
 
-    <header class="bg-indigo-600 text-white shadow-md p-4 flex flex-wrap justify-between items-center gap-4">
+    <!-- Header Principal (Oculto en Impresión) -->
+    <header class="no-print bg-indigo-700 text-white shadow-lg p-4 flex flex-wrap justify-between items-center gap-4">
         <div class="flex items-center space-x-3">
-            <div id="appLogoHeader" class="bg-white/10 p-2.5 rounded-xl text-xl flex items-center justify-center min-w-[40px] min-h-[40px] overflow-hidden">
-                <i id="appLogoIconHeader" class="fa-solid fa-tooth"></i>
-                <img id="appLogoImgHeader" class="hidden max-h-8 max-w-[120px] object-contain" src="" alt="Logo">
+            <div id="headerLogoContainer" class="bg-white/10 p-2 rounded-xl flex items-center justify-center min-w-10 min-h-10 max-w-12 max-h-12 overflow-hidden">
+                <i id="defaultHeaderIcon" class="fa-solid fa-tooth text-2xl text-white"></i>
+                <img id="customHeaderLogo" class="hidden max-h-10 object-contain" alt="Logo">
             </div>
             <div>
-                <h1 id="appTitleHeader" class="text-xl font-bold tracking-tight">OdontoFlow Studio</h1>
-                <p class="text-xs text-indigo-200">Odontograma por Voz, Ajustes Dinámicos y Presupuesto</p>
+                <h1 id="appTitleDisplay" class="text-xl font-bold tracking-tight">OdontoFlow Studio</h1>
+                <p class="text-xs text-indigo-200 flex items-center gap-2">
+                    <span>Odontograma Digital & Reconocimiento de Voz</span>
+                    <span class="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Autoguardado
+                    </span>
+                </p>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
-            <button onclick="openSettingsModal()" class="bg-indigo-700 hover:bg-indigo-800 text-sm px-4 py-2 rounded-lg font-medium transition flex items-center space-x-2">
-                <i class="fa-solid fa-gear"></i>
-                <span>Ajustes & Estados</span>
+        
+        <div class="flex items-center flex-wrap gap-2">
+            <button onclick="openSettingsModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Ajustes & Tarifas</span>
             </button>
-            <button onclick="resetOdontogram()" class="bg-rose-600 hover:bg-rose-700 text-sm px-4 py-2 rounded-lg font-medium transition flex items-center space-x-2">
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i class="fa-solid fa-print"></i>
+                <span>Guardar / Imprimir PDF</span>
+            </button>
+            <button onclick="sendWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>Enviar WhatsApp</span>
+            </button>
+            <button onclick="confirmResetPatient()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-rotate-right"></i>
-                <span>Reiniciar</span>
+                <span>Nuevo Paciente</span>
             </button>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-y-auto">
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-3 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-y-auto">
         
-        <!-- Panel Izquierdo: Paciente, Moneda y Estados Clínicos (4 Cols) -->
-        <div class="lg:col-span-4 flex flex-col gap-6">
-            <!-- Datos del Paciente y Moneda -->
+        <!-- PANEL IZQUIERDO: Datos del Paciente & Selector de Estado (4 Cols en Desktop) -->
+        <div class="lg:col-span-4 flex flex-col gap-5 no-print">
+            
+            <!-- DATOS DEL PACIENTE -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-base font-semibold text-slate-700 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-user-injured text-indigo-600"></i> Datos del Paciente
-                </h2>
-                <div class="space-y-3">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-user-injured text-indigo-600"></i> Datos del Paciente
+                    </h2>
+                    <span class="text-[11px] bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-md" id="patientIdDisplay">HC-2026</span>
+                </div>
+                
+                <div class="space-y-3 text-xs">
                     <div>
-                        <label class="block text-xs font-medium text-slate-500 mb-1">Nombre Completo</label>
-                        <input type="text" id="patientName" value="María Fernanda Gómez" oninput="updatePatientInfoDisplay()" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <label class="block font-medium text-slate-500 mb-1">Nombre Completo</label>
+                        <input type="text" id="inputPatientName" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Nombre del paciente..." onchange="savePatientData()">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Edad</label>
-                            <input type="number" id="patientAge" value="28" oninput="updatePatientInfoDisplay()" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <label class="block font-medium text-slate-500 mb-1">Edad</label>
+                            <input type="number" id="inputPatientAge" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Edad..." onchange="savePatientData()">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Teléfono (WhatsApp)</label>
-                            <input type="text" id="patientPhone" value="+5491112345678" oninput="updatePatientInfoDisplay()" placeholder="+54..." class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <label class="block font-medium text-slate-500 mb-1">Teléfono (WhatsApp)</label>
+                            <input type="text" id="inputPatientPhone" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="+51 9..." onchange="savePatientData()">
                         </div>
-                    </div>
-                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-                        <label class="block text-xs font-medium text-slate-500">Símbolo de Moneda</label>
-                        <input type="text" id="currencySymbol" value="$" oninput="updateCurrencySymbol(this.value)" class="w-20 text-sm font-bold text-indigo-600 border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none text-center">
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex-1">
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-base font-semibold text-slate-700 flex items-center gap-2">
-                        <i class="fa-solid fa-palette text-indigo-600"></i> Estado Clínico Activo
+            <!-- ASISTENTE DE VOZ & ESTADO ACTIVO -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col gap-4">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-700 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-microphone-lines text-indigo-600"></i> Asistente Clínico por Voz
                     </h2>
-                    <button onclick="openSettingsModal()" class="text-xs text-indigo-600 hover:underline font-medium"><i class="fa-solid fa-gear"></i> Gestionar</button>
-                </div>
-                <p class="text-xs text-slate-400 mb-3">Seleccione el estado del menú desplegable antes de marcar piezas o usar voz.</p>
-                
-                <!-- Desplegable Personalizado -->
-                <div class="relative">
-                    <button onclick="toggleDropdown()" id="dropdownToggleBtn" class="w-full flex items-center justify-between p-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 transition text-sm font-medium text-slate-700">
-                        <div class="flex items-center gap-2">
-                            <span id="activeDot" class="w-3 h-3 rounded-full bg-amber-500"></span>
-                            <span id="activeStateName">caries oclusal</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform" id="dropdownArrow"></i>
-                    </button>
-
-                    <!-- Menú Desplegable -->
-                    <div id="statusDropdownMenu" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-20 max-h-56 overflow-y-auto p-1.5 space-y-1">
-                        <!-- Inyectado por JS -->
-                    </div>
+                    <p class="text-[11px] text-slate-400">Dicta la pieza y el estado manos libres (ej: "pieza cuatro ocho extraído", "diente tres punto cuatro caries distal").</p>
                 </div>
 
-                <div class="mt-6 pt-5 border-t border-slate-100">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
-                            <i class="fa-solid fa-microphone-lines text-indigo-600"></i> Control por Voz Inteligente
-                        </span>
-                        <span id="micStatusIndicator" class="inline-block w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                <div class="flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <div class="flex items-center gap-2.5">
+                        <span id="micStatusDot" class="w-3 h-3 rounded-full bg-slate-300"></span>
+                        <span id="micStatusText" class="text-xs font-semibold text-slate-600">Micrófono inactivo</span>
                     </div>
-                    <button id="voiceBtn" onclick="toggleVoiceRecognition()" class="w-full py-2.5 px-4 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-medium transition flex items-center justify-center gap-2">
+                    <button id="voiceBtn" onclick="toggleVoiceRecognition()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2 rounded-xl font-medium transition flex items-center gap-2 shadow-xs cursor-pointer">
                         <i id="micIcon" class="fa-solid fa-microphone"></i>
-                        <span id="micBtnText">Iniciar Comando de Voz</span>
+                        <span id="micBtnLabel">Iniciar Dictado</span>
                     </button>
-                    <p class="text-[11px] text-slate-400 mt-2 text-center">Ej: "Pieza cuatro ocho extraído" o "Pieza 33 endodoncia en buen estado"</p>
+                </div>
+
+                <!-- DESPLEGABLE SELECCIÓN MANUAL DE ESTADO CLINICO -->
+                <div class="pt-2 border-t border-slate-100">
+                    <label class="block text-xs font-bold text-slate-700 mb-2 flex items-center justify-between">
+                        <span><i class="fa-solid fa-palette text-indigo-600 mr-1"></i> Estado Clínico Manual Activo</span>
+                        <span class="text-[10px] text-slate-400 font-normal">(Para clic manual)</span>
+                    </label>
+                    
+                    <div class="relative">
+                        <select id="stateSelectDropdown" onchange="onStateSelectChange(this.value)" class="w-full border border-indigo-200 bg-indigo-50/40 text-slate-800 text-xs rounded-xl p-2.5 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
+                            <!-- Inyectado dinámicamente -->
+                        </select>
+                    </div>
+
+                    <!-- Indicador visual del estado activo -->
+                    <div id="activeStateBadge" class="mt-2.5 p-2 rounded-xl border text-xs font-medium flex items-center gap-2">
+                        <span id="activeStateDot" class="w-2.5 h-2.5 rounded-full"></span>
+                        <span id="activeStateName" class="font-bold">Caries</span>
+                        <span id="activeStateColorTag" class="ml-auto text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase bg-white/60">Rojo</span>
+                    </div>
                 </div>
             </div>
+
+            <!-- LEYENDA Y BUSCADOR RÁPIDO DE ESTADOS -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <button onclick="toggleLegend()" class="w-full text-xs font-bold text-slate-700 flex justify-between items-center cursor-pointer">
+                    <span><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Leyenda de Estados Configurados</span>
+                    <i id="legendChevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                
+                <div id="legendContainer" class="hidden mt-3 pt-3 border-t border-slate-100 space-y-1.5 max-h-48 overflow-y-auto text-xs">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+            </div>
+
         </div>
 
-        <!-- Panel Derecho: Odontograma y Presupuesto (8 Cols) - Envoltorio Imprimible Completo -->
-        <div id="printableArea" class="lg:col-span-8 flex flex-col gap-6">
-            
-            <!-- Ficha / Encabezado del Paciente para Impresión -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-wrap justify-between items-center border-b border-slate-100 pb-3 mb-3">
+        <!-- PANEL DERECHO: ODONTOGRAMA VISUAL, HALLAZGOS Y PRESUPUESTO (8 Cols) -->
+        <div class="lg:col-span-8 flex flex-col gap-6">
+
+            <!-- ENCABEZADO FICHA DE IMPRESIÓN (Solo visible en Guardar/Imprimir PDF) -->
+            <div class="print-only hidden bg-white p-4 rounded-2xl border border-slate-200 mb-2">
+                <div class="flex justify-between items-start border-b border-slate-200 pb-3 mb-3">
                     <div class="flex items-center gap-3">
-                        <div id="appLogoPrint" class="flex items-center justify-center">
-                            <i id="appLogoIconPrint" class="fa-solid fa-tooth text-2xl text-indigo-600"></i>
-                            <img id="appLogoImgPrint" class="hidden max-h-10 max-w-[140px] object-contain" src="" alt="Logo">
+                        <div id="printLogoContainer" class="w-12 h-12 flex items-center justify-center">
+                            <i id="printDefaultIcon" class="fa-solid fa-tooth text-3xl text-indigo-600"></i>
+                            <img id="printCustomLogo" class="hidden max-h-12 object-contain">
                         </div>
                         <div>
-                            <h2 id="appTitlePrint" class="text-base font-bold text-slate-800">OdontoFlow Studio</h2>
-                            <p class="text-xs text-slate-400">Reporte Odontológico y Ficha Clínica</p>
+                            <h1 id="printClinicName" class="text-xl font-bold text-slate-900">OdontoFlow Studio</h1>
+                            <p class="text-xs text-slate-500">Informe Clínico de Odontograma y Presupuesto</p>
                         </div>
                     </div>
-                    <div class="text-xs text-slate-500 font-medium">
-                        Fecha: <span id="printDate" class="font-bold text-slate-700"></span>
+                    <div class="text-right text-xs text-slate-500">
+                        <p class="font-bold text-slate-700">Fecha: <span id="printDate">22/08/2026</span></p>
+                        <p>ID Consulta: <span id="printPatientId">HC-2026</span></p>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                    <div>
-                        <span class="block text-slate-400 font-medium">Nombre del Paciente:</span>
-                        <span id="displayPatientName" class="font-bold text-slate-800 text-sm">María Fernanda Gómez</span>
-                    </div>
-                    <div>
-                        <span class="block text-slate-400 font-medium">Edad:</span>
-                        <span id="displayPatientAge" class="font-bold text-slate-800 text-sm">28 años</span>
-                    </div>
-                    <div>
-                        <span class="block text-slate-400 font-medium">Teléfono / WhatsApp:</span>
-                        <span id="displayPatientPhone" class="font-bold text-slate-800 text-sm">+5491112345678</span>
-                    </div>
+
+                <!-- Datos Paciente Impresión -->
+                <div class="grid grid-cols-3 gap-2 text-xs bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                    <div><span class="font-bold text-slate-600">Paciente:</span> <span id="printNameVal" class="font-medium">---</span></div>
+                    <div><span class="font-bold text-slate-600">Edad:</span> <span id="printAgeVal" class="font-medium">---</span></div>
+                    <div><span class="font-bold text-slate-600">Teléfono:</span> <span id="printPhoneVal" class="font-medium">---</span></div>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center justify-center">
+            <!-- SECCIÓN ODONTOGRAMA GRÁFICO -->
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center">
                 
-                <!-- Tipo de Dentición -->
-                <div class="flex bg-slate-100 p-1 rounded-xl mb-6 no-print">
-                    <button onclick="setDentitionType('adult')" id="btnAdult" class="px-5 py-2 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition">Permanente (Adulto)</button>
-                    <button onclick="setDentitionType('child')" id="btnChild" class="px-5 py-2 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-800 transition">Temporal (Niño)</button>
+                <!-- Selector Dentición Permanente / Infantil -->
+                <div class="no-print flex bg-slate-100 p-1 rounded-xl mb-5 text-xs font-semibold">
+                    <button onclick="setDentitionType('adult')" id="btnAdult" class="px-4 py-1.5 rounded-lg bg-white text-slate-800 shadow-xs transition cursor-pointer">Permanente (Adultos)</button>
+                    <button onclick="setDentitionType('child')" id="btnChild" class="px-4 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer">Temporal (Niños)</button>
                 </div>
 
-                <!-- Maxilar Superior -->
+                <div class="w-full flex justify-between items-center mb-2 px-2">
+                    <span class="text-[11px] font-bold text-indigo-600 uppercase tracking-wider">Arco Dental <span id="dentitionLabel">Permanente</span></span>
+                    <span class="text-[10px] text-slate-400 font-medium">Haga clic sobre una pieza para aplicar el estado activo</span>
+                </div>
+
+                <!-- MAXILAR SUPERIOR -->
                 <div class="w-full mb-6">
-                    <div class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Maxilar Superior</div>
-                    <div id="upperArch" class="flex justify-center items-center gap-1 md:gap-1.5 flex-wrap"></div>
+                    <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Maxilar Superior</div>
+                    <div id="upperArch" class="flex justify-center items-center gap-1 sm:gap-1.5 flex-wrap">
+                        <!-- Inyectado dinámicamente -->
+                    </div>
                 </div>
 
-                <div class="w-full border-t border-dashed border-slate-200 my-1 relative">
-                    <span class="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-white px-3 text-[10px] text-slate-400 uppercase font-bold tracking-widest">Línea Media</span>
+                <!-- LÍNEA MEDIA -->
+                <div class="w-full border-t border-dashed border-slate-300 my-1 relative">
+                    <span class="absolute left-1/2 -translate-x-1/2 -top-2 bg-white px-2 text-[9px] text-slate-400 font-bold tracking-widest uppercase">Línea Media</span>
                 </div>
 
-                <!-- Maxilar Inferior -->
+                <!-- MAXILAR INFERIOR -->
                 <div class="w-full mt-4">
-                    <div id="lowerArch" class="flex justify-center items-center gap-1 md:gap-1.5 flex-wrap mb-2"></div>
-                    <div class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Maxilar Inferior</div>
+                    <div id="lowerArch" class="flex justify-center items-center gap-1 sm:gap-1.5 flex-wrap mb-2">
+                        <!-- Inyectado dinámicamente -->
+                    </div>
+                    <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">Maxilar Inferior</div>
                 </div>
             </div>
 
-            <!-- Panel de Nota Dental Individual -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4 no-print">
-                <div>
-                    <h3 id="selectedToothTitle" class="text-sm font-semibold text-slate-700">Seleccione una pieza dental</h3>
-                    <p id="selectedToothDetails" class="text-xs text-slate-400">Haga clic sobre una pieza para registrar notas clínicas.</p>
+            <!-- DETALLE PIEZA SELECCIONADA Y NOTA RÁPIDA -->
+            <div class="no-print bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div id="selectedToothBadge" class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-sm flex items-center justify-center">
+                        #--
+                    </div>
+                    <div>
+                        <h3 id="selectedToothTitle" class="text-xs font-bold text-slate-800">Ninguna pieza seleccionada</h3>
+                        <p id="selectedToothSubtitle" class="text-[11px] text-slate-400">Seleccione un diente para agregar notas u observaciones clínicas específicas.</p>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <input type="text" id="toothNoteInput" placeholder="Añadir nota clínica..." class="text-xs border border-slate-300 rounded-lg px-3 py-2 w-48 focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <button onclick="saveToothNote()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2 rounded-lg font-medium transition">Guardar Nota</button>
+                
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <input type="text" id="inputToothNote" placeholder="Añadir nota clínica a la pieza..." class="text-xs border border-slate-300 rounded-lg px-3 py-1.5 flex-1 sm:w-64 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <button onclick="saveToothNote()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-1.5 rounded-lg font-semibold transition cursor-pointer">Guardar Nota</button>
                 </div>
             </div>
 
-            <!-- Tabla de Registros del Odontograma (Hallazgos Clínicos Automáticos) -->
+            <!-- REGISTROS Y HALLAZGOS DEL ODONTOGRAMA (TABLA 1) -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Registros y Hallazgos del Odontograma
-                    </h3>
-                    <span id="recordsCountBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">0 Hallazgos</span>
+                    <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-indigo-600"></i> Registros y Hallazgos del Odontograma
+                    </h2>
+                    <span id="findingsCount" class="text-[11px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded-full">0 Hallazgos</span>
                 </div>
-                <p class="text-xs text-slate-400 mb-3 no-print">Se agregan automáticamente todas las piezas marcadas mediante voz o de forma manual.</p>
-                <div class="overflow-x-auto border border-slate-100 rounded-xl">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-100">
-                            <tr>
-                                <th class="p-2.5">Pieza</th>
-                                <th class="p-2.5">Estado / Hallazgo</th>
-                                <th class="p-2.5">Notas u Observaciones</th>
-                                <th class="p-2.5 text-center no-print">Acciones</th>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 text-[11px]">
+                                <th class="py-2 px-3">Pieza</th>
+                                <th class="py-2 px-3">Estado Clínico / Hallazgo</th>
+                                <th class="py-2 px-3">Observaciones / Nota</th>
+                                <th class="py-2 px-3 text-center no-print">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="clinicalRecordsTableBody" class="divide-y divide-slate-100">
+                        <tbody id="findingsTableBody" class="divide-y divide-slate-100">
                             <!-- Inyectado dinámicamente -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Hoja de Presupuesto Independiente -->
-            <div id="budgetSection" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
+            <!-- HOJA DE PRESUPUESTO DE TRATAMIENTOS (TABLA 2) -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
                     <div>
-                        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-file-invoice-dollar text-indigo-600"></i> Hoja de Presupuesto y Tratamientos
-                        </h3>
-                        <p class="text-xs text-slate-400 no-print">Agregue los tratamientos independientes y costos personalizados para el paciente.</p>
+                        <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-emerald-600"></i> Hoja de Presupuesto
+                        </h2>
+                        <p class="text-[11px] text-slate-400 no-print">Agregue y cotice los tratamientos a realizar para el paciente.</p>
                     </div>
-                    <div class="flex items-center gap-2 no-print">
-                        <button onclick="addBudgetItem()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3 py-2 rounded-lg font-medium transition border border-indigo-200">
-                            <i class="fa-solid fa-plus"></i> Añadir Ítem
-                        </button>
-                        <button onclick="window.print()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs px-3 py-2 rounded-lg font-medium transition border border-rose-200">
-                            <i class="fa-solid fa-print"></i> Guardar / Imprimir PDF
-                        </button>
-                        <button onclick="sendWhatsAppBudget()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5">
-                            <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
-                        </button>
-                    </div>
+                    <button onclick="addBudgetItem()" class="no-print bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-xl font-semibold transition flex items-center gap-1 shadow-xs cursor-pointer">
+                        <i class="fa-solid fa-plus"></i> + Agregar Tratamiento
+                    </button>
                 </div>
 
-                <!-- Tabla de Presupuesto -->
-                <div class="overflow-x-auto border border-slate-100 rounded-xl">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-100">
-                            <tr>
-                                <th class="p-3">Pieza</th>
-                                <th class="p-3">Tratamiento / Concepto</th>
-                                <th class="p-3">Costo</th>
-                                <th class="p-3 text-center no-print">Acción</th>
+                <!-- Tabla Presupuesto -->
+                <div class="overflow-x-auto mb-4">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 text-[11px]">
+                                <th class="py-2 px-3">Tratamiento / Concepto</th>
+                                <th class="py-2 px-3 text-center w-20">Cant.</th>
+                                <th class="py-2 px-3 text-right w-28">Precio (<span class="currencySymbolDisplay">$</span>)</th>
+                                <th class="py-2 px-3 text-right w-28">Total (<span class="currencySymbolDisplay">$</span>)</th>
+                                <th class="py-2 px-3 text-center w-12 no-print"></th>
                             </tr>
                         </thead>
                         <tbody id="budgetTableBody" class="divide-y divide-slate-100">
@@ -264,200 +307,385 @@
                     </table>
                 </div>
 
-                <!-- Totales -->
-                <div class="flex justify-end mt-4 pt-3 border-t border-slate-100">
-                    <div class="text-right">
-                        <span class="text-xs text-slate-400 uppercase font-semibold">Total Presupuesto: </span>
-                        <span id="budgetTotalAmount" class="text-lg font-bold text-indigo-600 ml-2">$0.00</span>
+                <!-- CÁLCULO DE TOTALES Y DESCUENTO -->
+                <div class="border-t border-slate-200 pt-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
+                    
+                    <!-- Descuento Config -->
+                    <div class="no-print flex items-center gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-600">Descuento:</span>
+                        <input type="number" id="inputDiscountVal" value="0" min="0" step="any" onchange="updateDiscountConfig()" class="w-20 border border-slate-300 rounded-lg px-2 py-1 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <select id="selectDiscountType" onchange="updateDiscountConfig()" class="border border-slate-300 rounded-lg px-2 py-1 text-xs font-semibold bg-white cursor-pointer">
+                            <option value="fixed">Monto Fijo (<span class="currencySymbolDisplay">$</span>)</option>
+                            <option value="percent">Porcentaje (%)</option>
+                        </select>
+                    </div>
+
+                    <!-- Resumen Financiero -->
+                    <div class="w-full sm:w-auto ml-auto space-y-1.5 text-right font-semibold">
+                        <div class="flex justify-between sm:justify-end gap-6 text-slate-500">
+                            <span>Subtotal:</span>
+                            <span><span class="currencySymbolDisplay">$</span><span id="subtotalDisplay">0.00</span></span>
+                        </div>
+                        <div class="flex justify-between sm:justify-end gap-6 text-rose-600">
+                            <span>Descuento aplicado:</span>
+                            <span>-<span class="currencySymbolDisplay">$</span><span id="discountDisplay">0.00</span></span>
+                        </div>
+                        <div class="flex justify-between sm:justify-end gap-6 text-sm font-bold text-slate-900 pt-1 border-t border-slate-200">
+                            <span>TOTAL FINAL:</span>
+                            <span class="text-emerald-600"><span class="currencySymbolDisplay">$</span><span id="grandTotalDisplay">0.00</span></span>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
 
     </main>
 
-    <!-- Modal de Ajustes Dinámicos -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-xl w-full shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
-                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-gear text-indigo-600"></i> Ajustes Generales y de Estados
-                </h3>
-                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
+    <!-- MODAL DE AJUSTES & TARIFAS (Persistente) -->
+    <div id="settingsModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
             
-            <!-- Sección de Identidad & Branding de la Clínica -->
-            <div class="mb-4 pb-4 border-b border-slate-100 space-y-3">
-                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Identidad de la Clínica</h4>
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Nombre de la App / Clínica</label>
-                    <input type="text" id="appNameInput" value="OdontoFlow Studio" oninput="updateAppName(this.value)" class="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Logo Personalizado</label>
-                    <div class="flex items-center gap-3">
-                        <div id="logoPreviewContainer" class="w-12 h-12 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden shrink-0">
-                            <i id="logoPreviewIcon" class="fa-solid fa-tooth text-slate-400 text-lg"></i>
-                            <img id="logoPreviewImg" class="hidden w-full h-full object-contain" src="" alt="Logo Preview">
+            <div class="bg-indigo-700 text-white p-4 flex justify-between items-center">
+                <h2 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Configuración de Clínica, Estados y Tarifas
+                </h2>
+                <button onclick="closeSettingsModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-6 text-xs">
+                
+                <!-- 1. GENERAL & LOGO -->
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-indigo-600">1. Datos Generales de la Clínica</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-medium text-slate-600 mb-1">Nombre de la App / Clínica</label>
+                            <input type="text" id="settingClinicName" class="w-full border border-slate-300 rounded-lg p-2 font-semibold text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
                         </div>
-                        <div class="flex-1 flex gap-2">
-                            <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="hidden">
-                            <button onclick="document.getElementById('logoFileInput').click()" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-medium px-3 py-2 rounded-lg transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-upload"></i>
-                                <span>Subir Imagen</span>
-                            </button>
-                            <button onclick="removeCustomLogo()" id="removeLogoBtn" class="hidden text-xs bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-medium px-3 py-2 rounded-lg transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-trash-can"></i>
-                                <span>Quitar Logo</span>
-                            </button>
+                        <div>
+                            <label class="block font-medium text-slate-600 mb-1">Símbolo de Moneda</label>
+                            <input type="text" id="settingCurrency" class="w-full border border-slate-300 rounded-lg p-2 font-semibold text-xs focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="$, S/, €, etc.">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-600 mb-1">Logo de la Clínica (Opcional)</label>
+                        <div class="flex items-center gap-3">
+                            <input type="file" id="settingLogoInput" accept="image/*" onchange="handleLogoUpload(event)" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                            <button onclick="clearLogo()" class="text-rose-600 hover:underline text-xs">Quitar Logo</button>
                         </div>
                     </div>
                 </div>
+
+                <!-- 2. ESTADOS CLÍNICOS & COLORES -->
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-indigo-600">2. Estados Clínicos & Colores</h3>
+                        <button onclick="addNewClinicalStateSetting()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-lg font-semibold text-[11px] cursor-pointer">
+                            + Agregar Estado
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Personalice los nombres, las palabras clave que detecta la voz y el **COLOR** asociado.</p>
+                    
+                    <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="settingsStatesContainer">
+                        <!-- Inyectado dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- 3. TARIFARIO DE TRATAMIENTOS PREDEFINIDOS -->
+                <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-emerald-600">3. Tarifario de Tratamientos (Presupuesto)</h3>
+                        <button onclick="addNewTariffSetting()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg font-semibold text-[11px] cursor-pointer">
+                            + Agregar Tratamiento
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Listado de tratamientos predefinidos que aparecerán en el desplegable de presupuesto con su costo sugerido.</p>
+
+                    <div class="space-y-2 max-h-52 overflow-y-auto pr-1" id="settingsTariffsContainer">
+                        <!-- Inyectado dinámicamente -->
+                    </div>
+                </div>
+
             </div>
 
-            <p class="text-xs text-slate-500 mb-4">Cree, edite o elimine estados clínicos. El sistema de voz los reconocerá automáticamente al nombrarlos en voz alta.</p>
-            
-            <div id="settingsStatesList" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4">
-                <!-- Inyectado por JS -->
+            <div class="bg-slate-100 p-4 flex justify-between items-center border-t border-slate-200">
+                <button onclick="restoreDefaultSettings()" class="text-rose-600 hover:underline text-xs font-semibold cursor-pointer">
+                    Restablecer Configuración de Fábrica
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="closeSettingsModal()" class="px-4 py-2 bg-slate-300 hover:bg-slate-400 text-slate-700 rounded-xl font-semibold cursor-pointer">Cancelar</button>
+                    <button onclick="saveSettingsFromModal()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold cursor-pointer">Guardar Cambios</button>
+                </div>
             </div>
 
-            <button onclick="addNewClinicalStateForm()" class="w-full py-2.5 border-2 border-dashed border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 mb-4">
-                <i class="fa-solid fa-plus"></i> Crear Nuevo Estado Clínico
-            </button>
-
-            <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
-                <button onclick="closeSettingsModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-5 py-2.5 rounded-xl font-semibold transition">Guardar y Cerrar</button>
-            </div>
         </div>
     </div>
 
-    <!-- Modal de Notificaciones UI -->
-    <div id="notificationModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl text-center">
-            <div id="modalIcon" class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3 text-xl">
+    <!-- MODAL DE NOTIFICACIÓN / ALERTA -->
+    <div id="alertModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-5 max-w-xs w-full text-center shadow-xl">
+            <div id="alertIcon" class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-2 text-lg">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
-            <h3 id="modalTitle" class="text-base font-bold text-slate-800 mb-1">Título</h3>
-            <p id="modalMessage" class="text-xs text-slate-500 mb-5">Mensaje...</p>
-            <button onclick="closeModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs py-2.5 rounded-xl font-semibold transition">Entendido</button>
+            <h3 id="alertTitle" class="text-sm font-bold text-slate-800 mb-1">Notificación</h3>
+            <p id="alertMsg" class="text-xs text-slate-500 mb-4">Mensaje de confirmación...</p>
+            <button onclick="closeAlertModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs py-2 rounded-xl font-semibold cursor-pointer">Aceptar</button>
         </div>
     </div>
 
+    <!-- SCRIPT PRINCIPAL LÓGICA & PERSISTENCIA -->
     <script>
-        let appName = 'OdontoFlow Studio';
-        let appLogoDataUrl = '';
+        // --- CONSTANTES Y KEYS DE LOCALSTORAGE ---
+        const SETTINGS_KEY = 'odontoflow_settings_v4';
+        const DATA_KEY = 'odontoflow_patient_data_v4';
 
-        let clinicalStates = [
-            { id: 'healthy', name: 'sano', color: 'bg-slate-100 text-slate-600 border-slate-200', dot: 'bg-slate-300', icon: 'fa-solid fa-tooth' },
-            { id: 'endo_buen', name: 'endodoncia en buen estado', color: 'bg-blue-50 text-blue-700 border-blue-200', dot: 'bg-blue-500', icon: 'fa-solid fa-bolt' },
-            { id: 'endo_mal', name: 'endodoncia en mal estado', color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500', icon: 'fa-solid fa-triangle-exclamation' },
-            { id: 'caries_oclu', name: 'caries oclusal', color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-500', icon: 'fa-solid fa-circle' },
-            { id: 'caries_vest', name: 'caries vestibular', color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-500', icon: 'fa-solid fa-circle' },
-            { id: 'caries_dist', name: 'caries distal', color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-500', icon: 'fa-solid fa-circle' },
-            { id: 'caries_mes', name: 'caries mesial', color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-500', icon: 'fa-solid fa-circle' },
-            { id: 'resina_buen', name: 'obturacion con resina en buen estado', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500', icon: 'fa-solid fa-circle-check' },
-            { id: 'resina_mal', name: 'obturacion con resina en mal estado', color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500', icon: 'fa-solid fa-triangle-exclamation' },
-            { id: 'corona_buen', name: 'corona en buen estado', color: 'bg-purple-50 text-purple-700 border-purple-200', dot: 'bg-purple-500', icon: 'fa-solid fa-crown' },
-            { id: 'corona_mal', name: 'corona en mal estado', color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500', icon: 'fa-solid fa-triangle-exclamation' },
-            { id: 'extraccion', name: 'diente extraido', color: 'bg-slate-200 text-slate-400 border-slate-300 line-through', dot: 'bg-slate-400', icon: 'fa-solid fa-xmark' },
-            { id: 'agenesia', name: 'agenesia', color: 'bg-indigo-50 text-indigo-400 border-indigo-200', dot: 'bg-indigo-300', icon: 'fa-solid fa-ban' },
-            { id: 'remanente', name: 'remanente radicular', color: 'bg-orange-50 text-orange-700 border-orange-200', dot: 'bg-orange-500', icon: 'fa-solid fa-bone' },
-            { id: 'periodontal', name: 'bolsa periodontal', color: 'bg-teal-50 text-teal-700 border-teal-200', dot: 'bg-teal-500', icon: 'fa-solid fa-water' },
-            { id: 'implante', name: 'implante dental', color: 'bg-cyan-50 text-cyan-700 border-cyan-200', dot: 'bg-cyan-500', icon: 'fa-solid fa-screwdriver' }
+        // --- PALETA DE COLORES SOPORTADOS ---
+        const COLOR_OPTIONS = [
+            { id: 'rojo', label: 'Rojo (Caries / Alerta)', bgClass: 'color-rojo', dotClass: 'dot-rojo', hex: '#ef4444' },
+            { id: 'azul', label: 'Azul (Realizado / Normal)', bgClass: 'color-azul', dotClass: 'dot-azul', hex: '#3b82f6' },
+            { id: 'negro', label: 'Negro (Ausente / Extraído)', bgClass: 'color-negro', dotClass: 'dot-negro', hex: '#1e293b' },
+            { id: 'verde', label: 'Verde (Sano / Control)', bgClass: 'color-verde', dotClass: 'dot-verde', hex: '#10b981' },
+            { id: 'morado', label: 'Morado (Corona / Prótesis)', bgClass: 'color-morado', dotClass: 'dot-morado', hex: '#a855f7' },
+            { id: 'amarillo', label: 'Amarillo (Observación)', bgClass: 'color-amarillo', dotClass: 'dot-amarillo', hex: '#f59e0b' }
         ];
 
-        let currentCurrency = '$';
+        // --- CONFIGURACIÓN POR DEFECTO ---
+        const DEFAULT_SETTINGS = {
+            clinicName: 'OdontoFlow Studio',
+            currencySymbol: '$',
+            logoBase64: '',
+            clinicalStates: [
+                { id: 'endo_good', name: 'Endodoncia en buen estado', color: 'azul', keywords: ['endodoncia en buen estado', 'conducto en buen estado'] },
+                { id: 'endo_bad', name: 'Endodoncia en mal estado', color: 'rojo', keywords: ['endodoncia en mal estado', 'conducto en mal estado', 'endodoncia mal'] },
+                { id: 'caries_oclusal', name: 'Caries oclusal', color: 'rojo', keywords: ['caries oclusal', 'caries arriba'] },
+                { id: 'caries_vestibular', name: 'Caries vestibular', color: 'rojo', keywords: ['caries vestibular', 'caries afuera'] },
+                { id: 'caries_distal', name: 'Caries distal', color: 'rojo', keywords: ['caries distal', 'caries atras'] },
+                { id: 'caries_mesial', name: 'Caries mesial', color: 'rojo', keywords: ['caries mesial', 'caries adelante'] },
+                { id: 'caries_gen', name: 'Caries', color: 'rojo', keywords: ['caries'] },
+                { id: 'resina_good', name: 'Obturación con resina en buen estado', color: 'azul', keywords: ['obturacion con resina en buen estado', 'resina en buen estado', 'calza en buen estado', 'obturado'] },
+                { id: 'resina_bad', name: 'Obturación con resina en mal estado', color: 'rojo', keywords: ['obturacion con resina en mal estado', 'resina en mal estado', 'calza en mal estado', 'resina filtrada'] },
+                { id: 'corona_good', name: 'Corona en buen estado', color: 'azul', keywords: ['corona en buen estado'] },
+                { id: 'corona_bad', name: 'Corona en mal estado', color: 'rojo', keywords: ['corona en mal estado', 'corona mal'] },
+                { id: 'extracted', name: 'Diente extraído', color: 'negro', keywords: ['diente extraido', 'extraido', 'pieza extraida', 'ausente'] },
+                { id: 'agenesia', name: 'Agenesia', color: 'negro', keywords: ['agenesia'] },
+                { id: 'radicular', name: 'Remanente radicular', color: 'rojo', keywords: ['remanente radicular', 'raiz', 'restos radiculares'] },
+                { id: 'sano', name: 'Sano / Normal', color: 'verde', keywords: ['sano', 'normal', 'limpio'] }
+            ],
+            tariffs: [
+                { id: 't1', name: 'Curación con Resina Fotocurable', price: 40.00 },
+                { id: 't2', name: 'Tratamiento de Conducto (Endodoncia)', price: 120.00 },
+                { id: 't3', name: 'Corona de Porcelana / Zirconio', price: 250.00 },
+                { id: 't4', name: 'Extracción Dental Simple', price: 35.00 },
+                { id: 't5', name: 'Limpieza Ultrasónica + Profilaxis', price: 30.00 },
+                { id: 't6', name: 'Blanqueamiento Dental LED', price: 100.00 }
+            ]
+        };
+
+        // --- ESTADO GLOBAL DE LA APLICACIÓN ---
+        let appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+        let activeStateId = 'caries_gen';
         let currentDentition = 'adult';
-        let activeState = 'caries_oclu';
-        let selectedToothId = null;
+        let selectedToothNum = null;
 
-        const adultUpperRight = [18, 17, 16, 15, 14, 13, 12, 11];
-        const adultUpperLeft = [21, 22, 23, 24, 25, 26, 27, 28];
-        const adultLowerRight = [48, 47, 46, 45, 44, 43, 42, 41];
-        const adultLowerLeft = [31, 32, 33, 34, 35, 36, 37, 38];
+        // Datos del Paciente en Sesión
+        let patientData = {
+            id: 'HC-' + Math.floor(1000 + Math.random() * 9000),
+            name: '',
+            age: '',
+            phone: '',
+            toothStates: {}, // { 18: { stateId: 'caries_gen', note: '' } }
+            findings: [],    // [ { id, tooth, stateName, color, note, time } ]
+            budgetItems: [], // [ { id, description, qty, price } ]
+            discountVal: 0,
+            discountType: 'fixed'
+        };
 
-        const childUpperRight = [55, 54, 53, 52, 51];
-        const childUpperLeft = [61, 62, 63, 64, 65];
-        const childLowerRight = [85, 84, 83, 82, 81];
-        const childLowerLeft = [71, 72, 73, 74, 75];
+        // Arcos Dentales FDI
+        const adultUpper = [18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28];
+        const adultLower = [48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38];
+        const childUpper = [55, 54, 53, 52, 51, 61, 62, 63, 64, 65];
+        const childLower = [85, 84, 83, 82, 81, 71, 72, 73, 74, 75];
 
-        let toothStates = {};
-        let budgetItems = [];
-
-        function initOdontogramData() {
-            toothStates = {};
-            const allTeeth = [...adultUpperRight, ...adultUpperLeft, ...adultLowerRight, ...adultLowerLeft,
-                              ...childUpperRight, ...childUpperLeft, ...childLowerRight, ...childLowerLeft];
-            allTeeth.forEach(t => {
-                toothStates[t] = { state: 'healthy', note: '' };
-            });
-            // Presupuesto independiente empieza limpio para que el odontólogo agregue los ítems que desee facturar
-            budgetItems = [];
+        // --- INICIALIZACIÓN AL CARGAR LA PÁGINA ---
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSettingsFromStorage();
+            loadPatientDataFromStorage();
+            applySettingsToUI();
+            renderStateSelectDropdown();
+            renderLegend();
+            renderArches();
+            renderFindingsTable();
             renderBudgetTable();
-            renderClinicalRecords();
-        }
+            updateTotals();
+            updatePrintFicha();
+        });
 
-        function updateCurrencySymbol(val) {
-            currentCurrency = val || '$';
-            renderBudgetTable();
-        }
-
-        function toggleDropdown() {
-            const menu = document.getElementById('statusDropdownMenu');
-            const arrow = document.getElementById('dropdownArrow');
-            menu.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.closest('#dropdownToggleBtn') && !event.target.closest('#statusDropdownMenu')) {
-                document.getElementById('statusDropdownMenu').classList.add('hidden');
-                document.getElementById('dropdownArrow').classList.remove('rotate-180');
+        // --- PERSISTENCIA LOCALSTORAGE ---
+        function loadSettingsFromStorage() {
+            const stored = localStorage.getItem(SETTINGS_KEY);
+            if (stored) {
+                try {
+                    appSettings = JSON.parse(stored);
+                } catch (e) {
+                    appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+                }
             }
         }
 
-        function renderDropdownMenu() {
-            const menu = document.getElementById('statusDropdownMenu');
-            menu.innerHTML = '';
+        function saveSettingsToStorage() {
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+        }
+
+        function loadPatientDataFromStorage() {
+            const stored = localStorage.getItem(DATA_KEY);
+            if (stored) {
+                try {
+                    patientData = JSON.parse(stored);
+                } catch (e) {
+                    initEmptyPatient();
+                }
+            } else {
+                initEmptyPatient();
+            }
+            // Sincronizar inputs
+            document.getElementById('inputPatientName').value = patientData.name || '';
+            document.getElementById('inputPatientAge').value = patientData.age || '';
+            document.getElementById('inputPatientPhone').value = patientData.phone || '';
+            document.getElementById('inputDiscountVal').value = patientData.discountVal || 0;
+            document.getElementById('selectDiscountType').value = patientData.discountType || 'fixed';
+            document.getElementById('patientIdDisplay').innerText = patientData.id;
+        }
+
+        function savePatientDataToStorage() {
+            localStorage.setItem(DATA_KEY, JSON.stringify(patientData));
+            updatePrintFicha();
+        }
+
+        function initEmptyPatient() {
+            patientData = {
+                id: 'HC-' + Math.floor(1000 + Math.random() * 9000),
+                name: '',
+                age: '',
+                phone: '',
+                toothStates: {},
+                findings: [],
+                budgetItems: [],
+                discountVal: 0,
+                discountType: 'fixed'
+            };
+        }
+
+        function savePatientData() {
+            patientData.name = document.getElementById('inputPatientName').value;
+            patientData.age = document.getElementById('inputPatientAge').value;
+            patientData.phone = document.getElementById('inputPatientPhone').value;
+            savePatientDataToStorage();
+        }
+
+        // --- APLICAR CONFIGURACIÓN A LA INTERFAZ ---
+        function applySettingsToUI() {
+            document.getElementById('appTitleDisplay').innerText = appSettings.clinicName || 'OdontoFlow Studio';
+            document.getElementById('printClinicName').innerText = appSettings.clinicName || 'OdontoFlow Studio';
             
-            clinicalStates.forEach(st => {
-                const item = document.createElement('div');
-                item.className = `flex items-center justify-between p-2.5 rounded-lg cursor-pointer text-xs font-medium transition ${st.id === activeState ? 'bg-indigo-50 text-indigo-700 font-semibold' : 'hover:bg-slate-100 text-slate-700'}`;
-                item.onclick = () => {
-                    activeState = st.id;
-                    updateActiveDropdownDisplay();
-                    toggleDropdown();
-                };
-                item.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full ${st.dot}"></span>
-                        <span>${st.name}</span>
-                    </div>
-                    ${st.id === activeState ? '<i class="fa-solid fa-check text-indigo-600 text-xs"></i>' : ''}
-                `;
-                menu.appendChild(item);
+            // Símbolos de Moneda
+            const currDisplays = document.querySelectorAll('.currencySymbolDisplay');
+            currDisplays.forEach(el => el.innerText = appSettings.currencySymbol || '$');
+
+            // Logo Header y Logo Impresión
+            const headerLogoImg = document.getElementById('customHeaderLogo');
+            const headerDefaultIcon = document.getElementById('defaultHeaderIcon');
+            const printLogoImg = document.getElementById('printCustomLogo');
+            const printDefaultIcon = document.getElementById('printDefaultIcon');
+
+            if (appSettings.logoBase64) {
+                headerLogoImg.src = appSettings.logoBase64;
+                headerLogoImg.classList.remove('hidden');
+                headerDefaultIcon.classList.add('hidden');
+
+                printLogoImg.src = appSettings.logoBase64;
+                printLogoImg.classList.remove('hidden');
+                printDefaultIcon.classList.add('hidden');
+            } else {
+                headerLogoImg.classList.add('hidden');
+                headerDefaultIcon.classList.remove('hidden');
+
+                printLogoImg.classList.add('hidden');
+                printDefaultIcon.classList.remove('hidden');
+            }
+        }
+
+        // --- MANEJO DE ESTADOS CLÍNICOS & DESPLEGABLE ---
+        function renderStateSelectDropdown() {
+            const dropdown = document.getElementById('stateSelectDropdown');
+            dropdown.innerHTML = '';
+
+            appSettings.clinicalStates.forEach(st => {
+                const opt = document.createElement('option');
+                opt.value = st.id;
+                opt.innerText = `${st.name} (${st.color.toUpperCase()})`;
+                if (st.id === activeStateId) opt.selected = true;
+                dropdown.appendChild(opt);
             });
-            updateActiveDropdownDisplay();
+
+            updateActiveStateBadge();
         }
 
-        function updateActiveDropdownDisplay() {
-            const currentObj = clinicalStates.find(s => s.id === activeState) || clinicalStates[0];
-            document.getElementById('activeDot').className = `w-3 h-3 rounded-full ${currentObj.dot}`;
-            document.getElementById('activeStateName').innerText = currentObj.name;
+        function onStateSelectChange(val) {
+            activeStateId = val;
+            updateActiveStateBadge();
         }
 
+        function updateActiveStateBadge() {
+            const stateObj = appSettings.clinicalStates.find(s => s.id === activeStateId) || appSettings.clinicalStates[0];
+            const colorConfig = COLOR_OPTIONS.find(c => c.id === stateObj.color) || COLOR_OPTIONS[0];
+
+            const badge = document.getElementById('activeStateBadge');
+            const dot = document.getElementById('activeStateDot');
+            const nameEl = document.getElementById('activeStateName');
+            const colorTag = document.getElementById('activeStateColorTag');
+
+            badge.className = `mt-2.5 p-2 rounded-xl border text-xs font-medium flex items-center gap-2 ${colorConfig.bgClass}`;
+            dot.className = `w-2.5 h-2.5 rounded-full ${colorConfig.dotClass}`;
+            nameEl.innerText = stateObj.name;
+            colorTag.innerText = stateObj.color.toUpperCase();
+        }
+
+        function toggleLegend() {
+            const container = document.getElementById('legendContainer');
+            const chevron = document.getElementById('legendChevron');
+            container.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function renderLegend() {
+            const container = document.getElementById('legendContainer');
+            container.innerHTML = '';
+
+            appSettings.clinicalStates.forEach(st => {
+                const colorConfig = COLOR_OPTIONS.find(c => c.id === st.color) || COLOR_OPTIONS[0];
+                const div = document.createElement('div');
+                div.className = `flex items-center justify-between p-1.5 rounded-lg border text-[11px] ${colorConfig.bgClass}`;
+                div.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full ${colorConfig.dotClass}"></span>
+                        <span class="font-semibold">${st.name}</span>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold opacity-75">${st.color}</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // --- RENDERIZADO DEL ODONTOGRAMA ---
         function setDentitionType(type) {
             currentDentition = type;
-            const btnAdult = document.getElementById('btnAdult');
-            const btnChild = document.getElementById('btnChild');
-            if (type === 'adult') {
-                btnAdult.className = "px-5 py-2 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition";
-                btnChild.className = "px-5 py-2 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-800 transition";
-            } else {
-                btnChild.className = "px-5 py-2 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm transition";
-                btnAdult.className = "px-5 py-2 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-800 transition";
-            }
+            document.getElementById('dentitionLabel').innerText = type === 'adult' ? 'Permanente' : 'Temporal';
+            document.getElementById('btnAdult').className = type === 'adult' ? 'px-4 py-1.5 rounded-lg bg-white text-slate-800 shadow-xs transition cursor-pointer' : 'px-4 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer';
+            document.getElementById('btnChild').className = type === 'child' ? 'px-4 py-1.5 rounded-lg bg-white text-slate-800 shadow-xs transition cursor-pointer' : 'px-4 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer';
             renderArches();
         }
 
@@ -467,369 +695,334 @@
             upperArch.innerHTML = '';
             lowerArch.innerHTML = '';
 
-            let upperRight = currentDentition === 'adult' ? adultUpperRight : childUpperRight;
-            let upperLeft = currentDentition === 'adult' ? adultUpperLeft : childUpperLeft;
-            let lowerRight = currentDentition === 'adult' ? adultLowerRight : childLowerRight;
-            let lowerLeft = currentDentition === 'adult' ? adultLowerLeft : childLowerLeft;
+            const uList = currentDentition === 'adult' ? adultUpper : childUpper;
+            const lList = currentDentition === 'adult' ? adultLower : childLower;
 
-            upperRight.forEach(num => upperArch.appendChild(createToothElement(num)));
-            const sep1 = document.createElement('div');
-            sep1.className = "w-px h-8 bg-slate-200 mx-1";
-            upperArch.appendChild(sep1);
-            upperLeft.forEach(num => upperArch.appendChild(createToothElement(num)));
+            const midUpper = Math.floor(uList.length / 2);
+            const midLower = Math.floor(lList.length / 2);
 
-            lowerRight.forEach(num => lowerArch.appendChild(createToothElement(num)));
-            const sep2 = document.createElement('div');
-            sep2.className = "w-px h-8 bg-slate-200 mx-1";
-            lowerArch.appendChild(sep2);
-            lowerLeft.forEach(num => lowerArch.appendChild(createToothElement(num)));
+            uList.forEach((num, idx) => {
+                upperArch.appendChild(createToothNode(num));
+                if (idx === midUpper - 1) {
+                    const sep = document.createElement('div');
+                    sep.className = 'w-px h-10 bg-indigo-200 mx-1 border-r border-dashed border-indigo-400';
+                    upperArch.appendChild(sep);
+                }
+            });
+
+            lList.forEach((num, idx) => {
+                lowerArch.appendChild(createToothNode(num));
+                if (idx === midLower - 1) {
+                    const sep = document.createElement('div');
+                    sep.className = 'w-px h-10 bg-indigo-200 mx-1 border-r border-dashed border-indigo-400';
+                    lowerArch.appendChild(sep);
+                }
+            });
         }
 
-        function createToothElement(number) {
-            const data = toothStates[number] || { state: 'healthy', note: '' };
-            const stateConfig = clinicalStates.find(s => s.id === data.state) || clinicalStates[0];
+        function createToothNode(num) {
+            const stateRecord = patientData.toothStates[num] || { stateId: 'sano', note: '' };
+            const stateObj = appSettings.clinicalStates.find(s => s.id === stateRecord.stateId) || appSettings.clinicalStates[appSettings.clinicalStates.length - 1];
+            const colorConfig = COLOR_OPTIONS.find(c => c.id === stateObj.color) || COLOR_OPTIONS[0];
 
-            const div = document.createElement('div');
-            div.className = `flex flex-col items-center cursor-pointer p-1.5 rounded-xl border transition group hover:shadow-md ${number === selectedToothId ? 'border-indigo-600 bg-indigo-50/40 ring-2 ring-indigo-200' : (stateConfig ? stateConfig.color : 'bg-slate-100 text-slate-600')}`;
-            div.onclick = () => selectToothManual(number);
+            const isSelected = selectedToothNum === num;
 
-            const iconClass = stateConfig ? stateConfig.icon : 'fa-solid fa-tooth text-slate-300';
-            const dotClass = stateConfig ? stateConfig.dot : 'bg-slate-300';
+            const wrap = document.createElement('div');
+            wrap.className = `tooth-box flex flex-col items-center p-1 rounded-xl border transition cursor-pointer ${colorConfig.bgClass} ${isSelected ? 'ring-2 ring-indigo-600 scale-105 shadow-md' : 'hover:scale-102'}`;
+            wrap.onclick = () => onToothClick(num);
 
-            div.innerHTML = `
-                <span class="text-[10px] font-bold text-slate-400 group-hover:text-indigo-600">${number}</span>
-                <div class="w-7 h-8 rounded-md flex items-center justify-center my-0.5 text-xs font-bold transition ${data.state === 'extraccion' ? 'bg-slate-300 text-slate-500' : 'bg-white border border-slate-200'}">
-                    <i class="${iconClass}"></i>
+            wrap.innerHTML = `
+                <span class="text-[10px] font-bold text-slate-500 mb-0.5">${num}</span>
+                <div class="w-7 h-8 sm:w-8 sm:h-9 bg-white border border-slate-300 rounded-lg flex items-center justify-center shadow-2xs font-bold text-xs">
+                    <i class="${getIconForState(stateObj.id, colorConfig.id)}"></i>
                 </div>
-                <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span>
+                <span class="w-2 h-2 rounded-full ${colorConfig.dotClass} mt-1"></span>
             `;
-            return div;
+
+            return wrap;
         }
 
-        function selectToothManual(number) {
-            selectedToothId = number;
-            updateToothState(number, activeState);
+        function getIconForState(stateId, colorId) {
+            if (stateId.includes('caries')) return 'fa-solid fa-triangle-exclamation text-rose-500';
+            if (stateId.includes('endo')) return 'fa-solid fa-bolt text-blue-500';
+            if (stateId.includes('resina')) return 'fa-solid fa-circle text-amber-500';
+            if (stateId.includes('corona')) return 'fa-solid fa-crown text-purple-600';
+            if (stateId.includes('extracted') || stateId.includes('agenesia')) return 'fa-solid fa-xmark text-slate-700';
+            if (stateId.includes('radicular')) return 'fa-solid fa-tooth text-rose-600';
+            return 'fa-solid fa-tooth text-slate-300';
         }
 
-        function updateToothState(number, newState) {
-            selectedToothId = number;
-            if (!toothStates[number]) toothStates[number] = { state: 'healthy', note: '' };
-            toothStates[number].state = newState;
-            
-            updateDetailsPanel(number);
+        function onToothClick(num) {
+            applyToothState(num, activeStateId);
+        }
+
+        function applyToothState(num, stateId, noteOverride = null) {
+            selectedToothNum = num;
+            const stateObj = appSettings.clinicalStates.find(s => s.id === stateId) || appSettings.clinicalStates[0];
+
+            // Guardar estado en diente
+            const prevNote = (patientData.toothStates[num] && patientData.toothStates[num].note) || '';
+            patientData.toothStates[num] = {
+                stateId: stateObj.id,
+                note: noteOverride !== null ? noteOverride : prevNote
+            };
+
+            // Registrar Hallazgo
+            addFindingRecord(num, stateObj.name, stateObj.color, patientData.toothStates[num].note);
+
+            savePatientDataToStorage();
+            updateSelectedToothUI(num);
             renderArches();
-            renderClinicalRecords();
+            renderFindingsTable();
         }
 
-        function renderClinicalRecords() {
-            const tbody = document.getElementById('clinicalRecordsTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            
-            const records = [];
-            Object.keys(toothStates).forEach(num => {
-                const item = toothStates[num];
-                if (item.state !== 'healthy' || (item.note && item.note.trim() !== '')) {
-                    records.push({ number: parseInt(num), ...item });
-                }
-            });
+        function updateSelectedToothUI(num) {
+            document.getElementById('selectedToothBadge').innerText = '#' + num;
+            const toothRecord = patientData.toothStates[num] || { stateId: 'sano', note: '' };
+            const stateObj = appSettings.clinicalStates.find(s => s.id === toothRecord.stateId) || appSettings.clinicalStates[0];
 
-            records.sort((a, b) => a.number - b.number);
-
-            const badge = document.getElementById('recordsCountBadge');
-            if (badge) badge.innerText = `${records.length} Hallazgo${records.length === 1 ? '' : 's'}`;
-
-            if (records.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No hay hallazgos registrados aún. Dicta un comando por voz (ej: "Pieza 48 extraído") o haz clic en una pieza para registrar.</td></tr>`;
-                return;
-            }
-
-            records.forEach(rec => {
-                const st = clinicalStates.find(s => s.id === rec.state) || clinicalStates[0];
-                const tr = document.createElement('tr');
-                tr.className = "border-b border-slate-50 hover:bg-slate-50/50 transition";
-                tr.innerHTML = `
-                    <td class="p-2.5 font-bold text-slate-800">#${rec.number}</td>
-                    <td class="p-2.5">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border ${st.color}">
-                            <span class="w-2 h-2 rounded-full ${st.dot}"></span>
-                            <span>${st.name}</span>
-                        </span>
-                    </td>
-                    <td class="p-2.5 text-slate-600">
-                        <input type="text" value="${rec.note || ''}" placeholder="Añadir nota..." onchange="updateRecordNote(${rec.number}, this.value)" class="w-full bg-transparent border-b border-slate-200 focus:border-indigo-500 outline-none text-xs">
-                    </td>
-                    <td class="p-2.5 text-center flex items-center justify-center gap-2">
-                        <button onclick="copyToBudget(${rec.number}, '${st.name}')" title="Copiar a Presupuesto" class="text-indigo-600 hover:text-indigo-800 font-medium text-xs bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1 rounded-md transition flex items-center gap-1">
-                            <i class="fa-solid fa-plus text-[10px]"></i> Presupuestar
-                        </button>
-                        <button onclick="clearToothRecord(${rec.number})" title="Marcar como Sano" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateRecordNote(number, noteVal) {
-            if (toothStates[number]) {
-                toothStates[number].note = noteVal;
-                if (selectedToothId === number) {
-                    updateDetailsPanel(number);
-                }
-            }
-        }
-
-        function copyToBudget(toothNum, stateName) {
-            budgetItems.push({
-                id: Date.now(),
-                tooth: toothNum.toString(),
-                treatment: stateName,
-                cost: 0
-            });
-            renderBudgetTable();
-            showModal("Añadido", `El hallazgo de la pieza #${toothNum} se copió a la hoja de presupuesto.`, "fa-solid fa-file-circle-check");
-        }
-
-        function clearToothRecord(number) {
-            if (toothStates[number]) {
-                toothStates[number].state = 'healthy';
-                toothStates[number].note = '';
-                renderArches();
-                renderClinicalRecords();
-                if (selectedToothId === number) {
-                    updateDetailsPanel(number);
-                }
-            }
-        }
-
-        function updateDetailsPanel(number) {
-            const tooth = toothStates[number];
-            const stateObj = clinicalStates.find(s => s.id === tooth.state);
-            document.getElementById('selectedToothTitle').innerText = `Pieza Dental #${number}`;
-            document.getElementById('selectedToothDetails').innerText = `Estado: ${stateObj ? stateObj.name : 'Desconocido'}. Nota: ${tooth.note || 'Sin observaciones'}`;
-            document.getElementById('toothNoteInput').value = tooth.note;
+            document.getElementById('selectedToothTitle').innerText = `Pieza Dental #${num} - ${stateObj.name}`;
+            document.getElementById('selectedToothSubtitle').innerText = `Color asignado: ${stateObj.color.toUpperCase()}. Observaciones registradas a continuación.`;
+            document.getElementById('inputToothNote').value = toothRecord.note || '';
         }
 
         function saveToothNote() {
-            if (!selectedToothId) {
-                showModal("Aviso", "Seleccione una pieza dental primero.", "fa-solid fa-circle-exclamation");
+            if (!selectedToothNum) {
+                showAlert("Selección Requerida", "Haga clic en una pieza dental antes de agregar una nota.");
                 return;
             }
-            const noteText = document.getElementById('toothNoteInput').value;
-            toothStates[selectedToothId].note = noteText;
-            updateDetailsPanel(selectedToothId);
-            renderClinicalRecords();
-            showModal("Guardado", `Nota actualizada para pieza #${selectedToothId}`, "fa-solid fa-circle-check");
+            const noteText = document.getElementById('inputToothNote').value;
+            if (patientData.toothStates[selectedToothNum]) {
+                patientData.toothStates[selectedToothNum].note = noteText;
+            }
+
+            // Actualizar nota en hallazgos
+            const finding = patientData.findings.find(f => f.tooth === selectedToothNum);
+            if (finding) finding.note = noteText;
+
+            savePatientDataToStorage();
+            renderFindingsTable();
+            showAlert("Nota Guardada", `Se guardó la observación para la pieza #${selectedToothNum}`);
         }
 
+        // --- MANEJO DE TABLA DE HALLAZGOS ---
+        function addFindingRecord(tooth, stateName, color, note = '') {
+            // Eliminar duplicados previos para esa pieza o actualizar
+            patientData.findings = patientData.findings.filter(f => f.tooth !== tooth);
+            patientData.findings.unshift({
+                id: Date.now() + '_' + tooth,
+                tooth: tooth,
+                stateName: stateName,
+                color: color,
+                note: note
+            });
+        }
+
+        function renderFindingsTable() {
+            const tbody = document.getElementById('findingsTableBody');
+            tbody.innerHTML = '';
+
+            document.getElementById('findingsCount').innerText = `${patientData.findings.length} Hallazgos`;
+
+            if (patientData.findings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400 italic">No hay hallazgos registrados. Dicta por voz o selecciona una pieza.</td></tr>`;
+                return;
+            }
+
+            patientData.findings.forEach(f => {
+                const colorConfig = COLOR_OPTIONS.find(c => c.id === f.color) || COLOR_OPTIONS[0];
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="py-2 px-3 font-bold text-indigo-700">#${f.tooth}</td>
+                    <td class="py-2 px-3">
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md font-semibold text-[11px] ${colorConfig.bgClass}">
+                            <span class="w-2 h-2 rounded-full ${colorConfig.dotClass}"></span>
+                            ${f.stateName}
+                        </span>
+                    </td>
+                    <td class="py-2 px-3 text-slate-600">${f.note || '---'}</td>
+                    <td class="py-2 px-3 text-center no-print">
+                        <button onclick="transferFindingToBudget('${f.stateName}')" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded-lg text-[10px] font-bold cursor-pointer transition">
+                            + Presupuestar
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function transferFindingToBudget(treatmentName) {
+            // Buscar si existe en tarifario
+            const tariff = appSettings.tariffs.find(t => t.name.toLowerCase() === treatmentName.toLowerCase());
+            const price = tariff ? tariff.price : 0;
+
+            patientData.budgetItems.push({
+                id: 'b_' + Date.now(),
+                description: treatmentName,
+                qty: 1,
+                price: price
+            });
+
+            savePatientDataToStorage();
+            renderBudgetTable();
+            updateTotals();
+            showAlert("Agregado a Presupuesto", `Se agregó "${treatmentName}" a la hoja de presupuesto.`);
+        }
+
+        // --- MANEJO DE HOJA DE PRESUPUESTO ---
         function addBudgetItem() {
-            budgetItems.push({
-                id: Date.now(),
-                tooth: 'General',
-                treatment: 'Nuevo Tratamiento',
-                cost: 0
+            patientData.budgetItems.push({
+                id: 'b_' + Date.now(),
+                description: appSettings.tariffs.length > 0 ? appSettings.tariffs[0].name : 'Tratamiento Dental',
+                qty: 1,
+                price: appSettings.tariffs.length > 0 ? appSettings.tariffs[0].price : 0
             });
-            renderBudgetTable();
-        }
 
-        function updateBudgetRow(id, field, value) {
-            const item = budgetItems.find(i => i.id === id);
-            if (item) {
-                if (field === 'cost') item.cost = parseFloat(value) || 0;
-                if (field === 'treatment') item.treatment = value;
-                if (field === 'tooth') item.tooth = value;
-                renderBudgetTable(false);
-            }
+            savePatientDataToStorage();
+            renderBudgetTable();
+            updateTotals();
         }
 
         function removeBudgetItem(id) {
-            budgetItems = budgetItems.filter(i => i.id !== id);
+            patientData.budgetItems = patientData.budgetItems.filter(item => item.id !== id);
+            savePatientDataToStorage();
             renderBudgetTable();
+            updateTotals();
         }
 
         function renderBudgetTable() {
             const tbody = document.getElementById('budgetTableBody');
             tbody.innerHTML = '';
-            let total = 0;
 
-            if (budgetItems.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No hay tratamientos en la hoja de presupuesto. Haga clic en "Añadir Ítem" para agregar conceptos y costos.</td></tr>`;
-                document.getElementById('budgetTotalAmount').innerText = `${currentCurrency}0.00`;
+            if (patientData.budgetItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-400 italic">No hay tratamientos en el presupuesto. Haga clic en "+ Agregar Tratamiento".</td></tr>`;
                 return;
             }
 
-            budgetItems.forEach(item => {
-                total += item.cost;
+            patientData.budgetItems.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b border-slate-50 hover:bg-slate-50/50 transition";
+                tr.className = 'hover:bg-slate-50 transition';
+
+                const total = (item.qty || 0) * (item.price || 0);
+
+                // Selector de tarifas o texto libre
+                let selectOptionsHtml = appSettings.tariffs.map(t => `<option value="${t.name}" ${t.name === item.description ? 'selected' : ''}>${t.name} (${appSettings.currencySymbol}${t.price.toFixed(2)})</option>`).join('');
+
                 tr.innerHTML = `
-                    <td class="p-3 font-semibold text-slate-700"><input type="text" value="${item.tooth}" oninput="updateBudgetRow(${item.id}, 'tooth', this.value)" class="w-16 bg-transparent border-b border-transparent focus:border-indigo-500 outline-none"></td>
-                    <td class="p-3"><input type="text" value="${item.treatment}" oninput="updateBudgetRow(${item.id}, 'treatment', this.value)" class="w-full bg-transparent border-b border-transparent focus:border-indigo-500 outline-none"></td>
-                    <td class="p-3 flex items-center gap-1"><span>${currentCurrency}</span><input type="number" value="${item.cost}" oninput="updateBudgetRow(${item.id}, 'cost', this.value)" class="w-24 bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none"></td>
-                    <td class="p-3 text-center no-print"><button onclick="removeBudgetItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
+                    <td class="py-2 px-3">
+                        <div class="flex flex-col gap-1">
+                            <select onchange="onBudgetTariffSelect('${item.id}', this.value)" class="no-print w-full border border-slate-300 rounded-md p-1 text-xs font-medium focus:ring-1 focus:ring-emerald-500 outline-none bg-white">
+                                <option value="">-- Seleccionar de Tarifario o Personalizado --</option>
+                                ${selectOptionsHtml}
+                            </select>
+                            <input type="text" value="${escapeHtml(item.description)}" onblur="updateBudgetItemDesc('${item.id}', this.value)" class="w-full border border-slate-200 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none" placeholder="Descripción del tratamiento...">
+                        </div>
+                    </td>
+                    <td class="py-2 px-3 text-center">
+                        <input type="number" min="1" step="1" value="${item.qty}" onblur="updateBudgetItemQty('${item.id}', this.value)" class="w-14 text-center border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2 px-3 text-right">
+                        <input type="number" min="0" step="any" value="${item.price}" onblur="updateBudgetItemPrice('${item.id}', this.value)" class="w-20 text-right border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2 px-3 text-right font-bold text-slate-800">
+                        ${appSettings.currencySymbol}${total.toFixed(2)}
+                    </td>
+                    <td class="py-2 px-3 text-center no-print">
+                        <button onclick="removeBudgetItem('${item.id}')" class="text-rose-500 hover:text-rose-700 text-sm p-1 cursor-pointer">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
                 `;
+
                 tbody.appendChild(tr);
             });
-
-            document.getElementById('budgetTotalAmount').innerText = `${currentCurrency}${total.toFixed(2)}`;
         }
 
-        function resetOdontogram() {
-            initOdontogramData();
-            selectedToothId = null;
-            document.getElementById('selectedToothTitle').innerText = "Seleccione una pieza dental";
-            document.getElementById('selectedToothDetails').innerText = "Haga clic sobre una pieza para registrar notas clínicas.";
-            document.getElementById('toothNoteInput').value = "";
-            renderArches();
-            renderBudgetTable();
-            renderClinicalRecords();
-            showModal("Reiniciado", "El odontograma y el presupuesto se han restablecido.", "fa-solid fa-rotate-right");
+        function onBudgetTariffSelect(itemId, name) {
+            if (!name) return;
+            const tariff = appSettings.tariffs.find(t => t.name === name);
+            const item = patientData.budgetItems.find(i => i.id === itemId);
+            if (item && tariff) {
+                item.description = tariff.name;
+                item.price = tariff.price;
+                savePatientDataToStorage();
+                renderBudgetTable();
+                updateTotals();
+            }
         }
 
-        function openSettingsModal() {
-            renderSettingsStatesList();
-            document.getElementById('settingsModal').classList.remove('hidden');
-            document.getElementById('settingsModal').classList.add('flex');
-        }
-
-        function closeSettingsModal() {
-            document.getElementById('settingsModal').classList.remove('flex');
-            document.getElementById('settingsModal').classList.add('hidden');
-            renderDropdownMenu();
-            renderArches();
-        }
-
-        function renderSettingsStatesList() {
-            const container = document.getElementById('settingsStatesList');
-            container.innerHTML = '';
-
-            clinicalStates.forEach((st, index) => {
-                const div = document.createElement('div');
-                div.className = "flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl border border-slate-200 bg-slate-50/50";
-                div.innerHTML = `
-                    <div class="flex items-center gap-3 flex-1 min-w-[200px]">
-                        <input type="text" value="${st.name}" oninput="updateStateProp(${index}, 'name', this.value)" class="text-xs font-medium border border-slate-300 rounded px-3 py-1.5 w-full outline-none bg-white">
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <select onchange="updateStateColor(${index}, this.value)" class="text-xs border border-slate-300 rounded px-2 py-1.5 bg-white outline-none">
-                            <option value="rose" ${st.dot.includes('rose') ? 'selected' : ''}>Rojo</option>
-                            <option value="amber" ${st.dot.includes('amber') ? 'selected' : ''}>Ámbar</option>
-                            <option value="blue" ${st.dot.includes('blue') ? 'selected' : ''}>Azul</option>
-                            <option value="purple" ${st.dot.includes('purple') ? 'selected' : ''}>Morado</option>
-                            <option value="emerald" ${st.dot.includes('emerald') ? 'selected' : ''}>Verde</option>
-                            <option value="slate" ${st.dot.includes('slate') ? 'selected' : ''}>Gris / Sano</option>
-                        </select>
-                        <button onclick="removeClinicalState(${index})" class="text-rose-500 hover:text-rose-700 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function updateStateProp(index, prop, value) {
-            clinicalStates[index][prop] = value;
-            // No re-renderizamos la lista de ajustes mientras se escribe para no perder el foco del teclado
-        }
-
-        function updateBudgetRow(id, field, value) {
-            const item = budgetItems.find(i => i.id === id);
+        function updateBudgetItemDesc(itemId, val) {
+            const item = patientData.budgetItems.find(i => i.id === itemId);
             if (item) {
-                if (field === 'cost') item.cost = parseFloat(value) || 0;
-                if (field === 'treatment') item.treatment = value;
-                if (field === 'tooth') item.tooth = value;
-                // En lugar de re-renderizar toda la tabla, solo recalculamos el total para mantener el foco del teclado activo
-                recalculateBudgetTotal();
+                item.description = val;
+                savePatientDataToStorage();
             }
         }
 
-        function recalculateBudgetTotal() {
-            let total = budgetItems.reduce((acc, item) => acc + item.cost, 0);
-            const totalEl = document.getElementById('budgetTotalAmount');
-            if (totalEl) totalEl.innerText = `${currentCurrency}${total.toFixed(2)}`;
-        }
-
-        function removeBudgetItem(id) {
-            budgetItems = budgetItems.filter(i => i.id !== id);
-            renderBudgetTable();
-        }
-
-        function renderBudgetTable() {
-            const tbody = document.getElementById('budgetTableBody');
-            tbody.innerHTML = '';
-            let total = 0;
-
-            if (budgetItems.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No hay tratamientos en la hoja de presupuesto. Haga clic en "Añadir Ítem" para agregar conceptos y costos.</td></tr>`;
-                document.getElementById('budgetTotalAmount').innerText = `${currentCurrency}0.00`;
-                return;
+        function updateBudgetItemQty(itemId, val) {
+            const item = patientData.budgetItems.find(i => i.id === itemId);
+            if (item) {
+                item.qty = parseFloat(val) || 1;
+                savePatientDataToStorage();
+                renderBudgetTable();
+                updateTotals();
             }
+        }
 
-            budgetItems.forEach(item => {
-                total += item.cost;
-                const tr = document.createElement('tr');
-                tr.className = "border-b border-slate-50 hover:bg-slate-50/50 transition";
-                tr.innerHTML = `
-                    <td class="p-3 font-semibold text-slate-700"><input type="text" value="${item.tooth}" oninput="updateBudgetRow(${item.id}, 'tooth', this.value)" class="w-16 bg-transparent border-b border-slate-200 focus:border-indigo-500 outline-none"></td>
-                    <td class="p-3"><input type="text" value="${item.treatment}" oninput="updateBudgetRow(${item.id}, 'treatment', this.value)" class="w-full bg-transparent border-b border-slate-200 focus:border-indigo-500 outline-none"></td>
-                    <td class="p-3 flex items-center gap-1"><span>${currentCurrency}</span><input type="number" value="${item.cost}" oninput="updateBudgetRow(${item.id}, 'cost', this.value)" class="w-24 bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none"></td>
-                    <td class="p-3 text-center no-print"><button onclick="removeBudgetItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
-                `;
-                tbody.appendChild(tr);
+        function updateBudgetItemPrice(itemId, val) {
+            const item = patientData.budgetItems.find(i => i.id === itemId);
+            if (item) {
+                item.price = parseFloat(val) || 0;
+                savePatientDataToStorage();
+                renderBudgetTable();
+                updateTotals();
+            }
+        }
+
+        function updateDiscountConfig() {
+            patientData.discountVal = parseFloat(document.getElementById('inputDiscountVal').value) || 0;
+            patientData.discountType = document.getElementById('selectDiscountType').value;
+            savePatientDataToStorage();
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let subtotal = 0;
+            patientData.budgetItems.forEach(i => {
+                subtotal += (i.qty || 0) * (i.price || 0);
             });
 
-            document.getElementById('budgetTotalAmount').innerText = `${currentCurrency}${total.toFixed(2)}`;
-        }
-
-        function updateStateColor(index, colorName) {
-            const colors = {
-                rose: { color: 'bg-rose-50 text-rose-700 border-rose-200', dot: 'bg-rose-500', icon: 'fa-solid fa-triangle-exclamation' },
-                amber: { color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-500', icon: 'fa-solid fa-circle' },
-                blue: { color: 'bg-blue-50 text-blue-700 border-blue-200', dot: 'bg-blue-500', icon: 'fa-solid fa-bolt' },
-                purple: { color: 'bg-purple-50 text-purple-700 border-purple-200', dot: 'bg-purple-500', icon: 'fa-solid fa-crown' },
-                emerald: { color: 'bg-emerald-50 text-emerald-700 border-emerald-200', dot: 'bg-emerald-500', icon: 'fa-solid fa-circle-check' },
-                slate: { color: 'bg-slate-100 text-slate-600 border-slate-200', dot: 'bg-slate-300', icon: 'fa-solid fa-tooth' }
-            };
-            const chosen = colors[colorName] || colors.slate;
-            clinicalStates[index].color = chosen.color;
-            clinicalStates[index].dot = chosen.dot;
-            clinicalStates[index].icon = chosen.icon;
-            renderDropdownMenu();
-        }
-
-        function addNewClinicalStateForm() {
-            const newId = 'state_' + Date.now();
-            clinicalStates.push({
-                id: newId,
-                name: 'nuevo tratamiento',
-                color: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                dot: 'bg-emerald-500',
-                icon: 'fa-solid fa-circle-check'
-            });
-            renderSettingsStatesList();
-            renderDropdownMenu();
-        }
-
-        function removeClinicalState(index) {
-            if (clinicalStates.length <= 2) {
-                showModal("Aviso", "Debe mantener al menos dos estados clínicos.", "fa-solid fa-circle-exclamation");
-                return;
+            let discount = 0;
+            if (patientData.discountType === 'percent') {
+                discount = subtotal * (patientData.discountVal / 100);
+            } else {
+                discount = patientData.discountVal;
             }
-            clinicalStates.splice(index, 1);
-            renderSettingsStatesList();
-            renderDropdownMenu();
+
+            if (discount > subtotal) discount = subtotal;
+            const grandTotal = subtotal - discount;
+
+            document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
+            document.getElementById('discountDisplay').innerText = discount.toFixed(2);
+            document.getElementById('grandTotalDisplay').innerText = grandTotal.toFixed(2);
         }
 
-        // --- RECONOCIMIENTO DE VOZ AVANZADO & ROBUSTO ---
+        // --- RECONOCIMIENTO DE VOZ AVANZADO ---
         let recognition = null;
         let isListening = false;
 
         function toggleVoiceRecognition() {
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                showModal("No compatible", "Su navegador no soporta reconocimiento de voz nativo. Use Google Chrome.", "fa-solid fa-triangle-exclamation");
+                showAlert("Navegador no compatible", "Su navegador no soporta reconocimiento de voz nativo. Utilice Google Chrome o Safari.");
                 return;
             }
-            if (isListening) stopVoiceRecognition();
-            else startVoiceRecognition();
+
+            if (isListening) {
+                stopVoiceRecognition();
+            } else {
+                startVoiceRecognition();
+            }
         }
 
         function startVoiceRecognition() {
@@ -841,230 +1034,378 @@
 
             recognition.onstart = () => {
                 isListening = true;
-                document.getElementById('micBtnText').innerText = "Escuchando comando...";
-                document.getElementById('micIcon').className = "fa-solid fa-microphone-slash text-rose-600 animate-pulse";
-                document.getElementById('micStatusIndicator').className = "inline-block w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping";
+                document.getElementById('micBtnLabel').innerText = "Escuchando...";
+                document.getElementById('micStatusText').innerText = "Micrófono activo. Hable ahora...";
+                document.getElementById('micStatusDot').className = "w-3 h-3 rounded-full bg-rose-500 animate-ping";
             };
 
             recognition.onresult = (event) => {
-                const speechToText = event.results[0][0].transcript.toLowerCase();
-                processAdvancedVoiceCommand(speechToText);
+                const text = event.results[0][0].transcript.toLowerCase();
+                processVoiceCommand(text);
             };
 
-            recognition.onerror = () => stopVoiceRecognition();
-            recognition.onend = () => stopVoiceRecognition();
+            recognition.onerror = () => {
+                stopVoiceRecognition();
+            };
+
+            recognition.onend = () => {
+                stopVoiceRecognition();
+            };
+
             recognition.start();
         }
 
         function stopVoiceRecognition() {
             isListening = false;
-            document.getElementById('micBtnText').innerText = "Iniciar Comando de Voz";
-            document.getElementById('micIcon').className = "fa-solid fa-microphone";
-            document.getElementById('micStatusIndicator').className = "inline-block w-2.5 h-2.5 rounded-full bg-slate-300";
+            document.getElementById('micBtnLabel').innerText = "Iniciar Dictado";
+            document.getElementById('micStatusText').innerText = "Micrófono inactivo";
+            document.getElementById('micStatusDot').className = "w-3 h-3 rounded-full bg-slate-300";
             if (recognition) recognition.stop();
         }
 
-        function parseSpokenToothNumber(text) {
-            let cleanText = text
-                .replace(/punto/g, '')
-                .replace(/coma/g, '')
-                .replace(/cero/g, '0')
-                .replace(/uno/g, '1')
-                .replace(/dos/g, '2')
-                .replace(/tres/g, '3')
-                .replace(/cuatro/g, '4')
-                .replace(/cinco/g, '5')
-                .replace(/seis/g, '6')
-                .replace(/siete/g, '7')
-                .replace(/ocho/g, '8')
-                .replace(/nueve/g, '9');
+        // MOTOR PARSER DE VOZ INTELIGENTE
+        function processVoiceCommand(rawText) {
+            console.log("Comando recibido por voz:", rawText);
 
-            const match = cleanText.match(/(?:pieza|diente)\D*(\d)\D*(\d)/i);
-            if (match) {
-                return parseInt(match[1] + match[2]);
-            }
+            // Normalización de números pronunciados punto por punto o palabra
+            let cleaned = rawText.toLowerCase();
+            cleaned = cleaned.replace(/cuatro\s*punto\s*cuatro/g, "44");
+            cleaned = cleaned.replace(/cuatro\s*cuatro/g, "44");
+            cleaned = cleaned.replace(/tres\s*punto\s*tres/g, "33");
+            cleaned = cleaned.replace(/tres\s*tres/g, "33");
+            cleaned = cleaned.replace(/tres\s*punto\s*cuatro/g, "34");
+            cleaned = cleaned.replace(/tres\s*cuatro/g, "34");
+            cleaned = cleaned.replace(/uno\s*punto\s*uno/g, "11");
+            cleaned = cleaned.replace(/uno\s*uno/g, "11");
+            cleaned = cleaned.replace(/cuatro\s*ocho/g, "48");
+            cleaned = cleaned.replace(/tres\s*ocho/g, "38");
 
-            const directMatch = cleanText.match(/\b([1-8][1-8]|[5-8][1-5])\b/);
-            if (directMatch) {
-                return parseInt(directMatch[1]);
-            }
-
-            return null;
-        }
-
-        function processAdvancedVoiceCommand(text) {
-            const toothNum = parseSpokenToothNumber(text);
-            const allValidTeeth = [...adultUpperRight, ...adultUpperLeft, ...adultLowerRight, ...adultLowerLeft,
-                                   ...childUpperRight, ...childUpperLeft, ...childLowerRight, ...childLowerLeft];
-
-            if (!toothNum || !allValidTeeth.includes(toothNum)) {
-                showModal("Comando no reconocido", `No se identificó una pieza válida en: "${text}"`, "fa-solid fa-circle-exclamation");
+            // Extraer número de pieza dental
+            const matchNumber = cleaned.match(/ (\d{2}) /) || cleaned.match(/(?:pieza|diente)\s*(\d+)/i);
+            
+            if (!matchNumber) {
+                showAlert("Comando Incompleto", `No se detectó número de pieza claro en: "${rawText}"`);
                 return;
             }
 
-            // Ordenar los estados clínicos por longitud de nombre descendente para evaluar frases largas/específicas primero
-            const sortedStates = [...clinicalStates].sort((a, b) => b.name.length - a.name.length);
-            
-            let matchedStateId = activeState;
-            for (let st of sortedStates) {
-                if (text.includes(st.name.toLowerCase())) {
-                    matchedStateId = st.id;
-                    break;
-                }
-            }
+            const toothNum = parseInt(matchNumber[1]);
 
-            updateToothState(toothNum, matchedStateId);
-            const stateObj = clinicalStates.find(s => s.id === matchedStateId);
-            const stateName = stateObj ? stateObj.name : 'Actualizado';
-            showModal("Voz Procesada", `Pieza #${toothNum} marcada como: ${stateName}`, "fa-solid fa-circle-check");
-        }
-
-        function sendWhatsAppBudget() {
-            const phone = document.getElementById('patientPhone').value.trim();
-            if (!phone) {
-                showModal("Falta Teléfono", "Por favor, ingrese un número de teléfono válido con código de país para WhatsApp.", "fa-solid fa-circle-exclamation");
+            // Verificar si el número corresponde a dentición válida
+            const allTeeth = [...adultUpper, ...adultLower, ...childUpper, ...childLower];
+            if (!allTeeth.includes(toothNum)) {
+                showAlert("Pieza No Encontrada", `El número de pieza #${toothNum} no es válido en el odontograma.`);
                 return;
             }
 
-            const patientName = document.getElementById('patientName').value;
+            // Cambiar dentición automáticamente si es temporal o permanente
+            if (childUpper.includes(toothNum) || childLower.includes(toothNum)) {
+                setDentitionType('child');
+            } else {
+                setDentitionType('adult');
+            }
+
+            // Evaluar Estado Clínico por coincidencia de Keywords (Priorizando frases más largas)
+            let matchedState = null;
             
-            // Recopilar Hallazgos del Odontograma
-            const clinicalRecords = [];
-            Object.keys(toothStates).forEach(num => {
-                const item = toothStates[num];
-                if (item.state !== 'healthy' || (item.note && item.note.trim() !== '')) {
-                    const st = clinicalStates.find(s => s.id === item.state) || clinicalStates[0];
-                    clinicalRecords.push(`• Pieza #${num}: ${st.name}${item.note ? ' (' + item.note + ')' : ''}`);
-                }
+            // Ordenar estados por longitud de palabras clave descendente
+            const sortedStates = [...appSettings.clinicalStates].sort((a, b) => {
+                const maxA = Math.max(...a.keywords.map(k => k.length));
+                const maxB = Math.max(...b.keywords.map(k => k.length));
+                return maxB - maxA;
             });
 
-            let total = budgetItems.reduce((acc, item) => acc + item.cost, 0);
-            
-            let message = `Hola *${patientName}* 👋, le compartimos el resumen de su consulta y presupuesto dental:\n\n`;
-            
-            if (clinicalRecords.length > 0) {
-                message += `📋 *HALLAZGOS DEL ODONTOGRAMA:*\n` + clinicalRecords.join('\n') + `\n\n`;
+            for (const st of sortedStates) {
+                for (const kw of st.keywords) {
+                    if (cleaned.includes(kw.toLowerCase())) {
+                        matchedState = st;
+                        break;
+                    }
+                }
+                if (matchedState) break;
             }
 
-            if (budgetItems.length > 0) {
-                message += `💰 *HOJA DE PRESUPUESTO:*\n`;
-                budgetItems.forEach(item => {
-                    message += `• Pieza #${item.tooth}: ${item.treatment} - *${currentCurrency}${item.cost}*\n`;
-                });
-                message += `\n*Total Estimado: ${currentCurrency}${total.toFixed(2)}*\n\n`;
+            // Si no se reconoció ningún estado, aplicar el estado activo actual
+            if (!matchedState) {
+                matchedState = appSettings.clinicalStates.find(s => s.id === activeStateId) || appSettings.clinicalStates[0];
             }
 
-            message += `_OdontoFlow Studio_`;
-
-            const encoded = encodeURIComponent(message);
-            window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encoded}`, '_blank');
+            applyToothState(toothNum, matchedState.id);
+            showAlert("Comando Ejecutado", `Pieza #${toothNum} actualizada a: ${matchedState.name}`);
         }
 
-        function showModal(title, message, iconClass) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMessage').innerText = message;
-            document.getElementById('modalIcon').innerHTML = `<i class="${iconClass}"></i>`;
-            document.getElementById('notificationModal').classList.remove('hidden');
-            document.getElementById('notificationModal').classList.add('flex');
-        }
-
-        function closeModal() {
-            document.getElementById('notificationModal').classList.remove('flex');
-            document.getElementById('notificationModal').classList.add('hidden');
-        }
-
-        function updatePatientInfoDisplay() {
-            const name = document.getElementById('patientName')?.value || '---';
-            const age = document.getElementById('patientAge')?.value || '---';
-            const phone = document.getElementById('patientPhone')?.value || '---';
-            
-            const nameEl = document.getElementById('displayPatientName');
-            const ageEl = document.getElementById('displayPatientAge');
-            const phoneEl = document.getElementById('displayPatientPhone');
-            
-            if (nameEl) nameEl.innerText = name;
-            if (ageEl) ageEl.innerText = age ? `${age} años` : '---';
-            if (phoneEl) phoneEl.innerText = phone;
-        }
-
-        function updateAppName(val) {
-            appName = val.trim() || 'OdontoFlow Studio';
-            const appTitleHeader = document.getElementById('appTitleHeader');
-            const appTitlePrint = document.getElementById('appTitlePrint');
-            if (appTitleHeader) appTitleHeader.innerText = appName;
-            if (appTitlePrint) appTitlePrint.innerText = appName;
-        }
-
-        function handleLogoUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            if (file.size > 3 * 1024 * 1024) {
-                showModal("Archivo grande", "Por favor elija una imagen menor a 3MB.", "fa-solid fa-circle-exclamation");
+        // --- ENVIAR A WHATSAPP ---
+        function sendWhatsApp() {
+            if (!patientData.phone) {
+                showAlert("Teléfono Requerido", "Ingrese el número de teléfono del paciente antes de enviar el presupuesto por WhatsApp.");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                appLogoDataUrl = e.target.result;
-                applyLogoToUI();
-            };
-            reader.readAsDataURL(file);
+            let msg = `🏥 *${appSettings.clinicName || 'OdontoFlow Studio'}*
+`;
+            msg += `📋 *INFORME DE CONSULTA Y PRESUPUESTO*
+`;
+            msg += `-----------------------------------
+`;
+            msg += `👤 *Paciente:* ${patientData.name || 'Cliente'}
+`;
+            msg += `🆔 *HC:* ${patientData.id}
+
+`;
+
+            if (patientData.findings.length > 0) {
+                msg += `🦷 *HALLAZGOS DEL ODONTOGRAMA:*
+`;
+                patientData.findings.forEach(f => {
+                    msg += `• Pieza #${f.tooth}: ${f.stateName} ${f.note ? '(' + f.note + ')' : ''}
+`;
+                });
+                msg += `
+`;
+            }
+
+            if (patientData.budgetItems.length > 0) {
+                msg += `💰 *PRESUPUESTO DE TRATAMIENTOS:*
+`;
+                patientData.budgetItems.forEach(i => {
+                    const total = (i.qty || 0) * (i.price || 0);
+                    msg += `• ${i.description} (x${i.qty}): ${appSettings.currencySymbol}${total.toFixed(2)}
+`;
+                });
+
+                let subtotal = 0;
+                patientData.budgetItems.forEach(i => subtotal += (i.qty || 0) * (i.price || 0));
+                let discount = patientData.discountType === 'percent' ? subtotal * (patientData.discountVal / 100) : patientData.discountVal;
+                if (discount > subtotal) discount = subtotal;
+                const grandTotal = subtotal - discount;
+
+                msg += `-----------------------------------
+`;
+                if (discount > 0) {
+                    msg += `Subtotal: ${appSettings.currencySymbol}${subtotal.toFixed(2)}
+`;
+                    msg += `Descuento: -${appSettings.currencySymbol}${discount.toFixed(2)}
+`;
+                }
+                msg += `*TOTAL ESTIMADO:* ${appSettings.currencySymbol}${grandTotal.toFixed(2)}
+`;
+            }
+
+            msg += `
+Quedamos a su disposición para agendar su cita. ¡Muchas gracias!`;
+
+            const cleanPhone = patientData.phone.replace(/[^0-9+]/g, '');
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
         }
 
-        function removeCustomLogo() {
-            appLogoDataUrl = '';
-            const logoFileInput = document.getElementById('logoFileInput');
-            if (logoFileInput) logoFileInput.value = '';
-            applyLogoToUI();
+        // --- ACTUALIZAR FICHA DE IMPRESIÓN ---
+        function updatePrintFicha() {
+            document.getElementById('printNameVal').innerText = patientData.name || '---';
+            document.getElementById('printAgeVal').innerText = patientData.age ? patientData.age + ' años' : '---';
+            document.getElementById('printPhoneVal').innerText = patientData.phone || '---';
+            document.getElementById('printDate').innerText = new Date().toLocaleDateString('es-ES');
+            document.getElementById('printPatientId').innerText = patientData.id;
         }
 
-        function applyLogoToUI() {
-            const headerIcon = document.getElementById('appLogoIconHeader');
-            const headerImg = document.getElementById('appLogoImgHeader');
-            const printIcon = document.getElementById('appLogoIconPrint');
-            const printImg = document.getElementById('appLogoImgPrint');
-            const previewIcon = document.getElementById('logoPreviewIcon');
-            const previewImg = document.getElementById('logoPreviewImg');
-            const removeBtn = document.getElementById('removeLogoBtn');
+        // --- MODAL DE AJUSTES & TARIFAS ---
+        function openSettingsModal() {
+            document.getElementById('settingClinicName').value = appSettings.clinicName;
+            document.getElementById('settingCurrency').value = appSettings.currencySymbol;
 
-            if (appLogoDataUrl) {
-                if (headerIcon) headerIcon.classList.add('hidden');
-                if (headerImg) { headerImg.src = appLogoDataUrl; headerImg.classList.remove('hidden'); }
+            renderSettingsStatesList();
+            renderSettingsTariffsList();
 
-                if (printIcon) printIcon.classList.add('hidden');
-                if (printImg) { printImg.src = appLogoDataUrl; printImg.classList.remove('hidden'); }
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('settingsModal').classList.add('flex');
+        }
 
-                if (previewIcon) previewIcon.classList.add('hidden');
-                if (previewImg) { previewImg.src = appLogoDataUrl; previewImg.classList.remove('hidden'); }
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('flex');
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
 
-                if (removeBtn) removeBtn.classList.remove('hidden');
-            } else {
-                if (headerIcon) headerIcon.classList.remove('hidden');
-                if (headerImg) headerImg.classList.add('hidden');
+        function renderSettingsStatesList() {
+            const container = document.getElementById('settingsStatesContainer');
+            container.innerHTML = '';
 
-                if (printIcon) printIcon.classList.remove('hidden');
-                if (printImg) printImg.classList.add('hidden');
+            appSettings.clinicalStates.forEach((st, idx) => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-wrap items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200';
 
-                if (previewIcon) previewIcon.classList.remove('hidden');
-                if (previewImg) previewImg.classList.add('hidden');
+                let colorOptsHtml = COLOR_OPTIONS.map(c => `<option value="${c.id}" ${c.id === st.color ? 'selected' : ''}>${c.label}</option>`).join('');
 
-                if (removeBtn) removeBtn.classList.add('hidden');
+                div.innerHTML = `
+                    <div class="flex-1 min-w-40">
+                        <label class="block text-[10px] font-bold text-slate-400">Nombre del Estado</label>
+                        <input type="text" value="${escapeHtml(st.name)}" onchange="appSettings.clinicalStates[${idx}].name = this.value" class="w-full border border-slate-300 rounded p-1 text-xs font-semibold">
+                    </div>
+                    <div class="w-36">
+                        <label class="block text-[10px] font-bold text-slate-400">Color Asignado</label>
+                        <select onchange="appSettings.clinicalStates[${idx}].color = this.value" class="w-full border border-slate-300 rounded p-1 text-xs font-semibold bg-white cursor-pointer">
+                            ${colorOptsHtml}
+                        </select>
+                    </div>
+                    <div class="flex-1 min-w-44">
+                        <label class="block text-[10px] font-bold text-slate-400">Palabras Clave para Voz (separadas por coma)</label>
+                        <input type="text" value="${escapeHtml(st.keywords.join(', '))}" onchange="appSettings.clinicalStates[${idx}].keywords = this.value.split(',').map(k => k.trim())" class="w-full border border-slate-300 rounded p-1 text-xs">
+                    </div>
+                    <button onclick="deleteClinicalStateSetting(${idx})" class="text-rose-500 hover:text-rose-700 text-xs p-1 mt-3 cursor-pointer">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addNewClinicalStateSetting() {
+            appSettings.clinicalStates.push({
+                id: 'custom_' + Date.now(),
+                name: 'Nuevo Estado',
+                color: 'rojo',
+                keywords: ['nuevo estado']
+            });
+            renderSettingsStatesList();
+        }
+
+        function deleteClinicalStateSetting(idx) {
+            if (appSettings.clinicalStates.length <= 1) {
+                showAlert("Aviso", "Debe mantener al menos un estado clínico configurado.");
+                return;
+            }
+            appSettings.clinicalStates.splice(idx, 1);
+            renderSettingsStatesList();
+        }
+
+        function renderSettingsTariffsList() {
+            const container = document.getElementById('settingsTariffsContainer');
+            container.innerHTML = '';
+
+            appSettings.tariffs.forEach((t, idx) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200';
+
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <label class="block text-[10px] font-bold text-slate-400">Nombre del Tratamiento</label>
+                        <input type="text" value="${escapeHtml(t.name)}" onchange="appSettings.tariffs[${idx}].name = this.value" class="w-full border border-slate-300 rounded p-1 text-xs font-semibold">
+                    </div>
+                    <div class="w-28">
+                        <label class="block text-[10px] font-bold text-slate-400">Precio Sugerido</label>
+                        <input type="number" step="any" value="${t.price}" onchange="appSettings.tariffs[${idx}].price = parseFloat(this.value) || 0" class="w-full border border-slate-300 rounded p-1 text-xs font-semibold text-right">
+                    </div>
+                    <button onclick="deleteTariffSetting(${idx})" class="text-rose-500 hover:text-rose-700 text-xs p-1 mt-3 cursor-pointer">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addNewTariffSetting() {
+            appSettings.tariffs.push({
+                id: 't_' + Date.now(),
+                name: 'Nuevo Tratamiento',
+                price: 0.00
+            });
+            renderSettingsTariffsList();
+        }
+
+        function deleteTariffSetting(idx) {
+            appSettings.tariffs.splice(idx, 1);
+            renderSettingsTariffsList();
+        }
+
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    appSettings.logoBase64 = evt.target.result;
+                    showAlert("Logo Subido", "La imagen se ha cargado correctamente.");
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        window.onload = () => {
-            initOdontogramData();
-            renderDropdownMenu();
+        function clearLogo() {
+            appSettings.logoBase64 = '';
+            document.getElementById('settingLogoInput').value = '';
+            showAlert("Logo Eliminado", "Se ha quitado el logo personalizado.");
+        }
+
+        function saveSettingsFromModal() {
+            appSettings.clinicName = document.getElementById('settingClinicName').value || 'OdontoFlow Studio';
+            appSettings.currencySymbol = document.getElementById('settingCurrency').value || '$';
+
+            saveSettingsToStorage();
+            applySettingsToUI();
+            renderStateSelectDropdown();
+            renderLegend();
             renderArches();
-            updatePatientInfoDisplay();
-            updateAppName(appName);
-            applyLogoToUI();
-            const printDateEl = document.getElementById('printDate');
-            if (printDateEl) {
-                printDateEl.innerText = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+            renderFindingsTable();
+            renderBudgetTable();
+            updateTotals();
+
+            closeSettingsModal();
+            showAlert("Ajustes Guardados", "Los cambios en la clínica, estados y tarifario se han guardado permanentemente.");
+        }
+
+        function restoreDefaultSettings() {
+            if (confirm("¿Desea restablecer toda la configuración de estados, tarifas y nombre a los valores de fábrica?")) {
+                appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+                saveSettingsToStorage();
+                applySettingsToUI();
+                renderStateSelectDropdown();
+                renderLegend();
+                renderArches();
+                renderFindingsTable();
+                renderBudgetTable();
+                updateTotals();
+                closeSettingsModal();
+                showAlert("Restablecido", "Se restauró la configuración de fábrica.");
             }
-        };
+        }
+
+        function confirmResetPatient() {
+            if (confirm("¿Desea reiniciar los datos del paciente actual? Esto borrará el odontograma y el presupuesto activo.")) {
+                initEmptyPatient();
+                savePatientDataToStorage();
+                selectedToothNum = null;
+                document.getElementById('inputPatientName').value = '';
+                document.getElementById('inputPatientAge').value = '';
+                document.getElementById('inputPatientPhone').value = '';
+                document.getElementById('patientIdDisplay').innerText = patientData.id;
+                document.getElementById('selectedToothBadge').innerText = '#--';
+                document.getElementById('selectedToothTitle').innerText = 'Ninguna pieza seleccionada';
+                document.getElementById('selectedToothSubtitle').innerText = 'Seleccione un diente para agregar observaciones.';
+                document.getElementById('inputToothNote').value = '';
+
+                renderArches();
+                renderFindingsTable();
+                renderBudgetTable();
+                updateTotals();
+                updatePrintFicha();
+                showAlert("Nuevo Paciente", "Se ha reiniciado el odontograma para un nuevo paciente.");
+            }
+        }
+
+        // --- UTILS ---
+        function showAlert(title, msg) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMsg').innerText = msg;
+            document.getElementById('alertModal').classList.remove('hidden');
+            document.getElementById('alertModal').classList.add('flex');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.remove('flex');
+            document.getElementById('alertModal').classList.add('hidden');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
     </script>
 </body>
 </html>
