@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OdontoFlow Studio - Odontograma & Presupuesto Interactivo</title>
+    <title>OdontoFlow Studio - Odontograma & Presupuesto Cloud</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome -->
@@ -68,15 +68,19 @@
             <div>
                 <h1 id="appTitleDisplay" class="text-xl font-bold tracking-tight">OdontoFlow Studio</h1>
                 <p class="text-xs text-indigo-200 flex items-center gap-2">
-                    <span>Odontograma Digital & Reconocimiento de Voz Avanzado</span>
-                    <span class="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Autoguardado
+                    <span>Odontograma Digital & Sincronización Cloud</span>
+                    <span id="cloudSyncBadge" class="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Nube Sincronizada
                     </span>
                 </p>
             </div>
         </div>
         
         <div class="flex items-center flex-wrap gap-2">
+            <button onclick="openPatientListModal()" class="bg-indigo-800 hover:bg-indigo-900 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Historial de Pacientes</span>
+            </button>
             <button onclick="openSettingsModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-sliders"></i>
                 <span>Ajustes & Tarifas</span>
@@ -90,7 +94,7 @@
                 <span>Enviar WhatsApp</span>
             </button>
             <button onclick="confirmResetPatient()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
-                <i class="fa-solid fa-rotate-right"></i>
+                <i class="fa-solid fa-plus"></i>
                 <span>Nuevo Paciente</span>
             </button>
         </div>
@@ -114,16 +118,16 @@
                 <div class="space-y-3 text-xs">
                     <div>
                         <label class="block font-medium text-slate-500 mb-1">Nombre Completo</label>
-                        <input type="text" id="inputPatientName" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Nombre del paciente..." onchange="savePatientData()">
+                        <input type="text" id="inputPatientName" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Nombre del paciente..." oninput="savePatientData()">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block font-medium text-slate-500 mb-1">Edad</label>
-                            <input type="number" id="inputPatientAge" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Edad..." onchange="savePatientData()">
+                            <input type="number" id="inputPatientAge" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="Edad..." oninput="savePatientData()">
                         </div>
                         <div>
                             <label class="block font-medium text-slate-500 mb-1">Teléfono (WhatsApp)</label>
-                            <input type="text" id="inputPatientPhone" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="+51 9..." onchange="savePatientData()">
+                            <input type="text" id="inputPatientPhone" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none transition" placeholder="+51 9..." oninput="savePatientData()">
                         </div>
                     </div>
                 </div>
@@ -196,7 +200,7 @@
         <!-- PANEL DERECHO: ODONTOGRAMA, HALLAZGOS Y PRESUPUESTO -->
         <div class="lg:col-span-8 flex flex-col gap-6">
 
-            <!-- ENCABEZADO FICHA DE IMPRESIÓN (Solo visible en Guardar/Imprimir PDF) -->
+            <!-- ENCABEZADO FICHA DE IMPRESIÓN -->
             <div class="print-only hidden bg-white p-4 rounded-2xl border border-slate-200 mb-2">
                 <div class="flex justify-between items-start border-b border-slate-200 pb-3 mb-3">
                     <div class="flex items-center gap-3">
@@ -215,7 +219,6 @@
                     </div>
                 </div>
 
-                <!-- Datos Paciente Impresión -->
                 <div class="grid grid-cols-3 gap-2 text-xs bg-slate-50 p-2.5 rounded-lg border border-slate-100">
                     <div><span class="font-bold text-slate-600">Paciente:</span> <span id="printNameVal" class="font-medium">---</span></div>
                     <div><span class="font-bold text-slate-600">Edad:</span> <span id="printAgeVal" class="font-medium">---</span></div>
@@ -226,7 +229,6 @@
             <!-- ODONTOGRAMA GRÁFICO -->
             <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center">
                 
-                <!-- Selector Dentición Permanente / Infantil -->
                 <div class="no-print flex bg-slate-100 p-1 rounded-xl mb-5 text-xs font-semibold">
                     <button onclick="setDentitionType('adult')" id="btnAdult" class="px-4 py-1.5 rounded-lg bg-white text-slate-800 shadow-xs transition cursor-pointer">Permanente (Adultos)</button>
                     <button onclick="setDentitionType('child')" id="btnChild" class="px-4 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition cursor-pointer">Temporal (Niños)</button>
@@ -259,7 +261,7 @@
                 </div>
             </div>
 
-            <!-- DETALLE PIEZA SELECCIONADA Y NOTA RÁPIDA -->
+            <!-- DETALLE PIEZA SELECCIONADA -->
             <div class="no-print bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
                     <div id="selectedToothBadge" class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-sm flex items-center justify-center">
@@ -317,7 +319,6 @@
                     </button>
                 </div>
 
-                <!-- Tabla Presupuesto -->
                 <div class="overflow-x-auto mb-4">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
@@ -335,20 +336,18 @@
                     </table>
                 </div>
 
-                <!-- CÁLCULO DE TOTALES Y DESCUENTO -->
+                <!-- CÁLCULO DE TOTALES -->
                 <div class="border-t border-slate-200 pt-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
                     
-                    <!-- Descuento Config -->
                     <div class="no-print flex items-center gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                         <span class="font-bold text-slate-600">Descuento:</span>
-                        <input type="number" id="inputDiscountVal" value="0" min="0" step="any" onchange="updateDiscountConfig()" class="w-20 border border-slate-300 rounded-lg px-2 py-1 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <input type="number" id="inputDiscountVal" value="0" min="0" step="any" oninput="updateDiscountConfig()" class="w-20 border border-slate-300 rounded-lg px-2 py-1 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 outline-none">
                         <select id="selectDiscountType" onchange="updateDiscountConfig()" class="border border-slate-300 rounded-lg px-2 py-1 text-xs font-semibold bg-white cursor-pointer">
                             <option value="fixed">Monto Fijo (<span class="currencySymbolDisplay">$</span>)</option>
                             <option value="percent">Porcentaje (%)</option>
                         </select>
                     </div>
 
-                    <!-- Resumen Financiero -->
                     <div class="w-full sm:w-auto ml-auto space-y-1.5 text-right font-semibold">
                         <div class="flex justify-between sm:justify-end gap-6 text-slate-500">
                             <span>Subtotal:</span>
@@ -371,6 +370,26 @@
 
     </main>
 
+    <!-- MODAL DE HISTORIAL DE PACIENTES EN LA NUBE -->
+    <div id="patientListModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-indigo-700 text-white p-4 flex justify-between items-center">
+                <h2 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open"></i> Historial de Pacientes en la Nube
+                </h2>
+                <button onclick="closePatientListModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-4 border-b border-slate-100">
+                <input type="text" id="searchPatientInput" oninput="filterPatientsList(this.value)" placeholder="Buscar por nombre o número de HC..." class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="p-4 overflow-y-auto space-y-2 flex-1" id="patientListContainer">
+                <p class="text-center text-xs text-slate-400 py-6">Cargando pacientes desde la nube...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL DE AJUSTES & TARIFAS -->
     <div id="settingsModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
@@ -386,7 +405,6 @@
 
             <div class="p-5 overflow-y-auto space-y-6 text-xs">
                 
-                <!-- 1. GENERAL & LOGO -->
                 <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-indigo-600">1. Datos Generales de la Clínica</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -408,7 +426,6 @@
                     </div>
                 </div>
 
-                <!-- 2. ESTADOS CLÍNICOS & COLORES -->
                 <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-indigo-600">2. Estados Clínicos & Colores</h3>
@@ -416,14 +433,11 @@
                             + Agregar Estado
                         </button>
                     </div>
-                    <p class="text-[11px] text-slate-400">Personalice los nombres, las palabras clave que detecta la voz y el **COLOR** asociado.</p>
-                    
                     <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="settingsStatesContainer">
                         <!-- Inyectado dinámicamente -->
                     </div>
                 </div>
 
-                <!-- 3. TARIFARIO DE TRATAMIENTOS PREDEFINIDOS -->
                 <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-emerald-600">3. Tarifario de Tratamientos (Presupuesto)</h3>
@@ -431,7 +445,6 @@
                             + Agregar Tratamiento
                         </button>
                     </div>
-                    <p class="text-[11px] text-slate-400">Listado de tratamientos predefinidos que aparecerán en el desplegable de presupuesto con su costo sugerido.</p>
 
                     <div class="space-y-2 max-h-52 overflow-y-auto pr-1" id="settingsTariffsContainer">
                         <!-- Inyectado dinámicamente -->
@@ -453,7 +466,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE NOTIFICACIÓN / ALERTA -->
+    <!-- MODAL DE NOTIFICACIÓN -->
     <div id="alertModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl p-5 max-w-xs w-full text-center shadow-xl">
             <div id="alertIcon" class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-2 text-lg">
@@ -465,7 +478,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT PRINCIPAL + INTEGRACIÓN DE CREDENCIALES SUPABASE -->
     <script>
         // =========================================================================
         // 🔑 CREDENCIALES CONFIGURADAS Y AUTENTICADAS
@@ -524,6 +536,7 @@
         let activeStateId = 'caries_gen';
         let currentDentition = 'adult';
         let selectedToothNum = null;
+        let isRemoteUpdate = false; 
 
         let patientData = {
             id: 'HC-' + Math.floor(1000 + Math.random() * 9000),
@@ -537,15 +550,13 @@
         const childUpper = [55, 54, 53, 52, 51, 61, 62, 63, 64, 65];
         const childLower = [85, 84, 83, 82, 81, 71, 72, 73, 74, 75];
 
-        // --- SISTEMA DE VALIDACIÓN DE LICENCIAS AL INICIAR ---
+        // --- SISTEMA DE VALIDACIÓN DE LICENCIAS Y SUSCRIPCIÓN TIEMPO REAL ---
         window.addEventListener('DOMContentLoaded', async () => {
-            // 1. Verificación de Dominio Autorizado (Protección Anti-Copia)
             if (window.location.hostname !== DOMINIO_OFICIAL && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
                 bloquearPantalla("Acceso No Autorizado", "Esta aplicación no está autorizada para ejecutarse fuera de la URL oficial.");
                 return;
             }
 
-            // 2. Control de Código de Licencia
             let licenciaGuardada = localStorage.getItem('odontoflow_licencia');
 
             if (!licenciaGuardada) {
@@ -588,7 +599,6 @@
                     return;
                 }
 
-                // Carga de aplicación tras validar exitosamente
                 loadSettingsFromStorage();
                 loadPatientDataFromStorage();
                 applySettingsToUI();
@@ -599,6 +609,9 @@
                 renderBudgetTable();
                 updateTotals();
                 updatePrintFicha();
+
+                // Activar Sincronización en Tiempo Real con Supabase
+                subscribeRealtimeChanges();
 
             } catch (err) {
                 console.error("Error al verificar la licencia:", err);
@@ -620,7 +633,7 @@
             `;
         }
 
-        // --- LÓGICA DE FUNCIONAMIENTO DE LA APLICACIÓN ---
+        // --- MANEJO DE ALMACENAMIENTO Y SINCRONIZACIÓN CLOUD ---
         function loadSettingsFromStorage() {
             const stored = localStorage.getItem(SETTINGS_KEY);
             if (stored) {
@@ -647,6 +660,10 @@
             } else {
                 initEmptyPatient();
             }
+            updatePatientUIFields();
+        }
+
+        function updatePatientUIFields() {
             document.getElementById('inputPatientName').value = patientData.name || '';
             document.getElementById('inputPatientAge').value = patientData.age || '';
             document.getElementById('inputPatientPhone').value = patientData.phone || '';
@@ -655,9 +672,75 @@
             document.getElementById('patientIdDisplay').innerText = patientData.id;
         }
 
+        let syncTimer = null;
         function savePatientDataToStorage() {
             localStorage.setItem(DATA_KEY, JSON.stringify(patientData));
             updatePrintFicha();
+
+            if (isRemoteUpdate) return; 
+
+            // Debounce para guardar en Supabase en tiempo real
+            clearTimeout(syncTimer);
+            syncTimer = setTimeout(syncPatientToSupabase, 400);
+        }
+
+        async function syncPatientToSupabase() {
+            const syncBadge = document.getElementById('cloudSyncBadge');
+            syncBadge.className = "bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1 animate-pulse";
+            syncBadge.innerHTML = `<i class="fa-solid fa-rotate"></i> Guardando...`;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('pacientes')
+                    .upsert({
+                        id: patientData.id,
+                        nombre: patientData.name || '',
+                        edad: patientData.age || '',
+                        telefono: patientData.phone || '',
+                        tooth_states: patientData.toothStates || {},
+                        findings: patientData.findings || [],
+                        budget_items: patientData.budgetItems || [],
+                        discount_val: patientData.discountVal || 0,
+                        discount_type: patientData.discountType || 'fixed',
+                        updated_at: new Date().toISOString()
+                    });
+
+                if (error) console.error("Error al sincronizar con Supabase:", error);
+
+                syncBadge.className = "bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1";
+                syncBadge.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Nube Sincronizada`;
+
+            } catch (err) {
+                console.error("Error de conexión Supabase:", err);
+            }
+        }
+
+        function subscribeRealtimeChanges() {
+            supabaseClient
+                .channel('realtime_pacientes')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'pacientes' }, payload => {
+                    const row = payload.new;
+                    if (row && row.id === patientData.id) {
+                        isRemoteUpdate = true;
+                        patientData.name = row.nombre || '';
+                        patientData.age = row.edad || '';
+                        patientData.phone = row.telefono || '';
+                        patientData.toothStates = row.tooth_states || {};
+                        patientData.findings = row.findings || [];
+                        patientData.budgetItems = row.budget_items || [];
+                        patientData.discountVal = row.discount_val || 0;
+                        patientData.discountType = row.discount_type || 'fixed';
+
+                        updatePatientUIFields();
+                        renderArches();
+                        renderFindingsTable();
+                        renderBudgetTable();
+                        updateTotals();
+                        updatePrintFicha();
+                        isRemoteUpdate = false;
+                    }
+                })
+                .subscribe();
         }
 
         function initEmptyPatient() {
@@ -993,14 +1076,14 @@
                                 <option value="">-- Seleccionar de Tarifario o Personalizado --</option>
                                 ${selectOptionsHtml}
                             </select>
-                            <input type="text" value="${escapeHtml(item.description)}" onblur="updateBudgetItemDesc('${item.id}', this.value)" class="w-full border border-slate-200 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none" placeholder="Descripción del tratamiento...">
+                            <input type="text" value="${escapeHtml(item.description)}" oninput="updateBudgetItemDesc('${item.id}', this.value)" class="w-full border border-slate-200 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none" placeholder="Descripción del tratamiento...">
                         </div>
                     </td>
                     <td class="py-2 px-3 text-center">
-                        <input type="number" min="1" step="1" value="${item.qty}" onblur="updateBudgetItemQty('${item.id}', this.value)" class="w-14 text-center border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
+                        <input type="number" min="1" step="1" value="${item.qty}" oninput="updateBudgetItemQty('${item.id}', this.value)" class="w-14 text-center border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
                     </td>
                     <td class="py-2 px-3 text-right">
-                        <input type="number" min="0" step="any" value="${item.price}" onblur="updateBudgetItemPrice('${item.id}', this.value)" class="w-20 text-right border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
+                        <input type="number" min="0" step="any" value="${item.price}" oninput="updateBudgetItemPrice('${item.id}', this.value)" class="w-20 text-right border border-slate-300 rounded-md p-1 text-xs font-semibold focus:ring-1 focus:ring-emerald-500 outline-none">
                     </td>
                     <td class="py-2 px-3 text-right font-bold text-slate-800">
                         ${appSettings.currencySymbol}${total.toFixed(2)}
@@ -1085,7 +1168,7 @@
             document.getElementById('grandTotalDisplay').innerText = grandTotal.toFixed(2);
         }
 
-        // --- RECONOCIMIENTO DE VOZ AVANZADO & NORMALIZACIÓN ROBUSTA ---
+        // --- RECONOCIMIENTO DE VOZ AVANZADO ---
         let recognition = null;
         let isListening = false;
 
@@ -1162,9 +1245,7 @@
         }
 
         function processVoiceCommand(rawText) {
-            console.log("Comando recibido por voz:", rawText);
             let norm = normalizeText(rawText);
-
             norm = norm.replace(/([a-z0-9]+)\s+(?:punto|coma)\s+([a-z0-9]+)/g, '$1 $2');
 
             const compoundTens = [
@@ -1260,12 +1341,98 @@
             }
 
             if (!matchedState) {
-                showAlert("Estado no Reconocido", `Pieza #${foundTooth} detectada, pero no se reconoció el estado en "${rawText}". Por favor especifique el hallazgo (ej: caries, resina, corona, endodoncia).`);
+                showAlert("Estado no Reconocido", `Pieza #${foundTooth} detectada, pero no se reconoció el estado en "${rawText}". Por favor especifique el hallazgo.`);
                 return;
             }
 
             applyToothState(foundTooth, matchedState.id);
             showAlert("Comando Ejecutado", `Pieza #${foundTooth} actualizada a: ${matchedState.name}`);
+        }
+
+        // --- HISTORIAL DE PACIENTES NUBE & ACCIONES ---
+        let allCloudPatients = [];
+
+        async function openPatientListModal() {
+            document.getElementById('patientListModal').classList.remove('hidden');
+            document.getElementById('patientListModal').classList.add('flex');
+            document.getElementById('patientListContainer').innerHTML = `<p class="text-center text-xs text-slate-400 py-6">Cargando pacientes desde la nube...</p>`;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('pacientes')
+                    .select('*')
+                    .order('updated_at', { ascending: false });
+
+                if (error) {
+                    document.getElementById('patientListContainer').innerHTML = `<p class="text-center text-xs text-rose-500 py-6">Error al cargar pacientes: ${error.message}</p>`;
+                    return;
+                }
+
+                allCloudPatients = data || [];
+                renderPatientList(allCloudPatients);
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function closePatientListModal() {
+            document.getElementById('patientListModal').classList.remove('flex');
+            document.getElementById('patientListModal').classList.add('hidden');
+        }
+
+        function renderPatientList(list) {
+            const container = document.getElementById('patientListContainer');
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-slate-400 py-6">No hay pacientes registrados en la nube aún.</p>`;
+                return;
+            }
+
+            list.forEach(p => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200 hover:bg-indigo-50/50 transition cursor-pointer";
+                div.onclick = () => loadPatientFromCloud(p);
+
+                div.innerHTML = `
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-800">${p.nombre || 'Paciente sin nombre'}</h4>
+                        <p class="text-[10px] text-slate-400">${p.id} • ${p.telefono || 'Sin teléfono'} • Última edic: ${new Date(p.updated_at).toLocaleDateString()}</p>
+                    </div>
+                    <button class="bg-indigo-600 text-white text-[10px] px-3 py-1 rounded-lg font-semibold">Abrir Ficha</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function filterPatientsList(term) {
+            const q = term.toLowerCase();
+            const filtered = allCloudPatients.filter(p => (p.nombre && p.nombre.toLowerCase().includes(q)) || (p.id && p.id.toLowerCase().includes(q)));
+            renderPatientList(filtered);
+        }
+
+        function loadPatientFromCloud(p) {
+            patientData = {
+                id: p.id,
+                name: p.nombre || '',
+                age: p.edad || '',
+                phone: p.telefono || '',
+                toothStates: p.tooth_states || {},
+                findings: p.findings || [],
+                budgetItems: p.budget_items || [],
+                discountVal: p.discount_val || 0,
+                discountType: p.discount_type || 'fixed'
+            };
+
+            savePatientDataToStorage();
+            updatePatientUIFields();
+            renderArches();
+            renderFindingsTable();
+            renderBudgetTable();
+            updateTotals();
+            closePatientListModal();
+            showAlert("Paciente Cargado", `Se abrió la ficha clínica de ${patientData.name || patientData.id}`);
         }
 
         function sendWhatsApp() {
@@ -1463,7 +1630,7 @@
             updateTotals();
 
             closeSettingsModal();
-            showAlert("Ajustes Guardados", "Los cambios en la clínica, estados y tarifario se han guardado permanentemente.");
+            showAlert("Ajustes Guardados", "Los cambios se han guardado permanentemente.");
         }
 
         function restoreDefaultSettings() {
@@ -1483,14 +1650,11 @@
         }
 
         function confirmResetPatient() {
-            if (confirm("¿Desea reiniciar los datos del paciente actual? Esto borrará el odontograma y el presupuesto activo.")) {
+            if (confirm("¿Desea crear un nuevo paciente? Se limpiará la pantalla para registrar una nueva historia clínica.")) {
                 initEmptyPatient();
                 savePatientDataToStorage();
                 selectedToothNum = null;
-                document.getElementById('inputPatientName').value = '';
-                document.getElementById('inputPatientAge').value = '';
-                document.getElementById('inputPatientPhone').value = '';
-                document.getElementById('patientIdDisplay').innerText = patientData.id;
+                updatePatientUIFields();
                 document.getElementById('selectedToothBadge').innerText = '#--';
                 document.getElementById('selectedToothTitle').innerText = 'Ninguna pieza seleccionada';
                 document.getElementById('selectedToothSubtitle').innerText = 'Seleccione un diente para agregar observaciones.';
@@ -1501,7 +1665,7 @@
                 renderBudgetTable();
                 updateTotals();
                 updatePrintFicha();
-                showAlert("Nuevo Paciente", "Se ha reiniciado el odontograma para un nuevo paciente.");
+                showAlert("Nuevo Paciente", "Se creó una nueva ficha clínica vacía lista para guardar en la nube.");
             }
         }
 
