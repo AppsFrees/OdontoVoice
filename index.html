@@ -153,7 +153,6 @@
                     </button>
                 </div>
 
-                <!-- Caja de Transcripción de Voz -->
                 <div id="voiceTranscriptBox" class="bg-indigo-50/60 border border-indigo-200 rounded-xl p-3 text-xs flex flex-col gap-1">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1">
                         <i class="fa-solid fa-comment-dots"></i> Último dictado capturado:
@@ -161,7 +160,6 @@
                     <p id="voiceTranscriptText" class="text-slate-700 font-medium italic">Presione 'Iniciar Dictado' y hable a su micrófono...</p>
                 </div>
 
-                <!-- SELECCIÓN MANUAL DE ESTADO CLÍNICO -->
                 <div class="pt-2 border-t border-slate-100">
                     <label class="block text-xs font-bold text-slate-700 mb-2 flex items-center justify-between">
                         <span><i class="fa-solid fa-palette text-indigo-600 mr-1"></i> Estado Clínico Manual Activo</span>
@@ -170,11 +168,9 @@
                     
                     <div class="relative">
                         <select id="stateSelectDropdown" onchange="onStateSelectChange(this.value)" class="w-full border border-indigo-200 bg-indigo-50/40 text-slate-800 text-xs rounded-xl p-2.5 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
-                            <!-- Inyectado dinámicamente -->
                         </select>
                     </div>
 
-                    <!-- Indicador visual del estado activo -->
                     <div id="activeStateBadge" class="mt-2.5 p-2 rounded-xl border text-xs font-medium flex items-center gap-2">
                         <span id="activeStateDot" class="w-2.5 h-2.5 rounded-full"></span>
                         <span id="activeStateName" class="font-bold">Caries</span>
@@ -191,7 +187,6 @@
                 </button>
                 
                 <div id="legendContainer" class="hidden mt-3 pt-3 border-t border-slate-100 space-y-1.5 max-h-48 overflow-y-auto text-xs">
-                    <!-- Inyectado dinámicamente -->
                 </div>
             </div>
 
@@ -239,23 +234,18 @@
                     <span class="text-[10px] text-slate-400 font-medium">Haga clic sobre una pieza para aplicar el estado activo</span>
                 </div>
 
-                <!-- MAXILAR SUPERIOR -->
                 <div class="w-full mb-6">
                     <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Maxilar Superior</div>
                     <div id="upperArch" class="flex justify-center items-center gap-1 sm:gap-1.5 flex-wrap">
-                        <!-- Inyectado dinámicamente -->
                     </div>
                 </div>
 
-                <!-- LÍNEA MEDIA -->
                 <div class="w-full border-t border-dashed border-slate-300 my-1 relative">
                     <span class="absolute left-1/2 -translate-x-1/2 -top-2 bg-white px-2 text-[9px] text-slate-400 font-bold tracking-widest uppercase">Línea Media</span>
                 </div>
 
-                <!-- MAXILAR INFERIOR -->
                 <div class="w-full mt-4">
                     <div id="lowerArch" class="flex justify-center items-center gap-1 sm:gap-1.5 flex-wrap mb-2">
-                        <!-- Inyectado dinámicamente -->
                     </div>
                     <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">Maxilar Inferior</div>
                 </div>
@@ -299,7 +289,6 @@
                             </tr>
                         </thead>
                         <tbody id="findingsTableBody" class="divide-y divide-slate-100">
-                            <!-- Inyectado dinámicamente -->
                         </tbody>
                     </table>
                 </div>
@@ -331,12 +320,10 @@
                             </tr>
                         </thead>
                         <tbody id="budgetTableBody" class="divide-y divide-slate-100">
-                            <!-- Inyectado dinámicamente -->
                         </tbody>
                     </table>
                 </div>
 
-                <!-- CÁLCULO DE TOTALES -->
                 <div class="border-t border-slate-200 pt-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
                     
                     <div class="no-print flex items-center gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
@@ -434,7 +421,6 @@
                         </button>
                     </div>
                     <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="settingsStatesContainer">
-                        <!-- Inyectado dinámicamente -->
                     </div>
                 </div>
 
@@ -447,7 +433,6 @@
                     </div>
 
                     <div class="space-y-2 max-h-52 overflow-y-auto pr-1" id="settingsTariffsContainer">
-                        <!-- Inyectado dinámicamente -->
                     </div>
                 </div>
 
@@ -479,13 +464,9 @@
     </div>
 
     <script>
-        // =========================================================================
-        // 🔑 CREDENCIALES CONFIGURADAS Y AUTENTICADAS
-        // =========================================================================
         const SUPABASE_URL = "https://hnrlbvmyxufjdzihqgta.supabase.co"; 
         const SUPABASE_KEY = "sb_publishable_h-al2RQJnVoMjyLcj8OY8A_wS443UyF"; 
         const DOMINIO_OFICIAL = "appsfrees.github.io"; 
-        // =========================================================================
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -550,7 +531,6 @@
         const childUpper = [55, 54, 53, 52, 51, 61, 62, 63, 64, 65];
         const childLower = [85, 84, 83, 82, 81, 71, 72, 73, 74, 75];
 
-        // --- SISTEMA DE VALIDACIÓN DE LICENCIAS Y SUSCRIPCIÓN TIEMPO REAL ---
         window.addEventListener('DOMContentLoaded', async () => {
             if (window.location.hostname !== DOMINIO_OFICIAL && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
                 bloquearPantalla("Acceso No Autorizado", "Esta aplicación no está autorizada para ejecutarse fuera de la URL oficial.");
@@ -599,7 +579,7 @@
                     return;
                 }
 
-                loadSettingsFromStorage();
+                await loadSettingsFromCloud();
                 loadPatientDataFromStorage();
                 applySettingsToUI();
                 renderStateSelectDropdown();
@@ -610,7 +590,6 @@
                 updateTotals();
                 updatePrintFicha();
 
-                // Activar Sincronización en Tiempo Real con Supabase
                 subscribeRealtimeChanges();
 
             } catch (err) {
@@ -633,20 +612,50 @@
             `;
         }
 
-        // --- MANEJO DE ALMACENAMIENTO Y SINCRONIZACIÓN CLOUD ---
-        function loadSettingsFromStorage() {
-            const stored = localStorage.getItem(SETTINGS_KEY);
-            if (stored) {
-                try {
-                    appSettings = JSON.parse(stored);
-                } catch (e) {
-                    appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+        // --- CARGAR Y GUARDAR CONFIGURACIÓN EN LA NUBE SUPABASE ---
+        async function loadSettingsFromCloud() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('configuracion')
+                    .select('*')
+                    .eq('id', 'global_settings')
+                    .maybeSingle();
+
+                if (data) {
+                    appSettings = {
+                        clinicName: data.clinic_name || DEFAULT_SETTINGS.clinicName,
+                        currencySymbol: data.currency_symbol || DEFAULT_SETTINGS.currencySymbol,
+                        logoBase64: data.logo_base64 || '',
+                        clinicalStates: data.clinical_states || DEFAULT_SETTINGS.clinicalStates,
+                        tariffs: data.tariffs || DEFAULT_SETTINGS.tariffs
+                    };
+                    localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+                } else {
+                    const stored = localStorage.getItem(SETTINGS_KEY);
+                    if (stored) appSettings = JSON.parse(stored);
                 }
+            } catch (err) {
+                console.warn("No se pudo cargar la configuración de la nube, usando local:", err);
             }
         }
 
-        function saveSettingsToStorage() {
+        async function saveSettingsToCloud() {
             localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+            try {
+                await supabaseClient
+                    .from('configuracion')
+                    .upsert({
+                        id: 'global_settings',
+                        clinic_name: appSettings.clinicName,
+                        currency_symbol: appSettings.currencySymbol,
+                        logo_base64: appSettings.logoBase64,
+                        clinical_states: appSettings.clinicalStates,
+                        tariffs: appSettings.tariffs,
+                        updated_at: new Date().toISOString()
+                    });
+            } catch (err) {
+                console.error("Error al guardar ajustes en la nube:", err);
+            }
         }
 
         function loadPatientDataFromStorage() {
@@ -679,7 +688,6 @@
 
             if (isRemoteUpdate) return; 
 
-            // Debounce para guardar en Supabase en tiempo real
             clearTimeout(syncTimer);
             syncTimer = setTimeout(syncPatientToSupabase, 400);
         }
@@ -705,7 +713,7 @@
                         updated_at: new Date().toISOString()
                     });
 
-                if (error) console.error("Error al sincronizar con Supabase:", error);
+                if (error) console.error("Error al sincronizar paciente con Supabase:", error);
 
                 syncBadge.className = "bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1";
                 syncBadge.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Nube Sincronizada`;
@@ -1616,11 +1624,11 @@
             showAlert("Logo Eliminado", "Se ha quitado el logo personalizado.");
         }
 
-        function saveSettingsFromModal() {
+        async function saveSettingsFromModal() {
             appSettings.clinicName = document.getElementById('settingClinicName').value || 'OdontoFlow Studio';
             appSettings.currencySymbol = document.getElementById('settingCurrency').value || '$';
 
-            saveSettingsToStorage();
+            await saveSettingsToCloud();
             applySettingsToUI();
             renderStateSelectDropdown();
             renderLegend();
@@ -1630,13 +1638,13 @@
             updateTotals();
 
             closeSettingsModal();
-            showAlert("Ajustes Guardados", "Los cambios se han guardado permanentemente.");
+            showAlert("Ajustes Guardados", "Los cambios se han guardado permanentemente en la nube.");
         }
 
-        function restoreDefaultSettings() {
-            if (confirm("¿Desea restablecer toda la configuración de estados, tarifas y nombre a los valores de fábrica?")) {
+        async function restoreDefaultSettings() {
+            if (confirm("¿Desea restablecer toda la configuración a los valores de fábrica?")) {
                 appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-                saveSettingsToStorage();
+                await saveSettingsToCloud();
                 applySettingsToUI();
                 renderStateSelectDropdown();
                 renderLegend();
@@ -1645,12 +1653,12 @@
                 renderBudgetTable();
                 updateTotals();
                 closeSettingsModal();
-                showAlert("Restablecido", "Se restauró la configuración de fábrica.");
+                showAlert("Restablecido", "Se restauró la configuración de fábrica en la nube.");
             }
         }
 
         function confirmResetPatient() {
-            if (confirm("¿Desea crear un nuevo paciente? Se limpiará la pantalla para registrar una nueva historia clínica.")) {
+            if (confirm("¿Desea crear un nuevo paciente? Se limpiará la pantalla para registrar una nueva historia clínica manteniéndose tus configuraciones.")) {
                 initEmptyPatient();
                 savePatientDataToStorage();
                 selectedToothNum = null;
@@ -1665,7 +1673,7 @@
                 renderBudgetTable();
                 updateTotals();
                 updatePrintFicha();
-                showAlert("Nuevo Paciente", "Se creó una nueva ficha clínica vacía lista para guardar en la nube.");
+                showAlert("Nuevo Paciente", "Se creó una nueva ficha clínica vacía manteniendo tus tarifas y configuración guardadas en la nube.");
             }
         }
 
