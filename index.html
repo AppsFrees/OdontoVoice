@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OdontoFlow Studio Pro - Suite Clínica Odontológica Integral</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -57,7 +55,6 @@
 </head>
 <body class="h-full flex flex-col font-sans text-slate-800 antialiased">
 
-    <!-- HEADER DE NAVEGACIÓN -->
     <header class="no-print bg-indigo-700 text-white shadow-lg p-4 flex flex-wrap justify-between items-center gap-4">
         <div class="flex items-center space-x-3">
             <div id="headerLogoContainer" class="bg-white/10 p-2 rounded-xl flex items-center justify-center min-w-10 min-h-10 max-w-12 max-h-12 overflow-hidden">
@@ -88,9 +85,13 @@
                 <i class="fa-solid fa-calendar-days"></i>
                 <span>Agenda</span>
             </button>
-            <button onclick="switchTab('loyalty')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer animate-pulse">
+            <button onclick="switchTab('loyalty')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-award"></i>
-                <span>Fidelización (20 Pilares)</span>
+                <span>Fidelización (60)</span>
+            </button>
+            <button onclick="switchTab('marketing')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer animate-pulse">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Marketing WA (60)</span>
             </button>
             <button onclick="openPatientListModal()" class="bg-indigo-800 hover:bg-indigo-900 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-folder-open"></i>
@@ -104,7 +105,7 @@
                 <i class="fa-solid fa-sliders"></i>
                 <span>Ajustes</span>
             </button>
-            <button onclick="printClinicalHistoryOnly()" class="bg-emerald-800 hover:bg-emerald-900 text-white text-xs px-3 py-2 rounded-xl font-medium transition flex items-center gap-1 shadow-xs cursor-pointer" title="Imprimir Historia Clínica y Odontograma (Sin Presupuesto)">
+            <button onclick="printClinicalHistoryOnly()" class="bg-emerald-800 hover:bg-emerald-900 text-white text-xs px-3 py-2 rounded-xl font-medium transition flex items-center gap-1 shadow-xs cursor-pointer" title="Imprimir Historia Clínica y Odontograma">
                 <i class="fa-solid fa-file-medical"></i>
                 <span>Imprimir HC</span>
             </button>
@@ -112,7 +113,7 @@
                 <i class="fa-solid fa-print"></i>
                 <span>Imprimir presupuesto</span>
             </button>
-            <button onclick="sendWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1 shadow-xs cursor-pointer">
+            <button onclick="sendWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
             </button>
             <button onclick="confirmResetPatient()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-xl font-medium transition flex items-center gap-1.5 shadow-xs cursor-pointer">
@@ -122,7 +123,6 @@
         </div>
     </header>
 
-    <!-- CUERPO PRINCIPAL -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-3 md:p-6 overflow-y-auto">
 
         <!-- VISTA 1: DASHBOARD DE CONTROL -->
@@ -160,11 +160,11 @@
 
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pacientes VIP / Retención</p>
-                        <h3 class="text-2xl font-bold text-amber-600 mt-1" id="dashTotalVip">0</h3>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Campañas Activas</p>
+                        <h3 class="text-2xl font-bold text-amber-600 mt-1">120</h3>
                     </div>
                     <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-award"></i>
+                        <i class="fa-solid fa-bullhorn"></i>
                     </div>
                 </div>
             </div>
@@ -206,15 +206,15 @@
                                 <span class="text-xs font-bold text-slate-800 block">Agenda de Citas</span>
                                 <span class="text-[10px] text-slate-500">Programar y recordar</span>
                             </button>
+                            <button onclick="switchTab('marketing')" class="p-4 rounded-xl border border-emerald-100 bg-emerald-50/50 hover:bg-emerald-100/50 transition text-left cursor-pointer">
+                                <i class="fa-solid fa-bullhorn text-emerald-600 text-lg mb-2 block"></i>
+                                <span class="text-xs font-bold text-slate-800 block">Marketing (60)</span>
+                                <span class="text-[10px] text-slate-500">Campañas conversiones</span>
+                            </button>
                             <button onclick="switchTab('loyalty')" class="p-4 rounded-xl border border-amber-100 bg-amber-50/50 hover:bg-amber-100/50 transition text-left cursor-pointer">
                                 <i class="fa-solid fa-award text-amber-600 text-lg mb-2 block"></i>
-                                <span class="text-xs font-bold text-slate-800 block">Fidelización (20 Pilares)</span>
-                                <span class="text-[10px] text-slate-500">Estrategias disruptivas</span>
-                            </button>
-                            <button onclick="switchTab('clinical')" class="p-4 rounded-xl border border-emerald-100 bg-emerald-50/50 hover:bg-emerald-100/50 transition text-left cursor-pointer">
-                                <i class="fa-solid fa-file-invoice-dollar text-emerald-600 text-lg mb-2 block"></i>
-                                <span class="text-xs font-bold text-slate-800 block">Cotizar Tratamientos</span>
-                                <span class="text-[10px] text-slate-500">Presupuestos y descuentos</span>
+                                <span class="text-xs font-bold text-slate-800 block">Fidelización (60)</span>
+                                <span class="text-[10px] text-slate-500">Retención de pacientes</span>
                             </button>
                             <button onclick="openSettingsModal()" class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-left cursor-pointer">
                                 <i class="fa-solid fa-sliders text-slate-600 text-lg mb-2 block"></i>
@@ -283,25 +283,55 @@
             </div>
         </div>
 
-        <!-- VISTA 3: MÓDULO DE FIDELIZACIÓN (20 PILARES CON GESTOR DE IMÁGENES Y VARIACIONES DE MENSAJES) -->
+        <!-- VISTA 3: MÓDULO DE FIDELIZACIÓN (60 PILARES) -->
         <div id="viewLoyalty" class="hidden space-y-6 no-print">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4 mb-4">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                 <div>
                     <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
-                        <i class="fa-solid fa-award text-amber-500"></i> Suite de Fidelización & Retención (20 Pilares Innovadores con Editor de Imágenes y Plantillas)
+                        <i class="fa-solid fa-award text-amber-500"></i> Suite de Fidelización & Retención (60 Estrategias)
                     </h2>
-                    <p class="text-xs text-slate-400">Personaliza las imágenes, edita plantillas o genera nuevas variaciones para tus campañas por WhatsApp.</p>
+                    <p class="text-xs text-slate-400">Personaliza y envía campañas de mantenimiento y fidelización directas a WhatsApp.</p>
                 </div>
-                <button onclick="openLoyaltyManagerModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 cursor-pointer shadow-sm">
-                    <i class="fa-solid fa-sliders"></i> Gestionar Imágenes y Plantillas
-                </button>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="searchLoyaltyInput" oninput="renderLoyaltyCards()" placeholder="Buscar por nombre o especialidad..." class="w-full border border-slate-300 rounded-xl pl-8 pr-3 py-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <button onclick="openLoyaltyManagerModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2 cursor-pointer shadow-sm whitespace-nowrap">
+                        <i class="fa-solid fa-sliders"></i> Gestionar 60 Pilares
+                    </button>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="loyaltyCardsGrid">
             </div>
         </div>
 
-        <!-- VISTA 4: FICHA CLÍNICA, ODONTOGRAMA & ANAMNESIS (MODELO COMPLETO) -->
+        <!-- VISTA 4: MÓDULO DE MARKETING WHATSAPP (60 CAMPAÑAS ESPECIALIZADAS) -->
+        <div id="viewMarketing" class="hidden space-y-6 no-print">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-bullhorn text-emerald-600"></i> Campañas de Marketing WhatsApp (60 Estrategias)
+                    </h2>
+                    <p class="text-xs text-slate-400">Estrategias de conversión diseñadas para generar consultas y agendar citas.</p>
+                </div>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="searchMarketingInput" oninput="renderMarketingCards()" placeholder="Buscar campaña por especialidad..." class="w-full border border-slate-300 rounded-xl pl-8 pr-3 py-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <button onclick="openMarketingManagerModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2 cursor-pointer shadow-sm whitespace-nowrap">
+                        <i class="fa-solid fa-sliders"></i> Gestionar 60 Campañas
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="marketingCardsGrid">
+            </div>
+        </div>
+
+        <!-- VISTA 5: FICHA CLÍNICA, ODONTOGRAMA & ANAMNESIS -->
         <div id="viewClinical" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- PANEL IZQUIERDO: ANAMNESIS & DATOS -->
@@ -824,19 +854,19 @@
         </div>
     </div>
 
-    <!-- MODAL GESTOR DE FIDELIZACIÓN (IMÁGENES Y VARIACIONES DE MENSAJES) -->
+    <!-- MODAL GESTOR DE FIDELIZACIÓN (60 PILARES) -->
     <div id="loyaltyManagerModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
             <div class="bg-amber-600 text-white p-4 flex justify-between items-center">
                 <h2 class="text-base font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> Gestor de Imágenes y Plantillas de Fidelización (20 Pilares)
+                    <i class="fa-solid fa-sliders"></i> Gestor de Fidelización (60 Pilares)
                 </h2>
                 <button onclick="closeLoyaltyManagerModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div class="p-4 bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
-                Selecciona un pilar, cambia su imagen (mediante URL o cargando archivo) y administra sus plantillas o genera nuevas variaciones.
+                Personaliza la imagen, edita o añade nuevas variaciones de mensajes para tus 60 estrategias de retención.
             </div>
             <div class="p-6 overflow-y-auto flex-1 space-y-6 text-xs" id="loyaltyManagerList">
             </div>
@@ -847,12 +877,35 @@
         </div>
     </div>
 
+    <!-- MODAL GESTOR DE MARKETING (60 CAMPAÑAS) -->
+    <div id="marketingManagerModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-emerald-600 text-white p-4 flex justify-between items-center">
+                <h2 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-bullhorn"></i> Gestor de Campañas de Marketing (60 Estrategias)
+                </h2>
+                <button onclick="closeMarketingManagerModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
+                Personaliza la imagen, edita o añade nuevas variaciones para tus 60 campañas de marketing conversivo.
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 space-y-6 text-xs" id="marketingManagerList">
+            </div>
+            <div class="bg-slate-100 p-4 flex justify-end gap-2 border-t border-slate-200">
+                <button onclick="closeMarketingManagerModal()" class="px-5 py-2 bg-slate-300 hover:bg-slate-400 text-slate-700 rounded-xl font-semibold cursor-pointer">Cerrar</button>
+                <button onclick="saveMarketingCustomizations()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold cursor-pointer">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL CONSENTIMIENTOS -->
     <div id="consentModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
             <div class="bg-indigo-700 text-white p-4 flex justify-between items-center">
                 <h2 class="text-base font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-file-signature"></i> Consentimientos Informados (Editables & Personalizados)
+                    <i class="fa-solid fa-file-signature"></i> Consentimientos Informados (Editables)
                 </h2>
                 <button onclick="closeConsentModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
@@ -1002,13 +1055,13 @@
         </button>
     </div>
 
-    <!-- SCRIPT DE LA APLICACIÓN -->
     <script>
-        const SETTINGS_KEY = 'odontoflow_settings_local_v11';
-        const CURRENT_PATIENT_KEY = 'odontoflow_current_patient_local_v11';
-        const ALL_PATIENTS_KEY = 'odontoflow_all_patients_local_v11';
-        const APPOINTMENTS_KEY = 'odontoflow_appointments_local_v7';
-        const LOYALTY_CONFIG_KEY = 'odontoflow_loyalty_config_v1';
+        const SETTINGS_KEY = 'odontoflow_settings_local_v15';
+        const CURRENT_PATIENT_KEY = 'odontoflow_current_patient_local_v15';
+        const ALL_PATIENTS_KEY = 'odontoflow_all_patients_local_v15';
+        const APPOINTMENTS_KEY = 'odontoflow_appointments_local_v15';
+        const LOYALTY_CONFIG_KEY = 'odontoflow_loyalty_config_v5';
+        const MARKETING_CONFIG_KEY = 'odontoflow_marketing_config_v3';
 
         const COLOR_OPTIONS = [
             { id: 'rojo', label: 'Rojo (Caries / Alerta)', bgClass: 'color-rojo', dotClass: 'dot-rojo', hex: '#ef4444' },
@@ -1038,175 +1091,125 @@
                 { id: 't3', name: 'Corona de Porcelana / Zirconio', price: 250.00 },
                 { id: 't4', name: 'Extracción Dental Simple', price: 35.00 },
                 { id: 't5', name: 'Limpieza Ultrasónica + Profilaxis', price: 30.00 },
-                { id: 't6', name: 'Blanqueamiento Dental LED', price: 100.00 }
+                { id: 't6', name: 'Blanqueamiento Dental LED', price: 100.00 },
+                { id: 't7', name: 'Alineadores Ortodoncia Invisible', price: 1200.00 },
+                { id: 't8', name: 'Implante Dental Titanio + Corona', price: 750.00 }
             ]
         };
 
+        // 60 PILARES DE FIDELIZACIÓN (INNOVADORES, MULTIESPECIALIDAD)
         const DEFAULT_LOYALTY_PILLARS = [
-            {
-                id: 1, name: "1. Recall Preventivo (6M)", badge: "Profilaxis",
-                imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "¡Hola *[PATIENT_NAME]*! Le escribimos de *OdontoFlow* para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo. 🦷✨",
-                    "Hola *[PATIENT_NAME]*, tu sonrisa en *OdontoFlow* merece estar impecable. ¿Agendamos tu control semestral de limpieza? 🦷🌿"
-                ]
-            },
-            {
-                id: 2, name: "2. Membresía VIP Puntos", badge: "Canjeables",
-                imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "Hola *[PATIENT_NAME]*, sus puntos acumulados en *OdontoFlow* le acreditan como socio VIP. Canjéelos hoy por un blanqueamiento o limpieza de cortesía. 👑",
-                    "¡Hola *[PATIENT_NAME]*! Tienes puntos acumulados en *OdontoFlow* listos para canjear por beneficios estéticos. ¡Consúltanos! 💎"
-                ]
-            },
-            {
-                id: 3, name: "3. Obsequio Cumpleaños", badge: "Cupón 20%",
-                imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "¡Feliz Cumpleaños, *[PATIENT_NAME]*! 🎂 De parte de *OdontoFlow* le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉",
-                    "¡En tu día especial, *[PATIENT_NAME]*! Disfruta 20% de descuento en tratamientos de *OdontoFlow* como regalo de cumpleaños. 🎁✨"
-                ]
-            },
-            {
-                id: 4, name: "4. Check-in Post-Op (48h)", badge: "Cuidado",
-                imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "Hola *[PATIENT_NAME]*, le escribimos desde *OdontoFlow* para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia? 💙",
-                    "Estimado/a *[PATIENT_NAME]*, ¿cómo se siente tras su intervención en *OdontoFlow*? Estamos aquí ante cualquier duda. 🩺"
-                ]
-            },
-            {
-                id: 5, name: "5. Programa Referidos", badge: "Amigos",
-                imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "¡Hola *[PATIENT_NAME]*! En *OdontoFlow* por cada amigo que nos recomiende, ambos obtienen 15% de descuento en su próxima consulta. ¡Comparta sonrisas!",
-                    "Comparte salud con tus amigos, *[PATIENT_NAME]*: en *OdontoFlow* ambos reciben 15% de descuento por cada referido. 🤝"
-                ]
-            },
-            {
-                id: 6, name: "6. Bono Aniversario Sonrisa", badge: "1 Año",
-                imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "¡Feliz Aniversario de Sonrisa, *[PATIENT_NAME]*! 🦷 Hoy se cumple 1 año de su tratamiento en *OdontoFlow*. Control de mantenimiento sin costo.",
-                    "Recordamos 1 año de tu rehabilitación en *OdontoFlow*, *[PATIENT_NAME]*. Te invitamos a tu control anual sin costo. 🌟"
-                ]
-            },
-            {
-                id: 7, name: "7. Retoque Estético Anual", badge: "Blanqueamiento",
-                imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "Hola *[PATIENT_NAME]*, le escribimos de *OdontoFlow* para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento.",
-                    "Mantén tu tono radiante con el retoque estético anual de blanqueamiento en *OdontoFlow*, *[PATIENT_NAME]*! ✨"
-                ]
-            },
-            {
-                id: 8, name: "8. Sorteo Mensual Activos", badge: "Sorteo",
-                imageUrl: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "¡Hola *[PATIENT_NAME]*! Participa en el sorteo mensual de *OdontoFlow* para una limpieza dental de cortesía. ¡Mucha suerte!",
-                    "¡Estás participando en el sorteo mensual de *OdontoFlow* para una limpieza dental gratuita, *[PATIENT_NAME]*! 🎟️"
-                ]
-            },
-            {
-                id: 9, name: "9. Club Familiar OdontoFam", badge: "Familia",
-                imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "Hola *[PATIENT_NAME]*, en *OdontoFlow* hemos lanzado el Club Familiar OdontoFam. Registre a su familia y obtenga tarifas preferenciales.",
-                    "Cónoce el Club Familiar *OdontoFam* en *OdontoFlow* y protege la sonrisa de toda tu familia con tarifas especiales, *[PATIENT_NAME]*! 👨‍👩‍👧‍👦"
-                ]
-            },
-            {
-                id: 10, name: "10. Protocolo 'Adiós Fobia'", badge: "Confort",
-                imageUrl: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "Hola *[PATIENT_NAME]*, le recordamos nuestro protocolo especial Adiós Fobia en *OdontoFlow* con aromaterapia y confort.",
-                    "¿Miedo al dentista? En *OdontoFlow* te cuidamos con nuestro protocolo *Adiós Fobia*, *[PATIENT_NAME]*. Relax total 🌿"
-                ]
-            },
-            {
-                id: 11, name: "11. Reto Sonrisa 21 Días", badge: "Gamificación",
-                imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🎮 ¡Hola *[PATIENT_NAME]*! Te invitamos al Reto Sonrisa 21 Días de *OdontoFlow*. Envíanos captura usando hilo dental y acumula puntos.",
-                    "¡Acepta el Reto Sonrisa 21 Días en *OdontoFlow*, *[PATIENT_NAME]*! Mejora tus hábitos de higiene y gana premios."
-                ]
-            },
-            {
-                id: 12, name: "12. Pasaporte 'Spa & Sonrisa'", badge: "Alianzas",
-                imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "✨ Hola *[PATIENT_NAME]*, obtén tu Pasaporte Spa & Sonrisa de *OdontoFlow* con 20% de descuento en spas aliadas de la ciudad.",
-                    "Disfruta de beneficios exclusivos en spas aliados con tu Pasaporte *Spa & Sonrisa* de *OdontoFlow*, *[PATIENT_NAME]*! 🌿"
-                ]
-            },
-            {
-                id: 13, name: "13. Alerta Sensibilidad", badge: "Predictivo",
-                imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🌡️ Hola *[PATIENT_NAME]*, debido al clima extremo, *OdontoFlow* te recuerda usar pasta para dientes sensibles y evitar cambios térmicos.",
-                    "Protégete de la sensibilidad dental en días de clima extremo con los consejos de *OdontoFlow*, *[PATIENT_NAME]*! 🧊☕"
-                ]
-            },
-            {
-                id: 14, name: "14. Beca Sonrisa Universitaria", badge: "Estudiantes",
-                imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🎓 ¡Hola *[PATIENT_NAME]*! Conoce la Beca Sonrisa Universitaria de *OdontoFlow*, con planes de pago diferido para jóvenes.",
-                    "Estudiante: accede a la Beca Sonrisa Universitaria en *OdontoFlow* con aranceles flexibles, *[PATIENT_NAME]*! 📚"
-                ]
-            },
-            {
-                id: 15, name: "15. Póliza Urgencia 24/7 VIP", badge: "Exclusivo",
-                imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🛡️ Hola *[PATIENT_NAME]*, tu membresía en *OdontoFlow* incluye acceso a nuestra Póliza de Urgencia 24/7 VIP por WhatsApp.",
-                    "Tranquilidad absoluta con la Póliza de Urgencia 24/7 VIP de *OdontoFlow*, *[PATIENT_NAME]*! Ante cualquier emergencia, contáctanos. 🚨"
-                ]
-            },
-            {
-                id: 16, name: "16. Embajadores Digitales", badge: "Social",
-                imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "📢 ¡Hola *[PATIENT_NAME]*! Únete al círculo de Embajadores Digitales de *OdontoFlow*. Comparte tu experiencia y gana créditos.",
-                    "Comparte tu reseña en redes sobre *OdontoFlow* y conviértete en Embajador Digital para ganar créditos, *[PATIENT_NAME]*! ⭐"
-                ]
-            },
-            {
-                id: 17, name: "17. Auditoría de Higiene (Video)", badge: "Telediagnóstico",
-                imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "📹 Hola *[PATIENT_NAME]*, te invitamos a una Auditoría de Higiene por Video en *OdontoFlow*. Envíanos un video corto de cepillado.",
-                    "Mejora tu técnica de cepillado con nuestra Auditoría de Higiene por Video gratuita en *OdontoFlow*, *[PATIENT_NAME]*! 🪥"
-                ]
-            },
-            {
-                id: 18, name: "18. Garantía 'Cero Caries 2A'", badge: "Lealtad Total",
-                imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🏆 ¡Felicidades *[PATIENT_NAME]*! Estás calificado para la Garantía Cero Caries 2A de *OdontoFlow*: profilaxis anual bonificada.",
-                    "Recompensamos tu constancia con la garantía Cero Caries 2A en *OdontoFlow*, *[PATIENT_NAME]*! Mantén tus controles al día. ✨"
-                ]
-            },
-            {
-                id: 19, name: "19. Kit Ecológico 'Eco-Smile'", badge: "Sustentable",
-                imageUrl: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "🌿 ¡Hola *[PATIENT_NAME]*! En tu próxima visita a *OdontoFlow* te entregaremos de regalo tu Kit Eco-Smile de bambú biodegradable.",
-                    "Cuidamos el planeta en *OdontoFlow*: recibe tu kit Eco-Smile de bambú en tu visita anual, *[PATIENT_NAME]*! 🌍"
-                ]
-            },
-            {
-                id: 20, name: "20. Simulación Sonrisa Digital", badge: "Estética Avanzada",
-                imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80",
-                templates: [
-                    "✨ ¡Hola *[PATIENT_NAME]*! Te invitamos a una sesión de Asesoría de Diseño de Sonrisa Digital (DSD) en *OdontoFlow* sin costo.",
-                    "Visualiza tu nueva sonrisa antes de empezar con nuestra Asesoría DSD en *OdontoFlow*, *[PATIENT_NAME]*! 💻😁"
-                ]
-            }
+            { id: 1, name: "1. Recall Preventivo (6M)", badge: "Profilaxis", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["¡Hola [PATIENT_NAME]! Le escribimos de [CLINIC_NAME] para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo hoy mismo. 🦷✨", "Hola [PATIENT_NAME], tu sonrisa en [CLINIC_NAME] merece estar impecable. ¿Agendamos tu control semestral de limpieza? 🦷🌿"] },
+            { id: 2, name: "2. Membresía VIP Puntos", badge: "Canjeables", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["Hola [PATIENT_NAME], sus puntos acumulados en [CLINIC_NAME] le acreditan como socio VIP. Canjéelos hoy por un blanqueamiento o limpieza de cortesía. 👑"] },
+            { id: 3, name: "3. Obsequio Cumpleaños", badge: "Cupón 20%", imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80", templates: ["¡Feliz Cumpleaños, [PATIENT_NAME]! 🎂 De parte de [CLINIC_NAME] le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉"] },
+            { id: 4, name: "4. Check-in Post-Op (48h)", badge: "Cuidado", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["Hola [PATIENT_NAME], le escribimos desde [CLINIC_NAME] para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia? 💙"] },
+            { id: 5, name: "5. Programa Referidos", badge: "Amigos", imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", templates: ["¡Hola [PATIENT_NAME]! En [CLINIC_NAME] por cada amigo que nos recomiende, ambos obtienen 15% de descuento en su próxima consulta. ¡Comparta sonrisas!"] },
+            { id: 6, name: "6. Bono Aniversario Sonrisa", badge: "1 Año", imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", templates: ["¡Feliz Aniversario de Sonrisa, [PATIENT_NAME]! 🦷 Hoy se cumple 1 año de su tratamiento en [CLINIC_NAME]. Control de mantenimiento sin costo."] },
+            { id: 7, name: "7. Retoque Estético Anual", badge: "Blanqueamiento", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["Hola [PATIENT_NAME], le escribimos de [CLINIC_NAME] para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento."] },
+            { id: 8, name: "8. Sorteo Mensual Activos", badge: "Sorteo", imageUrl: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80", templates: ["¡Hola [PATIENT_NAME]! Participa en el sorteo mensual de [CLINIC_NAME] para una limpieza dental de cortesía. ¡Mucha suerte!"] },
+            { id: 9, name: "9. Club Familiar OdontoFam", badge: "Familia", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["Hola [PATIENT_NAME], en [CLINIC_NAME] hemos lanzado el Club Familiar OdontoFam. Registre a su familia y obtenga tarifas preferenciales."] },
+            { id: 10, name: "10. Protocolo 'Adiós Fobia'", badge: "Confort", imageUrl: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80", templates: ["Hola [PATIENT_NAME], le recordamos nuestro protocolo especial Adiós Fobia en [CLINIC_NAME] con aromaterapia y confort."] },
+            { id: 11, name: "11. Reto Sonrisa 21 Días", badge: "Gamificación", imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80", templates: ["🎮 ¡Hola [PATIENT_NAME]! Te invitamos al Reto Sonrisa 21 Días de [CLINIC_NAME]. Envíanos captura usando hilo dental y acumula puntos."] },
+            { id: 12, name: "12. Pasaporte 'Spa & Sonrisa'", badge: "Alianzas", imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", templates: ["✨ Hola [PATIENT_NAME], obtén tu Pasaporte Spa & Sonrisa de [CLINIC_NAME] con 20% de descuento en spas aliadas de la ciudad."] },
+            { id: 13, name: "13. Alerta Sensibilidad", badge: "Predictivo", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["🌡️ Hola [PATIENT_NAME], debido al clima extremo, [CLINIC_NAME] te recuerda usar pasta para dientes sensibles y evitar cambios térmicos."] },
+            { id: 14, name: "14. Beca Sonrisa Universitaria", badge: "Estudiantes", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🎓 ¡Hola [PATIENT_NAME]! Conoce la Beca Sonrisa Universitaria de [CLINIC_NAME], con planes de pago diferido para jóvenes."] },
+            { id: 15, name: "15. Póliza Urgencia 24/7 VIP", badge: "Exclusivo", imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", templates: ["🛡️ Hola [PATIENT_NAME], tu membresía en [CLINIC_NAME] incluye acceso a nuestra Póliza de Urgencia 24/7 VIP por WhatsApp."] },
+            { id: 16, name: "16. Embajadores Digitales", badge: "Social", imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80", templates: ["📢 ¡Hola [PATIENT_NAME]! Únete al círculo de Embajadores Digitales de [CLINIC_NAME]. Comparte tu experiencia y gana créditos."] },
+            { id: 17, name: "17. Auditoría Higiene (Video)", badge: "Telediagnóstico", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["📹 Hola [PATIENT_NAME], te invitamos a una Auditoría de Higiene por Video en [CLINIC_NAME]. Envíanos un video corto de cepillado."] },
+            { id: 18, name: "18. Garantía 'Cero Caries 2A'", badge: "Lealtad", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["🏆 ¡Felicidades [PATIENT_NAME]! Estás calificado para la Garantía Cero Caries 2A de [CLINIC_NAME]: profilaxis anual bonificada."] },
+            { id: 19, name: "19. Kit Ecológico 'Eco-Smile'", badge: "Sustentable", imageUrl: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80", templates: ["🌿 ¡Hola [PATIENT_NAME]! En tu próxima visita a [CLINIC_NAME] te entregaremos de regalo tu Kit Eco-Smile de bambú biodegradable."] },
+            { id: 20, name: "20. Simulación Sonrisa 3D", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["✨ ¡Hola [PATIENT_NAME]! Te invitamos a una sesión de Asesoría de Diseño de Sonrisa Digital (DSD) en [CLINIC_NAME] sin costo."] },
+            { id: 21, name: "21. Control Post-Ortodoncia", badge: "Ortodoncia", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["🦷 ¡Hola [PATIENT_NAME]! Verificamos el estado de tus retenedores de ortodoncia en [CLINIC_NAME] para asegurar tu sonrisa."] },
+            { id: 22, name: "22. Mantenimiento de Implantes", badge: "Implantes", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["🔩 ¡Hola [PATIENT_NAME]! Es hora del control anual periimplantario en [CLINIC_NAME] para garantizar la salud de tus implantes dentales."] },
+            { id: 23, name: "23. Control de Carillas & Resinas", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["✨ Hola [PATIENT_NAME], te invitamos a tu pulido y chequeo semestral de carillas y restauraciones estéticas en [CLINIC_NAME]."] },
+            { id: 24, name: "24. Ajuste Prótesis Fija/Removible", badge: "Prótesis", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🦷 ¡Hola [PATIENT_NAME]! ¿Sientes algún desajuste en tu prótesis dental? En [CLINIC_NAME] te realizamos un rebase y ajuste sin costo de membresía."] },
+            { id: 25, name: "25. Sello Infantil Anticaries", badge: "Pediatría", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["👶 ¡Hola [PATIENT_NAME]! Es momento de renovar los selladores de fosas y fisuras de tus hijos en [CLINIC_NAME]. Prevención 100%."] },
+            { id: 26, name: "26. Evaluación de Ortopedia", badge: "Ortopedia", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["📏 Hola [PATIENT_NAME], el crecimiento óseo de tus hijos se supervisa a tiempo en [CLINIC_NAME] con ortopedia maxilar preventiva."] },
+            { id: 27, name: "27. Monitoreo Endodoncias (12M)", badge: "Endodoncia", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["⚡ ¡Hola [PATIENT_NAME]! Realizamos control radiográfico de rutina de tu tratamiento de conducto previo en [CLINIC_NAME]. Todo en orden."] },
+            { id: 28, name: "28. Club Senior 'Sonrisa Sana'", badge: "Senior", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["👵 Hola [PATIENT_NAME], nuestro Club Senior en [CLINIC_NAME] ofrece atención preferencial y beneficios en salud bucal para adultos mayores."] },
+            { id: 29, name: "29. Alerta Cambio Cepillo Trimestral", badge: "Hábitos", imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", templates: ["🪥 ¡Hola [PATIENT_NAME]! Ya pasaron 3 meses. Es hora de cambiar las fibras de tu cepillo dental. Pásate por [CLINIC_NAME] por tu repuesto eco."] },
+            { id: 30, name: "30. Programa Encías Sanas", badge: "Periodoncia", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["💧 Hola [PATIENT_NAME], mantén tus encías libres de sangrado con nuestro programa de mantenimiento periodontal en [CLINIC_NAME]."] },
+            { id: 31, name: "31. Escudo Nocturno (Bruxismo)", badge: "ATM", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["🌙 Hola [PATIENT_NAME], revisamos el desgaste y ajuste de tu placa miofuncional de bruxismo en [CLINIC_NAME]. ¡Protege tus dientes!"] },
+            { id: 32, name: "32. Certificado Bucal Escolar", badge: "Escolar", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🎒 ¡Hola [PATIENT_NAME]! Obtén el certificado oficial de salud bucal escolar para tus hijos en [CLINIC_NAME] con revisión rápida."] },
+            { id: 33, name: "33. Kit de Viajero OdontoFlow", badge: "Viajes", imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", templates: ["✈️ ¡Hola [PATIENT_NAME]! ¿Viajas pronto? Pasa por [CLINIC_NAME] a retirar tu mini kit de viaje con hilo dental y pasta de cortesía."] },
+            { id: 34, name: "34. Padrino / Madrina Dental", badge: "Comunidad", imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", templates: ["🤝 Hola [PATIENT_NAME], apadrina la salud dental de un familiar directo y obtén un 30% de beneficio cruzado en [CLINIC_NAME]."] },
+            { id: 35, name: "35. Testeo Aliento Fresco (Halitosis)", badge: "Bienestar", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🍃 ¡Hola [PATIENT_NAME]! Conoce nuestro protocolo especializado de aliento fresco y limpieza lingual profunda en [CLINIC_NAME]."] },
+            { id: 36, name: "36. Bono Cirugía Terceros Molares", badge: "Cirugía", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["🦷 Hola [PATIENT_NAME], recordamos tu retiro de puntos post-cirugía de muelas de juicio en [CLINIC_NAME]. ¡Estamos contigo!"] },
+            { id: 37, name: "37. Membresía Deportista (Bucal)", badge: "Deportes", imageUrl: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80", templates: ["⚽ ¡Hola [PATIENT_NAME]! Diseñamos tu protector bucal deportivo profesional a medida en [CLINIC_NAME]. ¡Protege tus dientes jugando!"] },
+            { id: 38, name: "38. Taller Higiene Gestantes", badge: "Maternidad", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🌸 Mamá gestante: en [CLINIC_NAME] te invitamos a nuestro taller gratuito de prevención de gingivitis en el embarazo, [PATIENT_NAME]."] },
+            { id: 39, name: "39. Asesoría Blanqueamiento Casero", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["✨ Hola [PATIENT_NAME], supervisamos tu kit de aclaramiento dental ambulatorio en [CLINIC_NAME] con cubetas a medida."] },
+            { id: 40, name: "40. Check-up Anual VIP", badge: "Exclusivo", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["👑 ¡Hola [PATIENT_NAME]! Tu membresía VIP en [CLINIC_NAME] incluye un Check-up Integral Anual con escáner y profilaxis sin cargo."] },
+            // NUEVOS 20 PILARES (41-60)
+            { id: 41, name: "41. Control 3D Alineadores", badge: "Invisalign", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["🦷 Hola [PATIENT_NAME], toca tu escaneo de avance para tus alineadores invisibles en [CLINIC_NAME]. ¡Veamos ese progreso!"] },
+            { id: 42, name: "42. Garantía Coronas Zirconio", badge: "Prótesis", imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", templates: ["💎 [PATIENT_NAME], en [CLINIC_NAME] protegemos tu inversión. Agenda tu revisión anual para mantener la garantía de tus coronas de zirconio."] },
+            { id: 43, name: "43. Membresía Blanco Eterno", badge: "Retoques", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["✨ ¡Hola [PATIENT_NAME]! Con tu membresía en [CLINIC_NAME], tu retoque de blanqueamiento semestral te espera. ¡Agenda tu cita de brillo!"] },
+            { id: 44, name: "44. Sello Pediátrico Vuelta al Cole", badge: "Pediatría", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🎒 ¡Hola [PATIENT_NAME]! Preparando la vuelta a clases con salud dental. Selladores y flúor de cortesía en la revisión de tus peques en [CLINIC_NAME]."] },
+            { id: 45, name: "45. Limpieza Sónica Prótesis", badge: "Mantenimiento", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🚿 Hola [PATIENT_NAME], trae tu prótesis removible a [CLINIC_NAME] para una limpieza ultrasónica profunda gratuita en tu revisión."] },
+            { id: 46, name: "46. Aniversario 'Fin de Brackets'", badge: "Celebración", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["🎉 ¡Hola [PATIENT_NAME]! Hoy cumples otro año desde que te quitamos los brackets. ¡Celebra con nosotros en [CLINIC_NAME] con un pulido gratis!"] },
+            { id: 47, name: "47. Control Férula Quirúrgica", badge: "Implantes", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["🔩 Hola [PATIENT_NAME], chequeo de avance post-implantes en [CLINIC_NAME]. Revisaremos la cicatrización y adaptación de la férula."] },
+            { id: 48, name: "48. Nutrición & Salud Dental", badge: "Gestantes", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🍎 Hola [PATIENT_NAME], en [CLINIC_NAME] cuidamos tu embarazo. Descarga aquí nuestra guía de nutrición para proteger el esmalte de tu bebé."] },
+            { id: 49, name: "49. Monitoreo Endodóntico 2A", badge: "Endodoncia", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["⚡ [PATIENT_NAME], han pasado 2 años de tu endodoncia en [CLINIC_NAME]. Te obsequiamos una radiografía de control para asegurar su éxito."] },
+            { id: 50, name: "50. Día Sonrisa Senior", badge: "Senior", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["👵👴 En [CLINIC_NAME] celebramos a nuestros adultos mayores, [PATIENT_NAME]. Este mes, 30% off en rebases y ajustes de prótesis."] },
+            { id: 51, name: "51. Programa 'Primer Dientito'", badge: "Bebés", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["👶 ¡Felicidades [PATIENT_NAME] por el primer diente de tu bebé! Agenda en [CLINIC_NAME] su primera orientación pediátrica gratuita."] },
+            { id: 52, name: "52. Taller Hábitos Infantiles", badge: "Prevención", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🧸 Hola [PATIENT_NAME], únete al taller online de [CLINIC_NAME] sobre cómo evitar deformaciones por chupón o succión de dedo en tus peques."] },
+            { id: 53, name: "53. Pulido Brillante de Carillas", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["💎 Hola [PATIENT_NAME], devuelve el brillo original a tus carillas cerámicas con nuestra sesión de pulido premium en [CLINIC_NAME]."] },
+            { id: 54, name: "54. Pack Familia Plus (4x3)", badge: "Promoción", imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", templates: ["👨‍👩‍👧‍👦 ¡Hola [PATIENT_NAME]! En [CLINIC_NAME] las familias ganan. Si agendan 4 limpiezas preventivas, ¡una es totalmente gratis!"] },
+            { id: 55, name: "55. Revisión Articulación y Postura", badge: "ATM", imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80", templates: ["🧠 Hola [PATIENT_NAME], tu mordida afecta tu postura. Realízate una evaluación de ATM integral en [CLINIC_NAME] para aliviar contracturas."] },
+            { id: 56, name: "56. Sonrisa Sin Humo", badge: "Salud", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🚭 Hola [PATIENT_NAME], en [CLINIC_NAME] apoyamos tu salud. Únete al programa Sonrisa Sin Humo para recuperar el tono natural y sanar tus encías."] },
+            { id: 57, name: "57. Monitoreo Ortopedia Maxilar", badge: "Ortopedia", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["📏 ¡Hola [PATIENT_NAME]! Toca revisión y ajuste de los aparatos de ortopedia de tus hijos en [CLINIC_NAME]. ¡El crecimiento no espera!"] },
+            { id: 58, name: "58. Reciclaje de Cepillos", badge: "Ecológico", imageUrl: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80", templates: ["🌍 Hola [PATIENT_NAME], trae tu cepillo de plástico viejo a [CLINIC_NAME] para reciclar, y te obsequiaremos uno nuevo de bambú sustentable."] },
+            { id: 59, name: "59. Control Perno/Corona", badge: "Rehabilitación", imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", templates: ["👑 Hola [PATIENT_NAME], revisaremos el estado de tu perno y corona en [CLINIC_NAME] para prevenir cualquier fractura radicular a futuro."] },
+            { id: 60, name: "60. Certificado Paciente Estrella", badge: "Gamificación", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["⭐ ¡Hola [PATIENT_NAME]! Tu hijo fue un súper paciente hoy. Pasa por recepción en [CLINIC_NAME] a retirar su diploma de Paciente Estrella."] }
+        ];
+
+        // 60 CAMPAÑAS DE MARKETING (INNOVADORAS Y CONVERSIVAS)
+        const DEFAULT_MARKETING_CAMPAIGNS = [
+            { id: 1, name: "1. Efecto Espejo (Blanqueamiento Flash)", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["✨ ¿Listo para deslumbrar? En [CLINIC_NAME] tenemos nuestra sesión Flash de Blanqueamiento LED con 30% off esta semana. ¡Reserva respondiendo aquí! 🦷💬"] },
+            { id: 2, name: "2. Cero Caries Familiar", badge: "Prevención", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["👨‍👩‍👧‍👦 ¡Protege a tus hijos! Pack preventivo en [CLINIC_NAME]: selladores y profilaxis familiar. ¡Escríbenos para agendar! 🛡️✨"] },
+            { id: 3, name: "3. Diagnóstico Digital 360°", badge: "Tecnología", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["💻 ¡Conoce el estado real de tu boca! En [CLINIC_NAME] realizamos diagnóstico 360° con cámara intraoral. Agenda tu evaluación hoy. 🔍😁"] },
+            { id: 4, name: "4. Diseño de Sonrisa DSD", badge: "Alta Gama", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["💎 ¿Te imaginas tu sonrisa ideal? En [CLINIC_NAME] creamos tu Diseño de Sonrisa Digital (DSD) antes de tocar un diente. ¡Agenda tu simulación! ✨"] },
+            { id: 5, name: "5. Adiós Bruxismo ATM", badge: "Bienestar", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["🌿 ¿Amaneces con dolor mandibular? En [CLINIC_NAME] diseñamos tu placa de descanso miofuncional. ¡Agenda tu evaluación anti-estrés! 😌💤"] },
+            { id: 6, name: "6. Ortodoncia Invisible Express", badge: "Ortodoncia", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["😁 Alinea tus dientes sin que lo noten. En [CLINIC_NAME] trabajamos con ortodoncia invisible. ¡Agenda tu valoración de alineación hoy! 🚀"] },
+            { id: 7, name: "7. Urgencia 0 (Atención Inmediata)", badge: "Urgencias", imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80", templates: ["🚨 ¿Dolor dental imprevisto? En [CLINIC_NAME] tenemos espacio reservado para urgencias. ¡Escríbenos para atenderte hoy mismo! ⚡🦷"] },
+            { id: 8, name: "8. Bono Cumpleaños VIP", badge: "Promoción", imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80", templates: ["🎂 ¡Regálate una sonrisa en tu cumple, [PATIENT_NAME]! [CLINIC_NAME] te da 25% de descuento en profilaxis. ¡Agenda tu regalo! 🎉"] },
+            { id: 9, name: "9. Check-up Ejecutivo Exprés", badge: "Empresas", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["⏱️ ¿Poco tiempo? Agenda tu Check-up Ejecutivo Exprés en [CLINIC_NAME]: revisión en solo 30 minutos optimizados para tu horario. 💼🦷"] },
+            { id: 10, name: "10. Rescate Dental (Implantes)", badge: "Rehabilitación", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["🦷 Recupera la firmeza y estética con implantes dentales en [CLINIC_NAME]. ¡Agenda tu tomografía y valoración quirúrgica! 💎"] },
+            { id: 11, name: "11. Mamis Radiantes & Seguras", badge: "Maternidad", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🤰 En el embarazo el cuidado bucal es vital. En [CLINIC_NAME] te atendemos con protocolos seguros para gestantes. ¡Agenda tu control! 👶💕"] },
+            { id: 12, name: "12. Doble Sonrisa (En Pareja)", badge: "Dúo", imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", templates: ["👥 ¡Ven con tu pareja a la limpieza semestral en [CLINIC_NAME] y obtengan 20% de descuento. ¡Escríbanos para agendar el dúo! 🥂✨"] },
+            { id: 13, name: "13. Renueva tus Calzas Oscuras", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["🖤 ¿Obturaciones de amalgama oscuras? Cámbiate a resinas estéticas invisibles en [CLINIC_NAME]. ¡Renueva tu sonrisa hoy! ✨🦷"] },
+            { id: 14, name: "14. Kit Aliento Fresco 100%", badge: "Salud Bucal", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🌿 ¿Sangrado de encías? En [CLINIC_NAME] realizamos limpieza periodontal profunda para garantizarte aliento fresco. ¡Agenda tu cita! 🍃"] },
+            { id: 15, name: "15. Sonrisa Teens", badge: "Adolescentes", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🎒 Prevención de caries y estética juvenil en [CLINIC_NAME]. ¡Ayuda a tus hijos a sonreír con seguridad! 🎓😁"] },
+            { id: 16, name: "16. Pack Novios / Bodas", badge: "Eventos", imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", templates: ["💍 Luce radiante en tus fotos con el Pack Novios de [CLINIC_NAME] (Blanqueamiento + Pulido). ¡Escríbenos para agendar! 🥂✨"] },
+            { id: 17, name: "17. Alivio Térmico (Sensibilidad)", badge: "Sensibilidad", imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80", templates: ["🍦 ¿Dolor al tomar frío? En [CLINIC_NAME] aplicamos selladores desensibilizantes profesionales. ¡Agenda tu alivio hoy! ☕⚡"] },
+            { id: 18, name: "18. Auditoría Cepillado", badge: "Educación", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["🪥 En [CLINIC_NAME] te regalamos una Auditoría de Técnica de Cepillado con tinción de placa. ¡Escríbenos para agendar tu test! 🔬"] },
+            { id: 19, name: "19. Reactivación 'Te Extrañamos'", badge: "Reactivación", imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80", templates: ["👋 ¡Hola! Ha pasado tiempo desde tu último chequeo. Vuelve a [CLINIC_NAME] con un bono especial en tu profilaxis anual. 💙"] },
+            { id: 20, name: "20. Flash Sale Matutino", badge: "Horarios", imageUrl: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80", templates: ["🌅 Si agendas en [CLINIC_NAME] de 8:00 a 10:00 AM, obtén 20% off en tu limpieza. ¡Cupos limitados por las mañanas! ☕🚀"] },
+            // NUEVAS 20 CAMPAÑAS DE MARKETING (41-60)
+            { id: 41, name: "41. Open Day Ortodoncia Invisible", badge: "Invisalign", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["😁 ¡Este viernes es Open Day en [CLINIC_NAME]! Escaneo 3D gratuito para ortodoncia invisible. ¡Reserva tu cupo antes que se agoten! 🚀"] },
+            { id: 42, name: "42. Promoción Implantes (Mes S/Intereses)", badge: "Implantes", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["🔩 Recupera tu masticación en [CLINIC_NAME] con Implantes de Alta Gama a meses sin intereses. ¡Solicita tu evaluación quirúrgica hoy! 💳"] },
+            { id: 43, name: "43. Plan Renove de Prótesis", badge: "Prótesis", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["🦷 ¿Tu placa te baila o lastima? Aprovecha el Plan Renove de Prótesis en [CLINIC_NAME] y vuelve a comer con total seguridad. ¡Cotiza aquí! 🍽️"] },
+            { id: 44, name: "44. Blanqueamiento + SPA Facial", badge: "Alianzas", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["✨ Relájate y brilla. Por tu Blanqueamiento LED en [CLINIC_NAME], recibe un voucher de limpieza facial en SPA asociado. ¡Doble belleza! 🧖‍♀️"] },
+            { id: 45, name: "45. Carillas de Resina Inyectada", badge: "Estética", imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80", templates: ["💎 Transforma tu sonrisa en 1 sola cita con Carillas de Resina Inyectada en [CLINIC_NAME]. Cero desgaste, máximo brillo. ¡Agenda valoración! 🌟"] },
+            { id: 46, name: "46. Campaña Universitarios 30% OFF", badge: "Estudiantes", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🎓 Muestra tu carnet universitario en [CLINIC_NAME] y obtén 30% off en limpieza profunda y curaciones estéticas. ¡Estudia con sonrisa sana! 📚"] },
+            { id: 47, name: "47. Pack 'Adiós Dolor' (Endodoncia)", badge: "Endodoncia", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["⚡ No pierdas esa muela. En [CLINIC_NAME] realizamos endodoncia mecanizada e indolora en 1 sola sesión. ¡Cero dolor, máxima precisión! 🩺"] },
+            { id: 48, name: "48. Odontopediatría 'Sin Miedo'", badge: "Pediatría", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🎈 ¿Pánico al dentista? En [CLINIC_NAME] somos expertos en psicología infantil. Trae a tus peques para una experiencia mágica y sin lágrimas. 🧸"] },
+            { id: 49, name: "49. Ortopedia Interceptiva Gratis", badge: "Ortopedia", imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", templates: ["🧒 Previene deformaciones faciales. Evaluación de ortopedia maxilar GRATUITA para niños de 5 a 8 años esta semana en [CLINIC_NAME]. 📏"] },
+            { id: 50, name: "50. Black Friday Dental", badge: "Promoción", imageUrl: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80", templates: ["🖤 ¡Revolución de precios en [CLINIC_NAME]! Hasta 40% OFF en blanqueamientos y resinas estéticas solo por esta semana. ¡Aprovéchalo! 🛍️"] },
+            { id: 51, name: "51. Segunda Opinión (Salva tu diente)", badge: "Diagnóstico", imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80", templates: ["🛡️ ¿Te dijeron que hay que extraer? Consulta una Segunda Opinión Gratuita en [CLINIC_NAME]. Haremos todo lo posible por salvar tu diente. 🦷"] },
+            { id: 52, name: "52. Día de la Madre (Regala Sonrisas)", badge: "Fechas Especiales", imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", templates: ["🌸 Mamá merece lo mejor. Regálale una Gift Card de Estética Dental en [CLINIC_NAME] con 20% de descuento adicional. ¡Agenda su sorpresa! 🎁"] },
+            { id: 53, name: "53. Día del Padre (Rehabilitación)", badge: "Fechas Especiales", imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80", templates: ["👔 Devuélvele la confianza a papá para sonreír y comer. Promoción especial del Día del Padre en Implantes y Prótesis en [CLINIC_NAME]. 👨‍👧‍👦"] },
+            { id: 54, name: "54. Campaña 'Encías Sanas' (Láser)", badge: "Periodoncia", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80", templates: ["💧 Tratamiento periodontal avanzado con tecnología láser en [CLINIC_NAME]. Cero bisturí, recuperación inmediata. ¡Dile adiós al sangrado! 🌿"] },
+            { id: 55, name: "55. Ortodoncia Zafiro/Cerámica", badge: "Estética Adultos", imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80", templates: ["✨ Brackets totalmente transparentes. Descubre la Ortodoncia de Zafiro en [CLINIC_NAME], ideal para adultos que buscan discreción total. 💎"] },
+            { id: 56, name: "56. Implantes All-on-4 (Charla Online)", badge: "Implantes", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["💻 Descubre cómo tener dientes fijos en 24h. Charla informativa online gratuita sobre Implantes All-on-4 por los cirujanos de [CLINIC_NAME]. 🔩"] },
+            { id: 57, name: "57. Sonrisa de Boda Extrema", badge: "Eventos", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["💍 Plan 3 meses antes de tu boda. Ortodoncia express, carillas y blanqueamiento. El paquete nupcial de [CLINIC_NAME] te dejará radiante. 🥂"] },
+            { id: 58, name: "58. Simulación 3D Gratuita", badge: "Tecnología", imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80", templates: ["🚀 Mira el 'Antes y Después' de tu boca antes de empezar. Agenda tu Simulación Computarizada en [CLINIC_NAME] sin costo alguno. 💻"] },
+            { id: 59, name: "59. Eliminación de Manchas AirFlow", badge: "Limpieza", imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80", templates: ["☕ ¿Manchas de café o tabaco difíciles? Prueba la limpieza con aeropulidor AirFlow en [CLINIC_NAME]. Indoloro y altamente eficaz. 🌬️"] },
+            { id: 60, name: "60. Flash Sale: 2x1 en Selladores", badge: "Pediatría", imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80", templates: ["🧸 ¡Protección x2! Este fin de semana, selladores preventivos 2x1 para niños en [CLINIC_NAME]. ¡Trae a los hermanitos y blinda sus muelas! 🛡️"] }
         ];
 
         let appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
         let loyaltyConfig = JSON.parse(JSON.stringify(DEFAULT_LOYALTY_PILLARS));
+        let marketingConfig = JSON.parse(JSON.stringify(DEFAULT_MARKETING_CAMPAIGNS));
         let activeStateId = 'caries_gen';
         let currentDentition = 'adult';
         let selectedToothNum = null;
@@ -1245,6 +1248,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             loadSettingsFromStorage();
             loadLoyaltyConfigFromStorage();
+            loadMarketingConfigFromStorage();
             loadPatientDataFromStorage();
             applySettingsToUI();
             renderStateSelectDropdown();
@@ -1253,6 +1257,7 @@
             renderBudgetTable();
             updateTotals();
             renderLoyaltyCards();
+            renderMarketingCards();
             switchTab('dashboard');
         });
 
@@ -1260,6 +1265,7 @@
             document.getElementById('viewDashboard').classList.add('hidden');
             document.getElementById('viewAgenda').classList.add('hidden');
             document.getElementById('viewLoyalty').classList.add('hidden');
+            document.getElementById('viewMarketing').classList.add('hidden');
             document.getElementById('viewClinical').classList.add('hidden');
 
             if (tabName === 'dashboard') {
@@ -1271,12 +1277,14 @@
             } else if (tabName === 'loyalty') {
                 renderLoyaltyCards();
                 document.getElementById('viewLoyalty').classList.remove('hidden');
+            } else if (tabName === 'marketing') {
+                renderMarketingCards();
+                document.getElementById('viewMarketing').classList.remove('hidden');
             } else {
                 document.getElementById('viewClinical').classList.remove('hidden');
             }
         }
 
-        // --- GESTIÓN DE FIDELIZACIÓN (20 PILARES CON IMÁGENES Y VARIACIONES) ---
         function loadLoyaltyConfigFromStorage() {
             const stored = localStorage.getItem(LOYALTY_CONFIG_KEY);
             if (stored) {
@@ -1295,38 +1303,41 @@
             if (!grid) return;
             grid.innerHTML = '';
 
+            const term = document.getElementById('searchLoyaltyInput')?.value.toLowerCase() || '';
             const patientList = getMasterPatientsList();
 
-            loyaltyConfig.forEach(pillar => {
+            const filtered = loyaltyConfig.filter(p => p.name.toLowerCase().includes(term) || p.badge.toLowerCase().includes(term));
+
+            filtered.forEach(pillar => {
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between";
+                card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between transition hover:shadow-md";
                 
-                let templatesOptionsHtml = pillar.templates.map((t, idx) => `<option value="${idx}">Variación ${idx + 1}: "${t.substring(0, 45)}..."</option>`).join('');
+                let templatesOptionsHtml = pillar.templates.map((t, idx) => `<option value="${idx}">Variación ${idx + 1}: "${t.substring(0, 42)}..."</option>`).join('');
 
                 card.innerHTML = `
                     <div>
-                        <div class="h-32 overflow-hidden bg-slate-100 relative">
-                            <img src="${pillar.imageUrl}" alt="${pillar.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80'">
+                        <div class="h-32 overflow-hidden bg-slate-100 relative group">
+                            <img src="${pillar.imageUrl}" alt="${pillar.name}" class="w-full h-full object-cover transition transform group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80'">
                             <span class="absolute top-2 right-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow">${pillar.badge}</span>
                         </div>
                         <div class="p-4">
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1"><i class="fa-solid fa-award text-amber-500"></i> ${pillar.name}</h4>
                             <div class="mt-2 space-y-1">
-                                <label class="text-[10px] font-bold text-slate-400 uppercase">Seleccionar Variación de Mensaje:</label>
-                                <select id="tmplSelect_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-slate-50 outline-none font-medium">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Variación de Mensaje:</label>
+                                <select id="tmplSelect_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-slate-50 outline-none font-medium text-slate-700">
                                     ${templatesOptionsHtml}
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="p-4 pt-0 space-y-2 border-t border-slate-100 mt-2">
-                        <select id="loyaltySel_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-white outline-none">
+                        <select id="loyaltySel_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-white outline-none font-semibold text-slate-600">
                             <option value="">-- Seleccionar Paciente --</option>
                             ${patientList.map(p => `<option value="${p.id}">${p.name || 'Sin Nombre'} (${p.phone || 'Sin tel'})</option>`).join('')}
                         </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatientCustom(${pillar.id})" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-2 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroupCustom(${pillar.id})" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-2 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <button onclick="sendLoyaltyPatientCustom(${pillar.id})" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[10px] py-2 px-1 rounded-xl font-bold truncate cursor-pointer transition shadow-xs"><i class="fa-brands fa-whatsapp text-sm mb-0.5 block"></i> Enviar Paciente</button>
+                            <button onclick="sendLoyaltyGroupCustom(${pillar.id})" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-[10px] py-2 px-1 rounded-xl font-bold truncate cursor-pointer transition shadow-xs"><i class="fa-solid fa-users text-sm mb-0.5 block"></i> Enviar Grupo</button>
                         </div>
                     </div>
                 `;
@@ -1344,7 +1355,7 @@
                 
                 let templatesInputsHtml = pillar.templates.map((t, tIdx) => `
                     <div class="flex gap-2 items-center">
-                        <input type="text" value="${escapeHtml(t)}" oninput="updatePillarTemplateText(${pIdx}, ${tIdx}, this.value)" class="flex-1 border border-slate-300 rounded-lg p-1.5 text-xs bg-white">
+                        <input type="text" value="${escapeHtml(t)}" oninput="updatePillarTemplateText(${pIdx}, ${tIdx}, this.value)" class="flex-1 border border-slate-300 rounded-lg p-1.5 text-xs bg-white text-slate-700">
                         <button onclick="removePillarTemplate(${pIdx}, ${tIdx})" class="text-rose-500 hover:text-rose-700 text-xs px-2 py-1 cursor-pointer"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 `).join('');
@@ -1352,22 +1363,22 @@
                 div.innerHTML = `
                     <div class="flex justify-between items-center font-bold text-slate-800">
                         <span>${pillar.name}</span>
-                        <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">ID: ${pillar.id}</span>
+                        <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">ID: ${pillar.id}</span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-semibold text-slate-500 mb-1">Imagen (URL de Enlace)</label>
-                            <input type="text" value="${pillar.imageUrl}" oninput="updatePillarImageUrl(${pIdx}, this.value)" class="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white">
+                            <label class="block font-semibold text-slate-500 mb-1">Imagen (URL de Enlace HTTPS)</label>
+                            <input type="text" value="${pillar.imageUrl.startsWith('data:') ? '' : pillar.imageUrl}" placeholder="https://..." oninput="updatePillarImageUrl(${pIdx}, this.value)" class="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white text-slate-700">
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-500 mb-1">O Subir Archivo Local</label>
-                            <input type="file" accept="image/*" onchange="uploadPillarImageFile(event, ${pIdx})" class="text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-indigo-50 file:text-indigo-700 cursor-pointer">
+                            <label class="block font-semibold text-slate-500 mb-1">O Subir Archivo Local (No recomendado web)</label>
+                            <input type="file" accept="image/*" onchange="uploadPillarImageFile(event, ${pIdx})" class="w-full text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-indigo-50 file:text-indigo-700 cursor-pointer">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <div class="flex justify-between items-center">
                             <label class="font-semibold text-slate-500">Variaciones de Mensaje (${pillar.templates.length})</label>
-                            <button onclick="addPillarTemplate(${pIdx})" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-pointer">+ Añadir Nueva Variación</button>
+                            <button onclick="addPillarTemplate(${pIdx})" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-pointer shadow-xs">+ Añadir Nueva Variación</button>
                         </div>
                         <div class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
                             ${templatesInputsHtml}
@@ -1386,9 +1397,7 @@
             document.getElementById('loyaltyManagerModal').classList.add('hidden');
         }
 
-        function updatePillarImageUrl(pIdx, url) {
-            loyaltyConfig[pIdx].imageUrl = url;
-        }
+        function updatePillarImageUrl(pIdx, url) { if (url) loyaltyConfig[pIdx].imageUrl = url; }
 
         function uploadPillarImageFile(event, pIdx) {
             const file = event.target.files[0];
@@ -1396,26 +1405,21 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 loyaltyConfig[pIdx].imageUrl = e.target.result;
-                showAlert("Imagen Cargada", "La imagen se cargó correctamente en la plantilla.");
+                showAlert("Imagen Cargada", "La imagen local se cargó. Recuerda que para envíos directos web es mejor usar enlaces HTTPS.");
             };
             reader.readAsDataURL(file);
         }
 
-        function updatePillarTemplateText(pIdx, tIdx, val) {
-            loyaltyConfig[pIdx].templates[tIdx] = val;
-        }
+        function updatePillarTemplateText(pIdx, tIdx, val) { loyaltyConfig[pIdx].templates[tIdx] = val; }
 
         function removePillarTemplate(pIdx, tIdx) {
-            if (loyaltyConfig[pIdx].templates.length <= 1) {
-                showAlert("Aviso", "Cada pilar debe mantener al menos una plantilla de mensaje.");
-                return;
-            }
+            if (loyaltyConfig[pIdx].templates.length <= 1) { showAlert("Aviso", "Cada estrategia debe tener al menos una plantilla."); return; }
             loyaltyConfig[pIdx].templates.splice(tIdx, 1);
             openLoyaltyManagerModal();
         }
 
         function addPillarTemplate(pIdx) {
-            loyaltyConfig[pIdx].templates.push("¡Hola *[PATIENT_NAME]*! Nueva variación de mensaje creada para *OdontoFlow*. 🦷✨");
+            loyaltyConfig[pIdx].templates.push("¡Hola [PATIENT_NAME]! Nueva variación creada para [CLINIC_NAME]. 🦷✨");
             openLoyaltyManagerModal();
         }
 
@@ -1423,7 +1427,7 @@
             saveLoyaltyConfigToStorage();
             renderLoyaltyCards();
             closeLoyaltyManagerModal();
-            showAlert("Fidelización Guardada", "Se actualizaron las imágenes y plantillas exitosamente.");
+            showAlert("Fidelización Guardada", "Se actualizaron las campañas de fidelización exitosamente.");
         }
 
         function sendLoyaltyPatientCustom(pillarId) {
@@ -1446,9 +1450,11 @@
             const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
             const rawMsg = (pillar && pillar.templates && pillar.templates[tmplIdx]) || (pillar && pillar.templates && pillar.templates[0]) || "";
             const personalizedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, targetPatient.name || 'Paciente').replace(/\[CLINIC_NAME\]/g, appSettings.clinicName || 'OdontoFlow Studio');
-            const imageUrl = (pillar && pillar.imageUrl) || '';
-            const fullMsg = imageUrl ? `${personalizedMsg}\n\n🖼️ Imagen informativa:\n${imageUrl}` : personalizedMsg;
-
+            
+            let imageUrl = (pillar && pillar.imageUrl) ? pillar.imageUrl : '';
+            if (imageUrl.startsWith('data:')) imageUrl = ''; 
+            
+            const fullMsg = imageUrl ? `${personalizedMsg}\n\n🖼️ Imagen:\n${imageUrl}` : personalizedMsg;
             window.open(`https://wa.me/${targetPatient.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(fullMsg)}`, '_blank');
         }
 
@@ -1458,21 +1464,209 @@
             const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
             const rawMsg = (pillar && pillar.templates && pillar.templates[tmplIdx]) || (pillar && pillar.templates && pillar.templates[0]) || "";
             const clinic = appSettings.clinicName || 'OdontoFlow Studio';
-            const imageUrl = (pillar && pillar.imageUrl) || '';
+            
+            let imageUrl = (pillar && pillar.imageUrl) ? pillar.imageUrl : '';
+            if (imageUrl.startsWith('data:')) imageUrl = ''; 
 
             const formattedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, 'Comunidad').replace(/\[CLINIC_NAME\]/g, clinic);
-            const groupMsg = imageUrl ? `📢 *${clinic}* (Campaña Oficial)\n\n${formattedMsg}\n\n🖼️ Imagen informativa:\n${imageUrl}` : `📢 *${clinic}* (Campaña Oficial)\n\n${formattedMsg}`;
+            const groupMsg = imageUrl ? `📢 *${clinic}*\n\n${formattedMsg}\n\n🖼️ Enlace Imagen:\n${imageUrl}` : `📢 *${clinic}*\n\n${formattedMsg}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(groupMsg)}`, '_blank');
         }
 
-        // --- DASHBOARD & OTROS ---
+        function loadMarketingConfigFromStorage() {
+            const stored = localStorage.getItem(MARKETING_CONFIG_KEY);
+            if (stored) {
+                try { marketingConfig = JSON.parse(stored); } catch (e) { marketingConfig = JSON.parse(JSON.stringify(DEFAULT_MARKETING_CAMPAIGNS)); }
+            } else {
+                marketingConfig = JSON.parse(JSON.stringify(DEFAULT_MARKETING_CAMPAIGNS));
+            }
+        }
+
+        function saveMarketingConfigToStorage() {
+            localStorage.setItem(MARKETING_CONFIG_KEY, JSON.stringify(marketingConfig));
+        }
+
+        function renderMarketingCards() {
+            const grid = document.getElementById('marketingCardsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const term = document.getElementById('searchMarketingInput')?.value.toLowerCase() || '';
+            const patientList = getMasterPatientsList();
+
+            const filtered = marketingConfig.filter(p => p.name.toLowerCase().includes(term) || p.badge.toLowerCase().includes(term));
+
+            filtered.forEach(camp => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between transition hover:shadow-md";
+                
+                let templatesOptionsHtml = camp.templates.map((t, idx) => `<option value="${idx}">Opción ${idx + 1}: "${t.substring(0, 42)}..."</option>`).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="h-32 overflow-hidden bg-slate-100 relative group">
+                            <img src="${camp.imageUrl}" alt="${camp.name}" class="w-full h-full object-cover transition transform group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80'">
+                            <span class="absolute top-2 right-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow">${camp.badge}</span>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1"><i class="fa-solid fa-bullhorn text-emerald-600"></i> ${camp.name}</h4>
+                            <div class="mt-2 space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Texto Promocional:</label>
+                                <select id="mktTmplSelect_${camp.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-slate-50 outline-none font-medium text-slate-700">
+                                    ${templatesOptionsHtml}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2 border-t border-slate-100 mt-2">
+                        <select id="mktSel_${camp.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-white outline-none font-semibold text-slate-600">
+                            <option value="">-- Enviar a Contacto --</option>
+                            ${patientList.map(p => `<option value="${p.id}">${p.name || 'Sin Nombre'} (${p.phone || 'Sin tel'})</option>`).join('')}
+                        </select>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <button onclick="sendMarketingPatient(${camp.id})" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[10px] py-2 px-1 rounded-xl font-bold truncate cursor-pointer transition shadow-xs"><i class="fa-brands fa-whatsapp text-sm mb-0.5 block"></i> Enviar Contacto</button>
+                            <button onclick="sendMarketingGroup(${camp.id})" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-[10px] py-2 px-1 rounded-xl font-bold truncate cursor-pointer transition shadow-xs"><i class="fa-solid fa-users text-sm mb-0.5 block"></i> Enviar Grupo</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openMarketingManagerModal() {
+            const listContainer = document.getElementById('marketingManagerList');
+            listContainer.innerHTML = '';
+
+            marketingConfig.forEach((camp, pIdx) => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3";
+                
+                let templatesInputsHtml = camp.templates.map((t, tIdx) => `
+                    <div class="flex gap-2 items-center">
+                        <input type="text" value="${escapeHtml(t)}" oninput="updateMktTemplateText(${pIdx}, ${tIdx}, this.value)" class="flex-1 border border-slate-300 rounded-lg p-1.5 text-xs bg-white text-slate-700">
+                        <button onclick="removeMktTemplate(${pIdx}, ${tIdx})" class="text-rose-500 hover:text-rose-700 text-xs px-2 py-1 cursor-pointer"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `).join('');
+
+                div.innerHTML = `
+                    <div class="flex justify-between items-center font-bold text-slate-800">
+                        <span>${camp.name}</span>
+                        <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-100">ID: ${camp.id}</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Imagen (URL de Enlace HTTPS)</label>
+                            <input type="text" value="${camp.imageUrl.startsWith('data:') ? '' : camp.imageUrl}" placeholder="https://..." oninput="updateMktImageUrl(${pIdx}, this.value)" class="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white text-slate-700">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">O Subir Archivo Local (No recomendado web)</label>
+                            <input type="file" accept="image/*" onchange="uploadMktImageFile(event, ${pIdx})" class="w-full text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <label class="font-semibold text-slate-500">Variaciones de Texto (${camp.templates.length})</label>
+                            <button onclick="addMktTemplate(${pIdx})" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-pointer shadow-xs">+ Añadir Nueva Variación</button>
+                        </div>
+                        <div class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            ${templatesInputsHtml}
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            document.getElementById('marketingManagerModal').classList.remove('hidden');
+            document.getElementById('marketingManagerModal').classList.add('flex');
+        }
+
+        function closeMarketingManagerModal() {
+            document.getElementById('marketingManagerModal').classList.remove('flex');
+            document.getElementById('marketingManagerModal').classList.add('hidden');
+        }
+
+        function updateMktImageUrl(pIdx, url) { if (url) marketingConfig[pIdx].imageUrl = url; }
+
+        function uploadMktImageFile(event, pIdx) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                marketingConfig[pIdx].imageUrl = e.target.result;
+                showAlert("Imagen Cargada", "Imagen local guardada en la campaña de marketing.");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateMktTemplateText(pIdx, tIdx, val) { marketingConfig[pIdx].templates[tIdx] = val; }
+
+        function removeMktTemplate(pIdx, tIdx) {
+            if (marketingConfig[pIdx].templates.length <= 1) { showAlert("Aviso", "La campaña debe tener al menos un texto."); return; }
+            marketingConfig[pIdx].templates.splice(tIdx, 1);
+            openMarketingManagerModal();
+        }
+
+        function addMktTemplate(pIdx) {
+            marketingConfig[pIdx].templates.push("¡Promoción especial en [CLINIC_NAME]! Reserva tu cita ahora mismo. 🚀");
+            openMarketingManagerModal();
+        }
+
+        function saveMarketingCustomizations() {
+            saveMarketingConfigToStorage();
+            renderMarketingCards();
+            closeMarketingManagerModal();
+            showAlert("Marketing Guardado", "Se actualizaron las campañas exitosamente.");
+        }
+
+        function sendMarketingPatient(campId) {
+            const camp = marketingConfig.find(p => p.id === campId);
+            const sel = document.getElementById(`mktSel_${campId}`);
+            const tmplSel = document.getElementById(`mktTmplSelect_${campId}`);
+            
+            let targetPatient = null;
+            if (sel && sel.value) {
+                const list = getMasterPatientsList();
+                targetPatient = list.find(p => p.id === sel.value);
+            }
+            if (!targetPatient && patientData && patientData.phone) targetPatient = patientData;
+
+            if (!targetPatient || !targetPatient.phone) {
+                showAlert("Contacto Requerido", "Seleccione un contacto válido con número de teléfono.");
+                return;
+            }
+
+            const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
+            const rawMsg = (camp && camp.templates && camp.templates[tmplIdx]) || "";
+            const personalizedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, targetPatient.name || 'Estimado/a').replace(/\[CLINIC_NAME\]/g, appSettings.clinicName || 'OdontoFlow Studio');
+            
+            let imageUrl = (camp && camp.imageUrl) ? camp.imageUrl : '';
+            if (imageUrl.startsWith('data:')) imageUrl = '';
+
+            const fullMsg = imageUrl ? `${personalizedMsg}\n\n🖼️ Imagen Promocional:\n${imageUrl}` : personalizedMsg;
+            window.open(`https://wa.me/${targetPatient.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(fullMsg)}`, '_blank');
+        }
+
+        function sendMarketingGroup(campId) {
+            const camp = marketingConfig.find(p => p.id === campId);
+            const tmplSel = document.getElementById(`mktTmplSelect_${campId}`);
+            const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
+            const rawMsg = (camp && camp.templates && camp.templates[tmplIdx]) || "";
+            const clinic = appSettings.clinicName || 'OdontoFlow Studio';
+            
+            let imageUrl = (camp && camp.imageUrl) ? camp.imageUrl : '';
+            if (imageUrl.startsWith('data:')) imageUrl = '';
+
+            const formattedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, 'Amigos y Seguidores').replace(/\[CLINIC_NAME\]/g, clinic);
+            const groupMsg = imageUrl ? `📢 *${clinic}* (Campaña)\n\n${formattedMsg}\n\n🖼️ Enlace de Promoción:\n${imageUrl}` : `📢 *${clinic}* (Campaña)\n\n${formattedMsg}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(groupMsg)}`, '_blank');
+        }
+
         function updateDashboardData() {
             const list = getMasterPatientsList();
             const appointments = getAppointmentsList();
 
             document.getElementById('dashTotalPatients').innerText = list.length;
             document.getElementById('dashTotalAppointments').innerText = appointments.filter(a => a.status !== 'Cancelada').length;
-            document.getElementById('dashTotalVip').innerText = list.length;
 
             let grandTotalBudget = 0;
             list.forEach(p => {
@@ -1501,7 +1695,6 @@
             });
         }
 
-        // --- CÁLCULO EDAD ---
         function onDobChange(dobStr) {
             patientData.dob = dobStr;
             const calculatedAge = calculateAgeFromDOB(dobStr);
@@ -1519,7 +1712,6 @@
             return isNaN(age) || age < 0 ? '' : age;
         }
 
-        // --- IMPRESIÓN HC EXCLUSIVA ---
         function printClinicalHistoryOnly() {
             savePatientData();
             executeStorageSave();
@@ -1629,7 +1821,6 @@
             header.classList.remove('no-print');
         }
 
-        // --- AGENDA & CITAS ---
         function getAppointmentsList() {
             const stored = localStorage.getItem(APPOINTMENTS_KEY);
             if (stored) {
@@ -1755,7 +1946,6 @@
             window.open(`https://wa.me/${app.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // --- GESTIÓN DE CONFIGURACIÓN Y PACIENTES ---
         function loadSettingsFromStorage() {
             const stored = localStorage.getItem(SETTINGS_KEY);
             if (stored) {
@@ -2022,7 +2212,6 @@
             chevron.classList.toggle('rotate-180');
         }
 
-        // --- CONSENTIMIENTOS ---
         const CONSENT_TEMPLATES = {
             endo: {
                 title: "Consentimiento Informado para Tratamiento de Endodoncia",
@@ -2333,6 +2522,33 @@
             });
         }
 
+        function renderFindingsTable() {
+            const tbody = document.getElementById('findingsTableBody');
+            tbody.innerHTML = '';
+            document.getElementById('findingsCount').innerText = `${patientData.findings.length} Hallazgos`;
+
+            if (patientData.findings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400 italic">No hay hallazgos registrados. Seleccione piezas en el odontograma.</td></tr>`;
+                return;
+            }
+
+            patientData.findings.forEach(f => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 font-bold text-indigo-600">#${f.tooth}</td>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">${f.stateName}</td>
+                    <td class="py-2.5 px-3 text-slate-500">${f.note || '-'}</td>
+                    <td class="py-2.5 px-3 text-center no-print">
+                        <button onclick="transferFindingToBudget('${f.stateName}')" class="text-[10px] bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-md cursor-pointer transition">
+                            + A Presupuesto
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function transferFindingToBudget(treatmentName) {
             const tariff = appSettings.tariffs.find(t => t.name.toLowerCase() === treatmentName.toLowerCase());
             patientData.budgetItems.push({
@@ -2453,7 +2669,6 @@
             document.getElementById('grandTotalDisplay').innerText = (subtotal - discount).toFixed(2);
         }
 
-        // --- ASISTENTE DE VOZ ---
         let recognition = null;
         let isListening = false;
 
@@ -2550,7 +2765,6 @@
             showAlert("Comando Ejecutado", `Pieza #${foundTooth} actualizada a: ${matchedState.name}`);
         }
 
-        // --- GESTIÓN DE PACIENTES Y MODALES ---
         function openPatientListModal() {
             document.getElementById('patientListModal').classList.remove('hidden');
             document.getElementById('patientListModal').classList.add('flex');
