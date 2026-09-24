@@ -289,7 +289,7 @@
                 <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
                     <i class="fa-solid fa-award text-amber-500"></i> Suite de Fidelización & Retención Avanzada (20 Pilares Disruptivos e Innovadores)
                 </h2>
-                <p class="text-xs text-slate-400">Estrategias clínicas y digitales diseñadas para fidelizar, reactivar y convertir a sus pacientes en embajadores fieles de su clínica.</p>
+                <p class="text-xs text-slate-400">Seleccione un paciente específico o comparta directamente en sus grupos de WhatsApp institucionales.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -301,9 +301,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-clock-rotate-left text-emerald-600"></i> 1. Recall Preventivo (6M)</h4>
                             <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Profilaxis</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Recordatorio automático de profilaxis y control semestral.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Recordatorio automático de profilaxis y control semestral.</p>
                     </div>
-                    <button onclick="sendRecallPreventivo()" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Recall</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_1" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(1, '¡Hola *[PATIENT_NAME]*! Le escribimos de *OdontoFlow* para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo. 🦷✨')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Hola comunidad! Les recordamos la importancia de su profilaxis y control semestral preventivo en *OdontoFlow*. ¡Agenden su cita! 🦷✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 2 -->
@@ -313,9 +321,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-500"></i> 2. Membresía VIP Puntos</h4>
                             <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Canjeables</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Otorgue puntos canjeables por limpiezas o blanqueamientos de cortesía.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Puntos canjeables por limpiezas o blanqueamientos de cortesía.</p>
                     </div>
-                    <button onclick="sendVipPoints()" class="w-full bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Notificar Puntos</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_2" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(2, 'Hola *[PATIENT_NAME]*, sus puntos acumulados en *OdontoFlow* le acreditan como socio VIP. Canjéelos hoy por un blanqueamiento o limpieza de cortesía. 👑')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Atención pacientes VIP! Acumulen puntos en cada visita a *OdontoFlow* y canjéenlos por beneficios estéticos y limpiezas de cortesía. 👑')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 3 -->
@@ -325,9 +341,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-cake-candles text-rose-500"></i> 3. Obsequio Cumpleaños</h4>
                             <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Cupón 20%</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Saludo automático de felicitación y cupón especial en su día.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Saludo automático de felicitación y cupón especial en su día.</p>
                     </div>
-                    <button onclick="sendBirthdayGift()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Saludo</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_3" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(3, '¡Feliz Cumpleaños, *[PATIENT_NAME]*! 🎂 De parte de *OdontoFlow* le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Felicidades a todos los cumpleañeros del mes! Disfruten su beneficio exclusivo del 20% de descuento en tratamientos estéticos en *OdontoFlow*. 🎉')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 4 -->
@@ -337,9 +361,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-heart-pulse text-indigo-600"></i> 4. Check-in Post-Op (48h)</h4>
                             <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Cuidado</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Mensaje preventivo de control tras cirugías y endodoncias complejas.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Mensaje preventivo de control tras cirugías y endodoncias.</p>
                     </div>
-                    <button onclick="sendPostOpCheckin()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Check-in</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_4" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(4, 'Hola *[PATIENT_NAME]*, le escribimos desde *OdontoFlow* para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia? 💙')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Atención personalizada post-operatoria en *OdontoFlow*. Siempre pendientes de la evolución y bienestar de nuestros pacientes. 💙')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 5 -->
@@ -349,9 +381,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-emerald-600"></i> 5. Programa Referidos</h4>
                             <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Amigos</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Incentivo mutuo: 15% de descuento para el paciente y su invitado.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Incentivo mutuo: 15% de descuento para el paciente y su invitado.</p>
                     </div>
-                    <button onclick="sendReferralPromo()" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Promo Referido</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_5" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(5, '¡Hola *[PATIENT_NAME]*! En *OdontoFlow* por cada amigo que nos recomiende, ambos obtienen 15% de descuento en su próxima consulta. ¡Comparta sonrisas!')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Programa de referidos *OdontoFlow*! Recomienda a un amigo y obtengan ambos 15% de descuento en su próxima consulta. ¡Compartamos salud!')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 6 -->
@@ -361,9 +401,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-medal text-amber-600"></i> 6. Bono Aniversario Sonrisa</h4>
                             <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">1 Año</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Felicitación al cumplirse 1 año de su rehabilitación o corona.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Felicitación al cumplirse 1 año de su rehabilitación o corona.</p>
                     </div>
-                    <button onclick="sendAnniversaryPromo()" class="w-full bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Saludo</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_6" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(6, '¡Feliz Aniversario de Sonrisa, *[PATIENT_NAME]*! 🦷 Hoy se cumple 1 año de su tratamiento en *OdontoFlow*. Control de mantenimiento sin costo.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Celebramos el aniversario de las sonrisas rehabilitadas en *OdontoFlow*. Controles anuales de cortesía para nuestros pacientes fieles.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 7 -->
@@ -373,9 +421,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-sparkles text-purple-600"></i> 7. Retoque Estético Anual</h4>
                             <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Blanqueamiento</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Campaña anual para recordar el mantenimiento del tono blanco.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Campaña anual para recordar el mantenimiento del tono blanco.</p>
                     </div>
-                    <button onclick="sendWhiteningRecall()" class="w-full bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Recordar Retoque</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_7" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(7, 'Hola *[PATIENT_NAME]*, le escribimos de *OdontoFlow* para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Luce una sonrisa radiante todo el año con la campaña de retoque estético y blanqueamiento en *OdontoFlow*! ✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 8 -->
@@ -385,9 +441,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-ticket text-rose-600"></i> 8. Sorteo Mensual Activos</h4>
                             <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Sorteo</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Selección aleatoria mensual de un paciente para limpieza de cortesía.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Selección aleatoria mensual de un paciente para limpieza de cortesía.</p>
                     </div>
-                    <button onclick="pickMonthlyWinner()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-solid fa-wand-magic-sparkles"></i> Elegir Ganador</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_8" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(8, '¡Hola *[PATIENT_NAME]*! Participa en el sorteo mensual de *OdontoFlow* para una limpieza dental de cortesía. ¡Mucha suerte!')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Gran Sorteo Mensual en *OdontoFlow*! Todos nuestros pacientes activos participan por una limpieza dental gratuita. 🎟️')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 9 -->
@@ -397,9 +461,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-people-roof text-indigo-600"></i> 9. Club Familiar OdontoFam</h4>
                             <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Familia</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Beneficios y tarifas preferenciales al registrar a todo el núcleo familiar.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Beneficios y tarifas preferenciales al registrar a todo el núcleo familiar.</p>
                     </div>
-                    <button onclick="sendFamilyClubPromo()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Invitar Plan Familiar</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_9" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(9, 'Hola *[PATIENT_NAME]*, en *OdontoFlow* hemos lanzado el Club Familiar OdontoFam. Registre a su familia y obtenga tarifas preferenciales.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Conoce el *Club Familiar OdontoFam* de *OdontoFlow*. Cuidamos la salud bucodental de toda tu familia con tarifas preferenciales. 👨‍👩‍👧‍👦')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 10 -->
@@ -409,12 +481,18 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-face-smile-relaxed text-teal-600"></i> 10. Protocolo "Adiós Fobia"</h4>
                             <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Confort</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Kit de bienvenida y aromaterapia/sedación para pacientes ansiosos.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Kit de bienvenida y aromaterapia/sedación para pacientes ansiosos.</p>
                     </div>
-                    <button onclick="sendAnxietyProtocol()" class="w-full bg-teal-50 hover:bg-teal-100 text-teal-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Guía Confort</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_10" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(10, 'Hola *[PATIENT_NAME]*, le recordamos nuestro protocolo especial Adiós Fobia en *OdontoFlow* con aromaterapia y confort.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¿Miedo al dentista? En *OdontoFlow* contamos con el protocolo *Adiós Fobia* para garantizar tu tranquilidad y confort total. 🌿')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- NUEVOS PILARES 11 AL 20 (DISRUPTIVOS E INNOVADORES) -->
 
                 <!-- PILAR 11 -->
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
@@ -423,9 +501,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-gamepad text-indigo-600"></i> 11. Reto Sonrisa 21 Días</h4>
                             <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Gamificación</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Desafío interactivo de uso diario de hilo dental con puntos acumulables.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Desafío interactivo de uso diario de hilo dental con puntos acumulables.</p>
                     </div>
-                    <button onclick="sendGamificationChallenge()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Lanzar Reto 21D</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_11" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(11, '🎮 ¡Hola *[PATIENT_NAME]*! Te invitamos al Reto Sonrisa 21 Días de *OdontoFlow*. Envíanos captura usando hilo dental y acumula puntos.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Únete al *Reto Sonrisa 21 Días* en *OdontoFlow*! Mejora tus hábitos de higiene bucal y gana premios acumulables. 🦷')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 12 -->
@@ -435,21 +521,37 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-passport text-purple-600"></i> 12. Pasaporte "Spa & Sonrisa"</h4>
                             <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Alianzas</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Convenio cruzado con spas y centros de estética locales para beneficios mutuos.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Convenio cruzado con spas y centros de estética locales para beneficios.</p>
                     </div>
-                    <button onclick="sendSpaAlliance()" class="w-full bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Pasaporte</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_12" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(12, '✨ Hola *[PATIENT_NAME]*, obtén tu Pasaporte Spa & Sonrisa de *OdontoFlow* con 20% de descuento en spas aliadas de la ciudad.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Disfruta de los beneficios exclusivos del *Pasaporte Spa & Sonrisa* gracias a las alianzas estratégicas de *OdontoFlow*. 🌿')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 13 -->
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-temperature-arrow-up text-amber-600"></i> 13. Alerta Sensibilidad Climática</h4>
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-temperature-arrow-up text-amber-600"></i> 13. Alerta Sensibilidad</h4>
                             <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Predictivo</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Tips preventivos automáticos en días de frío extremo o calor para dientes sensibles.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Tips preventivos automáticos en días de clima extremo.</p>
                     </div>
-                    <button onclick="sendWeatherAlert()" class="w-full bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Enviar Tips Térmicos</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_13" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(13, '🌡️ Hola *[PATIENT_NAME]*, debido al clima extremo, *OdontoFlow* te recuerda usar pasta para dientes sensibles y evitar cambios térmicos.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Tips preventivos *OdontoFlow*: protege tus dientes de la sensibilidad dental en temporadas de cambios climáticos extremos. 🧊☕')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 14 -->
@@ -459,9 +561,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-teal-600"></i> 14. Beca Sonrisa Universitaria</h4>
                             <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Estudiantes</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Plan especial con facilidades de pago diferido y aranceles preferenciales jóvenes.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Plan especial con facilidades de pago diferido para jóvenes.</p>
                     </div>
-                    <button onclick="sendStudentGrant()" class="w-full bg-teal-50 hover:bg-teal-100 text-teal-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Invitar Plan Joven</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_14" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(14, '🎓 ¡Hola *[PATIENT_NAME]*! Conoce la Beca Sonrisa Universitaria de *OdontoFlow*, con planes de pago diferido para jóvenes.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Estudiantes! Infórmense sobre la *Beca Sonrisa Universitaria* de *OdontoFlow* con aranceles preferenciales y pagos flexibles. 📚')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 15 -->
@@ -471,21 +581,37 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-rose-600"></i> 15. Póliza Urgencia 24/7 VIP</h4>
                             <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Exclusivo</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Acceso directo a línea de emergencia prioritaria WhatsApp fines de semana.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Acceso directo a línea de emergencia prioritaria fines de semana.</p>
                     </div>
-                    <button onclick="sendVipPolicy()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Activar Póliza VIP</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_15" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(15, '🛡️ Hola *[PATIENT_NAME]*, tu membresía en *OdontoFlow* incluye acceso a nuestra Póliza de Urgencia 24/7 VIP por WhatsApp.')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Tranquilidad absoluta con la *Póliza de Urgencia 24/7 VIP* de *OdontoFlow* para pacientes con membresía activa. 🚨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 16 -->
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-bullhorn text-indigo-600"></i> 16. Círculo "Embajadores Digitales"</h4>
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-bullhorn text-indigo-600"></i> 16. Embajadores Digitales</h4>
                             <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Social</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Crédito en clínica por menciones y reseñas en redes sociales del paciente.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Crédito en clínica por menciones y reseñas en redes sociales.</p>
                     </div>
-                    <button onclick="sendAmbassadorInvite()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Invitar Embajador</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_16" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(16, '📢 ¡Hola *[PATIENT_NAME]*! Únete al círculo de Embajadores Digitales de *OdontoFlow*. Comparte tu experiencia y gana créditos.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('¡Conviértete en Embajador Digital de *OdontoFlow*! Comparte tu reseña en redes y obtén créditos directos para tus consultas. ⭐')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 17 -->
@@ -495,9 +621,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-video text-emerald-600"></i> 17. Auditoría de Higiene (Video)</h4>
                             <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Telediagnóstico</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Opción para enviar video corto de cepillado y recibir feedback profesional gratuito.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Opción para enviar video corto de cepillado y recibir feedback.</p>
                     </div>
-                    <button onclick="sendVideoAuditInvite()" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Solicitar Video-Test</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_17" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(17, '📹 Hola *[PATIENT_NAME]*, te invitamos a una Auditoría de Higiene por Video en *OdontoFlow*. Envíanos un video corto de cepillado.')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Mejora tu técnica de cepillado con nuestra *Auditoría de Higiene por Video* gratuita en *OdontoFlow*. ¡Consúltanos! 🪥')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 18 -->
@@ -507,9 +641,17 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-award text-amber-600"></i> 18. Garantía "Cero Caries 2A"</h4>
                             <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Lealtad Total</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Si en controles de 2 años consecutivos no hay caries nuevas, profilaxis 100% bonificada.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Si en controles de 2 años no hay caries nuevas, profilaxis bonificada.</p>
                     </div>
-                    <button onclick="sendZeroCariesWarranty()" class="w-full bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Ver Certificado</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_18" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(18, '🏆 ¡Felicidades *[PATIENT_NAME]*! Estás calificado para la Garantía Cero Caries 2A de *OdontoFlow*: profilaxis anual bonificada.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Recompensamos tu constancia con la garantía *Cero Caries 2A* en *OdontoFlow*. ¡Mantén tus controles al día y gana beneficios! ✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 19 -->
@@ -519,21 +661,37 @@
                             <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-leaf text-teal-600"></i> 19. Kit Ecológico "Eco-Smile"</h4>
                             <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Sustentable</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Regalo de cepillos de bambú biodegradables personalizados en la visita anual.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Regalo de cepillos de bambú biodegradables en la visita anual.</p>
                     </div>
-                    <button onclick="sendEcoKitNotice()" class="w-full bg-teal-50 hover:bg-teal-100 text-teal-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Notificar Obsequio</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_19" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(19, '🌿 ¡Hola *[PATIENT_NAME]*! En tu próxima visita a *OdontoFlow* te entregaremos de regalo tu Kit Eco-Smile de bambú biodegradable.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('En *OdontoFlow* somos sustentables. Recibe tu kit *Eco-Smile* con cepillos de bambú en tu visita anual. ¡Cuidamos el planeta! 🌍')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PILAR 20 -->
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-face-grin-stars text-purple-600"></i> 20. Asesoría Diseño Sonrisa Digital</h4>
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-face-grin-stars text-purple-600"></i> 20. Simulación Sonrisa Digital</h4>
                             <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Estética Avanzada</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mb-3">Simulación digital previa y valoración gratuita de armonización orofacial.</p>
+                        <p class="text-[11px] text-slate-400 mb-2">Simulación digital previa y valoración gratuita de armonización.</p>
                     </div>
-                    <button onclick="sendDigitalSmileInvite()" class="w-full bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs py-1.5 rounded-xl font-bold cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Invitar Simulación</button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <select id="loyaltySel_20" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatient(20, '✨ ¡Hola *[PATIENT_NAME]*! Te invitamos a una sesión de Asesoría de Diseño de Sonrisa Digital (DSD) en *OdontoFlow* sin costo.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroup('Visualiza tu nueva sonrisa antes de empezar con nuestra *Simulación de Sonrisa Digital (DSD)* en *OdontoFlow*. ¡Reserva tu sesión! 💻😁')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -1344,10 +1502,61 @@
                 renderAppointmentsList();
                 document.getElementById('viewAgenda').classList.remove('hidden');
             } else if (tabName === 'loyalty') {
+                populateLoyaltyPatientSelects();
                 document.getElementById('viewLoyalty').classList.remove('hidden');
             } else {
                 document.getElementById('viewClinical').classList.remove('hidden');
             }
+        }
+
+        function populateLoyaltyPatientSelects() {
+            const list = getMasterPatientsList();
+            for (let i = 1; i <= 20; i++) {
+                const sel = document.getElementById(`loyaltySel_${i}`);
+                if (sel) {
+                    const currentVal = sel.value;
+                    sel.innerHTML = `<option value="">-- Seleccionar Paciente --</option>`;
+                    list.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.id;
+                        opt.innerText = `${p.name || 'Sin Nombre'} (${p.phone || 'Sin tel'})`;
+                        if (p.id === currentVal) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                }
+            }
+        }
+
+        function sendLoyaltyPatient(index, baseMsg) {
+            const sel = document.getElementById(`loyaltySel_${index}`);
+            let targetPatient = null;
+            if (sel && sel.value) {
+                const list = getMasterPatientsList();
+                targetPatient = list.find(p => p.id === sel.value);
+            }
+            
+            if (!targetPatient) {
+                if (patientData && patientData.phone) {
+                    targetPatient = patientData;
+                } else {
+                    showAlert("Paciente requerido", "Por favor seleccione un paciente en el menú desplegable de esta tarjeta o abra una ficha de paciente.");
+                    return;
+                }
+            }
+
+            if (!targetPatient.phone) {
+                showAlert("Teléfono faltante", `El paciente ${targetPatient.name || targetPatient.id} no tiene número de teléfono registrado.`);
+                return;
+            }
+
+            const personalizedMsg = baseMsg.replace(/\[PATIENT_NAME\]/g, targetPatient.name || 'Paciente');
+            window.open(`https://wa.me/${targetPatient.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(personalizedMsg)}`, '_blank');
+        }
+
+        function sendLoyaltyGroup(baseMsg) {
+            const groupMsg = `📢 *${appSettings.clinicName || 'OdontoFlow Studio'}* (Comunicado Oficial)\n\n${baseMsg}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(groupMsg)}`, '_blank');
+        }
         }
 
         function updateDashboardData() {
