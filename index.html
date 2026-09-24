@@ -283,421 +283,25 @@
             </div>
         </div>
 
-        <!-- VISTA 3: MÓDULO DE FIDELIZACIÓN (20 PILARES DISRUPTIVOS E INNOVADORES) -->
+        <!-- VISTA 3: MÓDULO DE FIDELIZACIÓN (20 PILARES CON GESTOR DE IMÁGENES Y VARIACIONES DE MENSAJES) -->
         <div id="viewLoyalty" class="hidden space-y-6 no-print">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 mb-4">
-                <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
-                    <i class="fa-solid fa-award text-amber-500"></i> Suite de Fidelización & Retención Avanzada (20 Pilares Disruptivos e Innovadores)
-                </h2>
-                <p class="text-xs text-slate-400">Seleccione un paciente específico o comparta directamente en sus grupos de WhatsApp institucionales.</p>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4 mb-4">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-award text-amber-500"></i> Suite de Fidelización & Retención (20 Pilares Innovadores con Editor de Imágenes y Plantillas)
+                    </h2>
+                    <p class="text-xs text-slate-400">Personaliza las imágenes, edita plantillas o genera nuevas variaciones para tus campañas por WhatsApp.</p>
+                </div>
+                <button onclick="openLoyaltyManagerModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 cursor-pointer shadow-sm">
+                    <i class="fa-solid fa-sliders"></i> Gestionar Imágenes y Plantillas
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                
-                <!-- PILAR 1 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-clock-rotate-left text-emerald-600"></i> 1. Recall Preventivo (6M)</h4>
-                            <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Profilaxis</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Recordatorio automático de profilaxis y control semestral.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_1" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(1, '¡Hola *[PATIENT_NAME]*! Le escribimos de *OdontoFlow* para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo. 🦷✨')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Hola comunidad! Les recordamos la importancia de su profilaxis y control semestral preventivo en *OdontoFlow*. ¡Agenden su cita! 🦷✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 2 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-500"></i> 2. Membresía VIP Puntos</h4>
-                            <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Canjeables</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Puntos canjeables por limpiezas o blanqueamientos de cortesía.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_2" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(2, 'Hola *[PATIENT_NAME]*, sus puntos acumulados en *OdontoFlow* le acreditan como socio VIP. Canjéelos hoy por un blanqueamiento o limpieza de cortesía. 👑')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Atención pacientes VIP! Acumulen puntos en cada visita a *OdontoFlow* y canjéenlos por beneficios estéticos y limpiezas de cortesía. 👑')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 3 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-cake-candles text-rose-500"></i> 3. Obsequio Cumpleaños</h4>
-                            <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Cupón 20%</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Saludo automático de felicitación y cupón especial en su día.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_3" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(3, '¡Feliz Cumpleaños, *[PATIENT_NAME]*! 🎂 De parte de *OdontoFlow* le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Felicidades a todos los cumpleañeros del mes! Disfruten su beneficio exclusivo del 20% de descuento en tratamientos estéticos en *OdontoFlow*. 🎉')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 4 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-heart-pulse text-indigo-600"></i> 4. Check-in Post-Op (48h)</h4>
-                            <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Cuidado</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Mensaje preventivo de control tras cirugías y endodoncias.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_4" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(4, 'Hola *[PATIENT_NAME]*, le escribimos desde *OdontoFlow* para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia? 💙')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Atención personalizada post-operatoria en *OdontoFlow*. Siempre pendientes de la evolución y bienestar de nuestros pacientes. 💙')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 5 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-emerald-600"></i> 5. Programa Referidos</h4>
-                            <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Amigos</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Incentivo mutuo: 15% de descuento para el paciente y su invitado.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_5" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(5, '¡Hola *[PATIENT_NAME]*! En *OdontoFlow* por cada amigo que nos recomiende, ambos obtienen 15% de descuento en su próxima consulta. ¡Comparta sonrisas!')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Programa de referidos *OdontoFlow*! Recomienda a un amigo y obtengan ambos 15% de descuento en su próxima consulta. ¡Compartamos salud!')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 6 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-medal text-amber-600"></i> 6. Bono Aniversario Sonrisa</h4>
-                            <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">1 Año</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Felicitación al cumplirse 1 año de su rehabilitación o corona.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_6" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(6, '¡Feliz Aniversario de Sonrisa, *[PATIENT_NAME]*! 🦷 Hoy se cumple 1 año de su tratamiento en *OdontoFlow*. Control de mantenimiento sin costo.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Celebramos el aniversario de las sonrisas rehabilitadas en *OdontoFlow*. Controles anuales de cortesía para nuestros pacientes fieles.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 7 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-sparkles text-purple-600"></i> 7. Retoque Estético Anual</h4>
-                            <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Blanqueamiento</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Campaña anual para recordar el mantenimiento del tono blanco.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_7" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(7, 'Hola *[PATIENT_NAME]*, le escribimos de *OdontoFlow* para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Luce una sonrisa radiante todo el año con la campaña de retoque estético y blanqueamiento en *OdontoFlow*! ✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 8 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-ticket text-rose-600"></i> 8. Sorteo Mensual Activos</h4>
-                            <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Sorteo</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Selección aleatoria mensual de un paciente para limpieza de cortesía.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_8" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(8, '¡Hola *[PATIENT_NAME]*! Participa en el sorteo mensual de *OdontoFlow* para una limpieza dental de cortesía. ¡Mucha suerte!')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Gran Sorteo Mensual en *OdontoFlow*! Todos nuestros pacientes activos participan por una limpieza dental gratuita. 🎟️')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 9 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-people-roof text-indigo-600"></i> 9. Club Familiar OdontoFam</h4>
-                            <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Familia</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Beneficios y tarifas preferenciales al registrar a todo el núcleo familiar.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_9" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(9, 'Hola *[PATIENT_NAME]*, en *OdontoFlow* hemos lanzado el Club Familiar OdontoFam. Registre a su familia y obtenga tarifas preferenciales.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Conoce el *Club Familiar OdontoFam* de *OdontoFlow*. Cuidamos la salud bucodental de toda tu familia con tarifas preferenciales. 👨‍👩‍👧‍👦')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 10 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-face-smile-relaxed text-teal-600"></i> 10. Protocolo "Adiós Fobia"</h4>
-                            <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Confort</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Kit de bienvenida y aromaterapia/sedación para pacientes ansiosos.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_10" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(10, 'Hola *[PATIENT_NAME]*, le recordamos nuestro protocolo especial Adiós Fobia en *OdontoFlow* con aromaterapia y confort.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¿Miedo al dentista? En *OdontoFlow* contamos con el protocolo *Adiós Fobia* para garantizar tu tranquilidad y confort total. 🌿')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 11 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-gamepad text-indigo-600"></i> 11. Reto Sonrisa 21 Días</h4>
-                            <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Gamificación</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Desafío interactivo de uso diario de hilo dental con puntos acumulables.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_11" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(11, '🎮 ¡Hola *[PATIENT_NAME]*! Te invitamos al Reto Sonrisa 21 Días de *OdontoFlow*. Envíanos captura usando hilo dental y acumula puntos.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Únete al *Reto Sonrisa 21 Días* en *OdontoFlow*! Mejora tus hábitos de higiene bucal y gana premios acumulables. 🦷')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 12 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-passport text-purple-600"></i> 12. Pasaporte "Spa & Sonrisa"</h4>
-                            <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Alianzas</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Convenio cruzado con spas y centros de estética locales para beneficios.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_12" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(12, '✨ Hola *[PATIENT_NAME]*, obtén tu Pasaporte Spa & Sonrisa de *OdontoFlow* con 20% de descuento en spas aliadas de la ciudad.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Disfruta de los beneficios exclusivos del *Pasaporte Spa & Sonrisa* gracias a las alianzas estratégicas de *OdontoFlow*. 🌿')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 13 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-temperature-arrow-up text-amber-600"></i> 13. Alerta Sensibilidad</h4>
-                            <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Predictivo</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Tips preventivos automáticos en días de clima extremo.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_13" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(13, '🌡️ Hola *[PATIENT_NAME]*, debido al clima extremo, *OdontoFlow* te recuerda usar pasta para dientes sensibles y evitar cambios térmicos.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Tips preventivos *OdontoFlow*: protege tus dientes de la sensibilidad dental en temporadas de cambios climáticos extremos. 🧊☕')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 14 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-teal-600"></i> 14. Beca Sonrisa Universitaria</h4>
-                            <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Estudiantes</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Plan especial con facilidades de pago diferido para jóvenes.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_14" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(14, '🎓 ¡Hola *[PATIENT_NAME]*! Conoce la Beca Sonrisa Universitaria de *OdontoFlow*, con planes de pago diferido para jóvenes.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Estudiantes! Infórmense sobre la *Beca Sonrisa Universitaria* de *OdontoFlow* con aranceles preferenciales y pagos flexibles. 📚')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 15 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-rose-600"></i> 15. Póliza Urgencia 24/7 VIP</h4>
-                            <span class="text-[9px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">Exclusivo</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Acceso directo a línea de emergencia prioritaria fines de semana.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_15" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(15, '🛡️ Hola *[PATIENT_NAME]*, tu membresía en *OdontoFlow* incluye acceso a nuestra Póliza de Urgencia 24/7 VIP por WhatsApp.')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Tranquilidad absoluta con la *Póliza de Urgencia 24/7 VIP* de *OdontoFlow* para pacientes con membresía activa. 🚨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 16 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-bullhorn text-indigo-600"></i> 16. Embajadores Digitales</h4>
-                            <span class="text-[9px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">Social</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Crédito en clínica por menciones y reseñas en redes sociales.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_16" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(16, '📢 ¡Hola *[PATIENT_NAME]*! Únete al círculo de Embajadores Digitales de *OdontoFlow*. Comparte tu experiencia y gana créditos.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('¡Conviértete en Embajador Digital de *OdontoFlow*! Comparte tu reseña en redes y obtén créditos directos para tus consultas. ⭐')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 17 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-video text-emerald-600"></i> 17. Auditoría de Higiene (Video)</h4>
-                            <span class="text-[9px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Telediagnóstico</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Opción para enviar video corto de cepillado y recibir feedback.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_17" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(17, '📹 Hola *[PATIENT_NAME]*, te invitamos a una Auditoría de Higiene por Video en *OdontoFlow*. Envíanos un video corto de cepillado.')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Mejora tu técnica de cepillado con nuestra *Auditoría de Higiene por Video* gratuita en *OdontoFlow*. ¡Consúltanos! 🪥')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 18 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-award text-amber-600"></i> 18. Garantía "Cero Caries 2A"</h4>
-                            <span class="text-[9px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">Lealtad Total</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Si en controles de 2 años no hay caries nuevas, profilaxis bonificada.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_18" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(18, '🏆 ¡Felicidades *[PATIENT_NAME]*! Estás calificado para la Garantía Cero Caries 2A de *OdontoFlow*: profilaxis anual bonificada.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Recompensamos tu constancia con la garantía *Cero Caries 2A* en *OdontoFlow*. ¡Mantén tus controles al día y gana beneficios! ✨')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 19 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-leaf text-teal-600"></i> 19. Kit Ecológico "Eco-Smile"</h4>
-                            <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-0.5 rounded-full">Sustentable</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Regalo de cepillos de bambú biodegradables en la visita anual.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_19" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(19, '🌿 ¡Hola *[PATIENT_NAME]*! En tu próxima visita a *OdontoFlow* te entregaremos de regalo tu Kit Eco-Smile de bambú biodegradable.')" class="bg-teal-50 hover:bg-teal-100 text-teal-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('En *OdontoFlow* somos sustentables. Recibe tu kit *Eco-Smile* con cepillos de bambú en tu visita anual. ¡Cuidamos el planeta! 🌍')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PILAR 20 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-face-grin-stars text-purple-600"></i> 20. Simulación Sonrisa Digital</h4>
-                            <span class="text-[9px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">Estética Avanzada</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mb-2">Simulación digital previa y valoración gratuita de armonización.</p>
-                    </div>
-                    <div class="space-y-2 pt-2 border-t border-slate-100">
-                        <select id="loyaltySel_20" class="w-full border border-slate-200 rounded-lg p-1 text-[11px] bg-white outline-none">
-                            <option value="">-- Seleccionar Paciente --</option>
-                        </select>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button onclick="sendLoyaltyPatient(20, '✨ ¡Hola *[PATIENT_NAME]*! Te invitamos a una sesión de Asesoría de Diseño de Sonrisa Digital (DSD) en *OdontoFlow* sin costo.')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
-                            <button onclick="sendLoyaltyGroup('Visualiza tu nueva sonrisa antes de empezar con nuestra *Simulación de Sonrisa Digital (DSD)* en *OdontoFlow*. ¡Reserva tu sesión! 💻😁')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-1.5 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="loyaltyCardsGrid">
             </div>
         </div>
 
-        <!-- VISTA 4: FICHA CLÍNICA, ODONTOGRAMA & ANAMNESIS -->
+        <!-- VISTA 4: FICHA CLÍNICA, ODONTOGRAMA & ANAMNESIS (MODELO COMPLETO) -->
         <div id="viewClinical" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- PANEL IZQUIERDO: ANAMNESIS & DATOS -->
@@ -1220,6 +824,29 @@
         </div>
     </div>
 
+    <!-- MODAL GESTOR DE FIDELIZACIÓN (IMÁGENES Y VARIACIONES DE MENSAJES) -->
+    <div id="loyaltyManagerModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-amber-600 text-white p-4 flex justify-between items-center">
+                <h2 class="text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Gestor de Imágenes y Plantillas de Fidelización (20 Pilares)
+                </h2>
+                <button onclick="closeLoyaltyManagerModal()" class="text-white/80 hover:text-white text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-50 border-b border-slate-200 text-xs text-slate-600">
+                Selecciona un pilar, cambia su imagen (mediante URL o cargando archivo) y administra sus plantillas o genera nuevas variaciones.
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 space-y-6 text-xs" id="loyaltyManagerList">
+            </div>
+            <div class="bg-slate-100 p-4 flex justify-end gap-2 border-t border-slate-200">
+                <button onclick="closeLoyaltyManagerModal()" class="px-5 py-2 bg-slate-300 hover:bg-slate-400 text-slate-700 rounded-xl font-semibold cursor-pointer">Cerrar</button>
+                <button onclick="saveLoyaltyCustomizations()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-semibold cursor-pointer">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL CONSENTIMIENTOS -->
     <div id="consentModal" class="no-print fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
@@ -1377,10 +1004,11 @@
 
     <!-- SCRIPT DE LA APLICACIÓN -->
     <script>
-        const SETTINGS_KEY = 'odontoflow_settings_local_v9';
-        const CURRENT_PATIENT_KEY = 'odontoflow_current_patient_local_v9';
-        const ALL_PATIENTS_KEY = 'odontoflow_all_patients_local_v9';
-        const APPOINTMENTS_KEY = 'odontoflow_appointments_local_v5';
+        const SETTINGS_KEY = 'odontoflow_settings_local_v11';
+        const CURRENT_PATIENT_KEY = 'odontoflow_current_patient_local_v11';
+        const ALL_PATIENTS_KEY = 'odontoflow_all_patients_local_v11';
+        const APPOINTMENTS_KEY = 'odontoflow_appointments_local_v7';
+        const LOYALTY_CONFIG_KEY = 'odontoflow_loyalty_config_v1';
 
         const COLOR_OPTIONS = [
             { id: 'rojo', label: 'Rojo (Caries / Alerta)', bgClass: 'color-rojo', dotClass: 'dot-rojo', hex: '#ef4444' },
@@ -1414,34 +1042,171 @@
             ]
         };
 
-        const CONSENT_TEMPLATES = {
-            endo: {
-                title: "Consentimiento Informado para Tratamiento de Endodoncia",
-                text: "Yo, [PATIENT_NAME], identificado(a) con DNI/ID [PATIENT_DNI], declaro que el cirujano dentista me ha explicado detalladamente la naturaleza del tratamiento de conducto (endodoncia). Comprendo que el objetivo es conservar la pieza dental afectada. Entiendo los riesgos potenciales que incluyen fractura de instrumental, perforación del conducto, dolor postoperatorio o reinfección que requiera apicectomía o extracción en casos complejos."
+        const DEFAULT_LOYALTY_PILLARS = [
+            {
+                id: 1, name: "1. Recall Preventivo (6M)", badge: "Profilaxis",
+                imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "¡Hola *[PATIENT_NAME]*! Le escribimos de *OdontoFlow* para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo. 🦷✨",
+                    "Hola *[PATIENT_NAME]*, tu sonrisa en *OdontoFlow* merece estar impecable. ¿Agendamos tu control semestral de limpieza? 🦷🌿"
+                ]
             },
-            cirugia: {
-                title: "Consentimiento Informado para Cirugía Oral y Extracción Dental",
-                text: "Yo, [PATIENT_NAME], con DNI/ID [PATIENT_DNI], autorizo la realización de la extracción dental / cirugía oral programada. Se me han expuesto los riesgos habituales del procedimiento quirúrgico, tales como hemorragia, inflamación, equimosis, infección secundaria, alveolitis o parestesia temporal/definitiva de nervios adyacentes."
+            {
+                id: 2, name: "2. Membresía VIP Puntos", badge: "Canjeables",
+                imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce6395?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "Hola *[PATIENT_NAME]*, sus puntos acumulados en *OdontoFlow* le acreditan como socio VIP. Canjéelos hoy por un blanqueamiento o limpieza de cortesía. 👑",
+                    "¡Hola *[PATIENT_NAME]*! Tienes puntos acumulados en *OdontoFlow* listos para canjear por beneficios estéticos. ¡Consúltanos! 💎"
+                ]
             },
-            orto: {
-                title: "Consentimiento Informado para Tratamiento de Ortodoncia",
-                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], manifiesto mi conformidad para iniciar el tratamiento de corrección ortodóntica. Comprendo que la duración del tratamiento es estimada y depende de mi colaboración clínica. Conozco los riesgos de reabsorción radicular, descalcificación del esmalte si no mantengo buena higiene y la obligatoriedad del uso de retenedores al finalizar."
+            {
+                id: 3, name: "3. Obsequio Cumpleaños", badge: "Cupón 20%",
+                imageUrl: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "¡Feliz Cumpleaños, *[PATIENT_NAME]*! 🎂 De parte de *OdontoFlow* le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉",
+                    "¡En tu día especial, *[PATIENT_NAME]*! Disfruta 20% de descuento en tratamientos de *OdontoFlow* como regalo de cumpleaños. 🎁✨"
+                ]
             },
-            implant: {
-                title: "Consentimiento Informado para Implantes y Rehabilitación",
-                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], acepto la colocación quirúrgica de implantes dentales ostointegrados. Acepto que existe una tasa de fallo en la integración ósea, así como la posibilidad de periimplantitis si no acudo a mis controles de mantenimiento periódicos."
+            {
+                id: 4, name: "4. Check-in Post-Op (48h)", badge: "Cuidado",
+                imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "Hola *[PATIENT_NAME]*, le escribimos desde *OdontoFlow* para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia? 💙",
+                    "Estimado/a *[PATIENT_NAME]*, ¿cómo se siente tras su intervención en *OdontoFlow*? Estamos aquí ante cualquier duda. 🩺"
+                ]
             },
-            blanqueamiento: {
-                title: "Consentimiento Informado para Blanqueamiento Dental Estético",
-                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], entiendo que el blanqueamiento dental busca aclarar el tono del esmalte. Se me ha aclarado que puede presentarse sensibilidad dentaria temporal e irritación gingival reversible."
+            {
+                id: 5, name: "5. Programa Referidos", badge: "Amigos",
+                imageUrl: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "¡Hola *[PATIENT_NAME]*! En *OdontoFlow* por cada amigo que nos recomiende, ambos obtienen 15% de descuento en su próxima consulta. ¡Comparta sonrisas!",
+                    "Comparte salud con tus amigos, *[PATIENT_NAME]*: en *OdontoFlow* ambos reciben 15% de descuento por cada referido. 🤝"
+                ]
             },
-            protesis: {
-                title: "Consentimiento Informado para Prótesis Dental",
-                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], autorizo la confección y adaptación de la prótesis dental. Se me han comunicado los períodos necesarios de adaptación, ajuste progresivo y la necesidad de hábitos estrictos de higiene."
+            {
+                id: 6, name: "6. Bono Aniversario Sonrisa", badge: "1 Año",
+                imageUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "¡Feliz Aniversario de Sonrisa, *[PATIENT_NAME]*! 🦷 Hoy se cumple 1 año de su tratamiento en *OdontoFlow*. Control de mantenimiento sin costo.",
+                    "Recordamos 1 año de tu rehabilitación en *OdontoFlow*, *[PATIENT_NAME]*. Te invitamos a tu control anual sin costo. 🌟"
+                ]
+            },
+            {
+                id: 7, name: "7. Retoque Estético Anual", badge: "Blanqueamiento",
+                imageUrl: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "Hola *[PATIENT_NAME]*, le escribimos de *OdontoFlow* para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento.",
+                    "Mantén tu tono radiante con el retoque estético anual de blanqueamiento en *OdontoFlow*, *[PATIENT_NAME]*! ✨"
+                ]
+            },
+            {
+                id: 8, name: "8. Sorteo Mensual Activos", badge: "Sorteo",
+                imageUrl: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "¡Hola *[PATIENT_NAME]*! Participa en el sorteo mensual de *OdontoFlow* para una limpieza dental de cortesía. ¡Mucha suerte!",
+                    "¡Estás participando en el sorteo mensual de *OdontoFlow* para una limpieza dental gratuita, *[PATIENT_NAME]*! 🎟️"
+                ]
+            },
+            {
+                id: 9, name: "9. Club Familiar OdontoFam", badge: "Familia",
+                imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "Hola *[PATIENT_NAME]*, en *OdontoFlow* hemos lanzado el Club Familiar OdontoFam. Registre a su familia y obtenga tarifas preferenciales.",
+                    "Cónoce el Club Familiar *OdontoFam* en *OdontoFlow* y protege la sonrisa de toda tu familia con tarifas especiales, *[PATIENT_NAME]*! 👨‍👩‍👧‍👦"
+                ]
+            },
+            {
+                id: 10, name: "10. Protocolo 'Adiós Fobia'", badge: "Confort",
+                imageUrl: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "Hola *[PATIENT_NAME]*, le recordamos nuestro protocolo especial Adiós Fobia en *OdontoFlow* con aromaterapia y confort.",
+                    "¿Miedo al dentista? En *OdontoFlow* te cuidamos con nuestro protocolo *Adiós Fobia*, *[PATIENT_NAME]*. Relax total 🌿"
+                ]
+            },
+            {
+                id: 11, name: "11. Reto Sonrisa 21 Días", badge: "Gamificación",
+                imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🎮 ¡Hola *[PATIENT_NAME]*! Te invitamos al Reto Sonrisa 21 Días de *OdontoFlow*. Envíanos captura usando hilo dental y acumula puntos.",
+                    "¡Acepta el Reto Sonrisa 21 Días en *OdontoFlow*, *[PATIENT_NAME]*! Mejora tus hábitos de higiene y gana premios."
+                ]
+            },
+            {
+                id: 12, name: "12. Pasaporte 'Spa & Sonrisa'", badge: "Alianzas",
+                imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "✨ Hola *[PATIENT_NAME]*, obtén tu Pasaporte Spa & Sonrisa de *OdontoFlow* con 20% de descuento en spas aliadas de la ciudad.",
+                    "Disfruta de beneficios exclusivos en spas aliados con tu Pasaporte *Spa & Sonrisa* de *OdontoFlow*, *[PATIENT_NAME]*! 🌿"
+                ]
+            },
+            {
+                id: 13, name: "13. Alerta Sensibilidad", badge: "Predictivo",
+                imageUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🌡️ Hola *[PATIENT_NAME]*, debido al clima extremo, *OdontoFlow* te recuerda usar pasta para dientes sensibles y evitar cambios térmicos.",
+                    "Protégete de la sensibilidad dental en días de clima extremo con los consejos de *OdontoFlow*, *[PATIENT_NAME]*! 🧊☕"
+                ]
+            },
+            {
+                id: 14, name: "14. Beca Sonrisa Universitaria", badge: "Estudiantes",
+                imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🎓 ¡Hola *[PATIENT_NAME]*! Conoce la Beca Sonrisa Universitaria de *OdontoFlow*, con planes de pago diferido para jóvenes.",
+                    "Estudiante: accede a la Beca Sonrisa Universitaria en *OdontoFlow* con aranceles flexibles, *[PATIENT_NAME]*! 📚"
+                ]
+            },
+            {
+                id: 15, name: "15. Póliza Urgencia 24/7 VIP", badge: "Exclusivo",
+                imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🛡️ Hola *[PATIENT_NAME]*, tu membresía en *OdontoFlow* incluye acceso a nuestra Póliza de Urgencia 24/7 VIP por WhatsApp.",
+                    "Tranquilidad absoluta con la Póliza de Urgencia 24/7 VIP de *OdontoFlow*, *[PATIENT_NAME]*! Ante cualquier emergencia, contáctanos. 🚨"
+                ]
+            },
+            {
+                id: 16, name: "16. Embajadores Digitales", badge: "Social",
+                imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "📢 ¡Hola *[PATIENT_NAME]*! Únete al círculo de Embajadores Digitales de *OdontoFlow*. Comparte tu experiencia y gana créditos.",
+                    "Comparte tu reseña en redes sobre *OdontoFlow* y conviértete en Embajador Digital para ganar créditos, *[PATIENT_NAME]*! ⭐"
+                ]
+            },
+            {
+                id: 17, name: "17. Auditoría de Higiene (Video)", badge: "Telediagnóstico",
+                imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "📹 Hola *[PATIENT_NAME]*, te invitamos a una Auditoría de Higiene por Video en *OdontoFlow*. Envíanos un video corto de cepillado.",
+                    "Mejora tu técnica de cepillado con nuestra Auditoría de Higiene por Video gratuita en *OdontoFlow*, *[PATIENT_NAME]*! 🪥"
+                ]
+            },
+            {
+                id: 18, name: "18. Garantía 'Cero Caries 2A'", badge: "Lealtad Total",
+                imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🏆 ¡Felicidades *[PATIENT_NAME]*! Estás calificado para la Garantía Cero Caries 2A de *OdontoFlow*: profilaxis anual bonificada.",
+                    "Recompensamos tu constancia con la garantía Cero Caries 2A en *OdontoFlow*, *[PATIENT_NAME]*! Mantén tus controles al día. ✨"
+                ]
+            },
+            {
+                id: 19, name: "19. Kit Ecológico 'Eco-Smile'", badge: "Sustentable",
+                imageUrl: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "🌿 ¡Hola *[PATIENT_NAME]*! En tu próxima visita a *OdontoFlow* te entregaremos de regalo tu Kit Eco-Smile de bambú biodegradable.",
+                    "Cuidamos el planeta en *OdontoFlow*: recibe tu kit Eco-Smile de bambú en tu visita anual, *[PATIENT_NAME]*! 🌍"
+                ]
+            },
+            {
+                id: 20, name: "20. Simulación Sonrisa Digital", badge: "Estética Avanzada",
+                imageUrl: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80",
+                templates: [
+                    "✨ ¡Hola *[PATIENT_NAME]*! Te invitamos a una sesión de Asesoría de Diseño de Sonrisa Digital (DSD) en *OdontoFlow* sin costo.",
+                    "Visualiza tu nueva sonrisa antes de empezar con nuestra Asesoría DSD en *OdontoFlow*, *[PATIENT_NAME]*! 💻😁"
+                ]
             }
-        };
+        ];
 
         let appSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+        let loyaltyConfig = JSON.parse(JSON.stringify(DEFAULT_LOYALTY_PILLARS));
         let activeStateId = 'caries_gen';
         let currentDentition = 'adult';
         let selectedToothNum = null;
@@ -1479,6 +1244,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSettingsFromStorage();
+            loadLoyaltyConfigFromStorage();
             loadPatientDataFromStorage();
             applySettingsToUI();
             renderStateSelectDropdown();
@@ -1486,6 +1252,7 @@
             renderFindingsTable();
             renderBudgetTable();
             updateTotals();
+            renderLoyaltyCards();
             switchTab('dashboard');
         });
 
@@ -1502,63 +1269,203 @@
                 renderAppointmentsList();
                 document.getElementById('viewAgenda').classList.remove('hidden');
             } else if (tabName === 'loyalty') {
-                populateLoyaltyPatientSelects();
+                renderLoyaltyCards();
                 document.getElementById('viewLoyalty').classList.remove('hidden');
             } else {
                 document.getElementById('viewClinical').classList.remove('hidden');
             }
         }
 
-        function populateLoyaltyPatientSelects() {
-            const list = getMasterPatientsList();
-            for (let i = 1; i <= 20; i++) {
-                const sel = document.getElementById(`loyaltySel_${i}`);
-                if (sel) {
-                    const currentVal = sel.value;
-                    sel.innerHTML = `<option value="">-- Seleccionar Paciente --</option>`;
-                    list.forEach(p => {
-                        const opt = document.createElement('option');
-                        opt.value = p.id;
-                        opt.innerText = `${p.name || 'Sin Nombre'} (${p.phone || 'Sin tel'})`;
-                        if (p.id === currentVal) opt.selected = true;
-                        sel.appendChild(opt);
-                    });
-                }
+        // --- GESTIÓN DE FIDELIZACIÓN (20 PILARES CON IMÁGENES Y VARIACIONES) ---
+        function loadLoyaltyConfigFromStorage() {
+            const stored = localStorage.getItem(LOYALTY_CONFIG_KEY);
+            if (stored) {
+                try { loyaltyConfig = JSON.parse(stored); } catch (e) { loyaltyConfig = JSON.parse(JSON.stringify(DEFAULT_LOYALTY_PILLARS)); }
+            } else {
+                loyaltyConfig = JSON.parse(JSON.stringify(DEFAULT_LOYALTY_PILLARS));
             }
         }
 
-        function sendLoyaltyPatient(index, baseMsg) {
-            const sel = document.getElementById(`loyaltySel_${index}`);
+        function saveLoyaltyConfigToStorage() {
+            localStorage.setItem(LOYALTY_CONFIG_KEY, JSON.stringify(loyaltyConfig));
+        }
+
+        function renderLoyaltyCards() {
+            const grid = document.getElementById('loyaltyCardsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const patientList = getMasterPatientsList();
+
+            loyaltyConfig.forEach(pillar => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between";
+                
+                let templatesOptionsHtml = pillar.templates.map((t, idx) => `<option value="${idx}">Variación ${idx + 1}: "${t.substring(0, 45)}..."</option>`).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="h-32 overflow-hidden bg-slate-100 relative">
+                            <img src="${pillar.imageUrl}" alt="${pillar.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80'">
+                            <span class="absolute top-2 right-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow">${pillar.badge}</span>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1"><i class="fa-solid fa-award text-amber-500"></i> ${pillar.name}</h4>
+                            <div class="mt-2 space-y-1">
+                                <label class="text-[10px] font-bold text-slate-400 uppercase">Seleccionar Variación de Mensaje:</label>
+                                <select id="tmplSelect_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-slate-50 outline-none font-medium">
+                                    ${templatesOptionsHtml}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2 border-t border-slate-100 mt-2">
+                        <select id="loyaltySel_${pillar.id}" class="w-full border border-slate-200 rounded-lg p-1.5 text-[11px] bg-white outline-none">
+                            <option value="">-- Seleccionar Paciente --</option>
+                            ${patientList.map(p => `<option value="${p.id}">${p.name || 'Sin Nombre'} (${p.phone || 'Sin tel'})</option>`).join('')}
+                        </select>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button onclick="sendLoyaltyPatientCustom(${pillar.id})" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[10px] py-2 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-brands fa-whatsapp"></i> Paciente</button>
+                            <button onclick="sendLoyaltyGroupCustom(${pillar.id})" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] py-2 px-1 rounded-lg font-bold truncate cursor-pointer"><i class="fa-solid fa-users"></i> Grupo WA</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openLoyaltyManagerModal() {
+            const listContainer = document.getElementById('loyaltyManagerList');
+            listContainer.innerHTML = '';
+
+            loyaltyConfig.forEach((pillar, pIdx) => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3";
+                
+                let templatesInputsHtml = pillar.templates.map((t, tIdx) => `
+                    <div class="flex gap-2 items-center">
+                        <input type="text" value="${escapeHtml(t)}" oninput="updatePillarTemplateText(${pIdx}, ${tIdx}, this.value)" class="flex-1 border border-slate-300 rounded-lg p-1.5 text-xs bg-white">
+                        <button onclick="removePillarTemplate(${pIdx}, ${tIdx})" class="text-rose-500 hover:text-rose-700 text-xs px-2 py-1 cursor-pointer"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `).join('');
+
+                div.innerHTML = `
+                    <div class="flex justify-between items-center font-bold text-slate-800">
+                        <span>${pillar.name}</span>
+                        <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">ID: ${pillar.id}</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">Imagen (URL de Enlace)</label>
+                            <input type="text" value="${pillar.imageUrl}" oninput="updatePillarImageUrl(${pIdx}, this.value)" class="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-500 mb-1">O Subir Archivo Local</label>
+                            <input type="file" accept="image/*" onchange="uploadPillarImageFile(event, ${pIdx})" class="text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[11px] file:font-semibold file:bg-indigo-50 file:text-indigo-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <label class="font-semibold text-slate-500">Variaciones de Mensaje (${pillar.templates.length})</label>
+                            <button onclick="addPillarTemplate(${pIdx})" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-md font-semibold cursor-pointer">+ Añadir Nueva Variación</button>
+                        </div>
+                        <div class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            ${templatesInputsHtml}
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            document.getElementById('loyaltyManagerModal').classList.remove('hidden');
+            document.getElementById('loyaltyManagerModal').classList.add('flex');
+        }
+
+        function closeLoyaltyManagerModal() {
+            document.getElementById('loyaltyManagerModal').classList.remove('flex');
+            document.getElementById('loyaltyManagerModal').classList.add('hidden');
+        }
+
+        function updatePillarImageUrl(pIdx, url) {
+            loyaltyConfig[pIdx].imageUrl = url;
+        }
+
+        function uploadPillarImageFile(event, pIdx) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                loyaltyConfig[pIdx].imageUrl = e.target.result;
+                showAlert("Imagen Cargada", "La imagen se cargó correctamente en la plantilla.");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updatePillarTemplateText(pIdx, tIdx, val) {
+            loyaltyConfig[pIdx].templates[tIdx] = val;
+        }
+
+        function removePillarTemplate(pIdx, tIdx) {
+            if (loyaltyConfig[pIdx].templates.length <= 1) {
+                showAlert("Aviso", "Cada pilar debe mantener al menos una plantilla de mensaje.");
+                return;
+            }
+            loyaltyConfig[pIdx].templates.splice(tIdx, 1);
+            openLoyaltyManagerModal();
+        }
+
+        function addPillarTemplate(pIdx) {
+            loyaltyConfig[pIdx].templates.push("¡Hola *[PATIENT_NAME]*! Nueva variación de mensaje creada para *OdontoFlow*. 🦷✨");
+            openLoyaltyManagerModal();
+        }
+
+        function saveLoyaltyCustomizations() {
+            saveLoyaltyConfigToStorage();
+            renderLoyaltyCards();
+            closeLoyaltyManagerModal();
+            showAlert("Fidelización Guardada", "Se actualizaron las imágenes y plantillas exitosamente.");
+        }
+
+        function sendLoyaltyPatientCustom(pillarId) {
+            const pillar = loyaltyConfig.find(p => p.id === pillarId);
+            const sel = document.getElementById(`loyaltySel_${pillarId}`);
+            const tmplSel = document.getElementById(`tmplSelect_${pillarId}`);
+            
             let targetPatient = null;
             if (sel && sel.value) {
                 const list = getMasterPatientsList();
                 targetPatient = list.find(p => p.id === sel.value);
             }
-            
-            if (!targetPatient) {
-                if (patientData && patientData.phone) {
-                    targetPatient = patientData;
-                } else {
-                    showAlert("Paciente requerido", "Por favor seleccione un paciente en el menú desplegable de esta tarjeta o abra una ficha de paciente.");
-                    return;
-                }
-            }
+            if (!targetPatient && patientData && patientData.phone) targetPatient = patientData;
 
-            if (!targetPatient.phone) {
-                showAlert("Teléfono faltante", `El paciente ${targetPatient.name || targetPatient.id} no tiene número de teléfono registrado.`);
+            if (!targetPatient || !targetPatient.phone) {
+                showAlert("Paciente Requerido", "Seleccione un paciente válido con número de teléfono.");
                 return;
             }
 
-            const personalizedMsg = baseMsg.replace(/\[PATIENT_NAME\]/g, targetPatient.name || 'Paciente');
-            window.open(`https://wa.me/${targetPatient.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(personalizedMsg)}`, '_blank');
+            const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
+            const rawMsg = (pillar && pillar.templates && pillar.templates[tmplIdx]) || (pillar && pillar.templates && pillar.templates[0]) || "";
+            const personalizedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, targetPatient.name || 'Paciente').replace(/\[CLINIC_NAME\]/g, appSettings.clinicName || 'OdontoFlow Studio');
+            const imageUrl = (pillar && pillar.imageUrl) || '';
+            const fullMsg = imageUrl ? `${personalizedMsg}\n\n🖼️ Imagen informativa:\n${imageUrl}` : personalizedMsg;
+
+            window.open(`https://wa.me/${targetPatient.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(fullMsg)}`, '_blank');
         }
 
-        function sendLoyaltyGroup(baseMsg) {
-            const groupMsg = `📢 *${appSettings.clinicName || 'OdontoFlow Studio'}* (Comunicado Oficial)\n\n${baseMsg}`;
+        function sendLoyaltyGroupCustom(pillarId) {
+            const pillar = loyaltyConfig.find(p => p.id === pillarId);
+            const tmplSel = document.getElementById(`tmplSelect_${pillarId}`);
+            const tmplIdx = tmplSel ? parseInt(tmplSel.value) || 0 : 0;
+            const rawMsg = (pillar && pillar.templates && pillar.templates[tmplIdx]) || (pillar && pillar.templates && pillar.templates[0]) || "";
+            const clinic = appSettings.clinicName || 'OdontoFlow Studio';
+            const imageUrl = (pillar && pillar.imageUrl) || '';
+
+            const formattedMsg = rawMsg.replace(/\[PATIENT_NAME\]/g, 'Comunidad').replace(/\[CLINIC_NAME\]/g, clinic);
+            const groupMsg = imageUrl ? `📢 *${clinic}* (Campaña Oficial)\n\n${formattedMsg}\n\n🖼️ Imagen informativa:\n${imageUrl}` : `📢 *${clinic}* (Campaña Oficial)\n\n${formattedMsg}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(groupMsg)}`, '_blank');
         }
-        }
 
+        // --- DASHBOARD & OTROS ---
         function updateDashboardData() {
             const list = getMasterPatientsList();
             const appointments = getAppointmentsList();
@@ -1594,7 +1501,7 @@
             });
         }
 
-        // --- CÁLCULO AUTOMÁTICO EDAD ---
+        // --- CÁLCULO EDAD ---
         function onDobChange(dobStr) {
             patientData.dob = dobStr;
             const calculatedAge = calculateAgeFromDOB(dobStr);
@@ -1608,9 +1515,7 @@
             const today = new Date();
             let age = today.getFullYear() - dob.getFullYear();
             const m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
-                age--;
-            }
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
             return isNaN(age) || age < 0 ? '' : age;
         }
 
@@ -1722,129 +1627,6 @@
             printArea.classList.add('hidden');
             printArea.classList.remove('print-only', 'block');
             header.classList.remove('no-print');
-        }
-
-        // --- FIDELIZACIÓN (20 PILARES DISRUPTIVOS) ---
-        function sendRecallPreventivo() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `¡Hola *${patientData.name || 'Paciente'}*! Le escribimos de *${appSettings.clinicName}* para recordarle que ya han pasado 6 meses desde su última profilaxis. Agende su control preventivo para mantener su sonrisa perfecta. 🦷✨`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendVipPoints() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `Hola *${patientData.name || 'Paciente'}*, sus puntos acumulados en *${appSettings.clinicName}* le acreditan como socio VIP. Puede canjearlos hoy por un blanqueamiento o limpieza de cortesía. ¡Consúltenos! 👑`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendBirthdayGift() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `¡Feliz Cumpleaños, *${patientData.name || 'Paciente'}*! 🎂 De parte de todo el equipo de *${appSettings.clinicName}* le deseamos un gran día y le regalamos un cupón del 20% de descuento en tratamientos estéticos durante este mes. 🎉`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendPostOpCheckin() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `Hola *${patientData.name || 'Paciente'}*, le escribimos desde *${appSettings.clinicName}* para saber cómo sigue tras su reciente procedimiento. ¿Presenta alguna molestia o inflamación? Estamos aquí para cuidarle. 💙`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendReferralPromo() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `¡Hola *${patientData.name || 'Paciente'}*! En *${appSettings.clinicName}* valoramos su confianza. Por cada amigo o familiar que nos recomiende, ambos obtendrán un 15% de descuento en su próxima consulta. ¡Comparta sonrisas!`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendAnniversaryPromo() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `¡Feliz Aniversario de Sonrisa, *${patientData.name || 'Paciente'}*! 🦷 Hoy se cumple 1 año de su tratamiento en *${appSettings.clinicName}*. Queremos invitarle a su control de mantenimiento sin costo de cortesía.`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendWhiteningRecall() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `Hola *${patientData.name || 'Paciente'}*, le escribimos de *${appSettings.clinicName}* para recordarle su sesión anual de mantenimiento y retoque estético de blanqueamiento dental. ¡Luzca siempre impecable!`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function pickMonthlyWinner() {
-            const list = getMasterPatientsList();
-            if (list.length === 0) { showAlert("Sin pacientes", "No hay pacientes registrados para sortear."); return; }
-            const winner = list[Math.floor(Math.random() * list.length)];
-            showAlert("¡Ganador Sorteo VIP!", `El paciente seleccionado este mes para su limpieza de cortesía es: ${winner.name || winner.id}`);
-        }
-
-        function sendFamilyClubPromo() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `Hola *${patientData.name || 'Paciente'}*, en *${appSettings.clinicName}* hemos lanzado el *Club Familiar OdontoFam*. Registre a su grupo familiar y obtenga tarifas preferenciales.`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendAnxietyProtocol() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `Hola *${patientData.name || 'Paciente'}*, le saludamos de *${appSettings.clinicName}*. Le recordamos nuestro protocolo especial "Adiós Fobia" con aromaterapia y confort para su visita.`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        // --- NUEVOS PILARES 11 AL 20 ---
-        function sendGamificationChallenge() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🎮 ¡Hola *${patientData.name || 'Paciente'}*! Te invitamos al *Reto Sonrisa 21 Días* de *${appSettings.clinicName}*. Envíanos captura usando hilo dental diario y acumula puntos dobles canjeables. ¡Acepta el reto! 🦷✨`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendSpaAlliance() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `✨ Hola *${patientData.name || 'Paciente'}*, como paciente preferencial de *${appSettings.clinicName}*, obtienes tu *Pasaporte Spa & Sonrisa* con 20% de descuento en nuestros spas aliadas de la ciudad. ¡Consúltanos! 🌿`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendWeatherAlert() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🌡️ Hola *${patientData.name || 'Paciente'}*, debido al cambio brusco de temperatura, desde *${appSettings.clinicName}* te recordamos usar pasta para dientes sensibles y evitar cambios térmicos bruscos. ¡Cuídate! 🧊☕`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendStudentGrant() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🎓 ¡Hola *${patientData.name || 'Paciente'}*! En *${appSettings.clinicName}* tenemos la *Beca Sonrisa Universitaria*, con planes de pago diferido y facilidades especiales para jóvenes y estudiantes. ¡Infórmate! 📚`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendVipPolicy() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🛡️ Hola *${patientData.name || 'Paciente'}*, tu membresía en *${appSettings.clinicName}* incluye acceso a nuestra *Póliza de Urgencias 24/7 VIP* por WhatsApp para fines de semana. ¡Tu tranquilidad es nuestra prioridad! 🚨`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendAmbassadorInvite() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `📢 ¡Hola *${patientData.name || 'Paciente'}*! Únete a nuestro círculo exclusivo de *Embajadores Digitales* de *${appSettings.clinicName}*. Comparte tu experiencia en redes y gana créditos directos para tus consultas. ⭐`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendVideoAuditInvite() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `📹 Hola *${patientData.name || 'Paciente'}*, en *${appSettings.clinicName}* te ofrecemos una *Auditoría de Higiene por Video*. Envíanos un video corto de 15s de tu cepillado y nuestro especialista te dará feedback gratuito. 🪥`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendZeroCariesWarranty() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🏆 ¡Felicidades *${patientData.name || 'Paciente'}*! Por tu excelente constancia, entras en nuestra *Garantía Cero Caries 2A* de *${appSettings.clinicName}*: si cumples tus controles, tu profilaxis anual es 100% bonificada. ✨`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendEcoKitNotice() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `🌿 ¡Hola *${patientData.name || 'Paciente'}*! En tu próxima visita a *${appSettings.clinicName}* te entregaremos de regalo tu *Kit Eco-Smile* con cepillo de bambú biodegradable personalizado. ¡Cuidamos tu sonrisa y el planeta! 🌍`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function sendDigitalSmileInvite() {
-            if (!patientData.phone) { showAlert("Teléfono faltante", "Ingrese el teléfono del paciente activo."); return; }
-            const msg = `✨ ¡Hola *${patientData.name || 'Paciente'}*! En *${appSettings.clinicName}* te invitamos a una sesión de *Asesoría de Diseño de Sonrisa Digital (DSD)* sin costo. Visualiza el cambio estético de tu sonrisa antes de empezar. 💻😁`;
-            window.open(`https://wa.me/${patientData.phone.replace(/[^0-9+]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         // --- AGENDA & CITAS ---
@@ -2241,6 +2023,33 @@
         }
 
         // --- CONSENTIMIENTOS ---
+        const CONSENT_TEMPLATES = {
+            endo: {
+                title: "Consentimiento Informado para Tratamiento de Endodoncia",
+                text: "Yo, [PATIENT_NAME], identificado(a) con DNI/ID [PATIENT_DNI], declaro que el cirujano dentista me ha explicado detalladamente la naturaleza del tratamiento de conducto (endodoncia). Comprendo que el objetivo es conservar la pieza dental afectada. Entiendo los riesgos potenciales que incluyen fractura de instrumental, perforación del conducto, dolor postoperatorio o reinfección que requiera apicectomía o extracción en casos complejos."
+            },
+            cirugia: {
+                title: "Consentimiento Informado para Cirugía Oral y Extracción Dental",
+                text: "Yo, [PATIENT_NAME], con DNI/ID [PATIENT_DNI], autorizo la realización de la extracción dental / cirugía oral programada. Se me han expuesto los riesgos habituales del procedimiento quirúrgico, tales como hemorragia, inflamación, equimosis, infección secundaria, alveolitis o parestesia temporal/definitiva de nervios adyacentes."
+            },
+            orto: {
+                title: "Consentimiento Informado para Tratamiento de Ortodoncia",
+                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], manifiesto mi conformidad para iniciar el tratamiento de corrección ortodóntica. Comprendo que la duración del tratamiento es estimada y depende de mi colaboración clínica. Conozco los riesgos de reabsorción radicular, descalcificación del esmalte si no mantengo buena higiene y la obligatoriedad del uso de retenedores al finalizar."
+            },
+            implant: {
+                title: "Consentimiento Informado para Implantes y Rehabilitación",
+                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], acepto la colocación quirúrgica de implantes dentales ostointegrados. Acepto que existe una tasa de fallo en la integración ósea, así como la posibilidad de periimplantitis si no acudo a mis controles de mantenimiento periódicos."
+            },
+            blanqueamiento: {
+                title: "Consentimiento Informado para Blanqueamiento Dental Estético",
+                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], entiendo que el blanqueamiento dental busca aclarar el tono del esmalte. Se me ha aclarado que puede presentarse sensibilidad dentaria temporal e irritación gingival reversible."
+            },
+            protesis: {
+                title: "Consentimiento Informado para Prótesis Dental",
+                text: "Yo, [PATIENT_NAME], DNI/ID [PATIENT_DNI], autorizo la confección y adaptación de la prótesis dental. Se me han comunicado los períodos necesarios de adaptación, ajuste progresivo y la necesidad de hábitos estrictos de higiene."
+            }
+        };
+
         function getCombinedConsentTemplates() {
             let combined = { ...CONSENT_TEMPLATES };
             if (appSettings.customConsents && Array.isArray(appSettings.customConsents)) {
@@ -2521,39 +2330,6 @@
                 stateName: stateName,
                 color: color,
                 note: note
-            });
-        }
-
-        function renderFindingsTable() {
-            const tbody = document.getElementById('findingsTableBody');
-            tbody.innerHTML = '';
-            document.getElementById('findingsCount').innerText = `${patientData.findings.length} Hallazgos`;
-
-            if (patientData.findings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400 italic">No hay hallazgos registrados.</td></tr>`;
-                return;
-            }
-
-            patientData.findings.forEach(f => {
-                const colorConfig = COLOR_OPTIONS.find(c => c.id === f.color) || COLOR_OPTIONS[0];
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition';
-                tr.innerHTML = `
-                    <td class="py-2 px-3 font-bold text-indigo-700">#${f.tooth}</td>
-                    <td class="py-2 px-3">
-                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md font-semibold text-[11px] ${colorConfig.bgClass}">
-                            <span class="w-2 h-2 rounded-full ${colorConfig.dotClass}"></span>
-                            ${f.stateName}
-                        </span>
-                    </td>
-                    <td class="py-2 px-3 text-slate-600">${f.note || '---'}</td>
-                    <td class="py-2 px-3 text-center no-print">
-                        <button onclick="transferFindingToBudget('${f.stateName}')" class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-lg text-[10px] font-bold cursor-pointer hover:bg-emerald-100">
-                            + Presupuestar
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
             });
         }
 
