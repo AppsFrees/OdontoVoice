@@ -1182,13 +1182,13 @@
             loadPatientDataFromStorage();
             applySettingsToUI();
             renderStateSelectDropdown();
-            renderArches();
-            renderFindingsTable();
-            renderBudgetTable();
+            try { renderArches(); } catch (error) { console.error('Odontograma no pudo renderizarse', error); }
+            try { renderFindingsTable(); } catch (error) { console.error('Hallazgos no pudieron renderizarse', error); }
+            try { renderBudgetTable(); } catch (error) { console.error('Presupuesto no pudo renderizarse', error); }
             updateTotals();
             renderLoyaltyCards();
             try { renderMarketingCards(); } catch (error) { console.error('Marketing no pudo renderizarse', error); }
-            renderArches();
+            try { renderArches(); } catch (error) { console.error('Odontograma no pudo renderizarse', error); }
             switchTab('dashboard');
         });
 
